@@ -23,6 +23,7 @@
             [tablecloth.pipeline]
             [tech.v3.dataset.metamorph]
             [tech.v3.libs.smile.nlp]
+            [scicloj.metamorph.ml]
             )
   )
 

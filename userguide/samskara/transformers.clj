@@ -1,12 +1,9 @@
-(ns scicloj.ml.userguide.transformers
-
+(ns samskara.transformers
   (:require
    [notespace.api :as note]
    [notespace.kinds :as kind]
-   [scicloj.ml.metamorph :as mm]
-
+   [samskara.metamorph :as mm]
    )
-
   )
 
 (defn docu-fn [v]
@@ -18,16 +15,15 @@
      kind/md-nocode
      )))
 
-
 (comment
-  (note/init-with-browser)
-  (note/eval-this-notespace)
-  (note/reread-this-notespace)
-  (note/render-static-html)
-  (note/init)
-  )
 
-(docu-fn (meta (var mm/count-vectorize)))
+  (note/init)
+  (notespace.api/update-config
+   #(assoc % :source-base-path "userguide"))
+  (note/eval-this-notespace)
+  (note/render-static-html "docs/userguide-transformers.html"))
+
+(docu-fn (var mm/count-vectorize))
 
 (docu-fn (var mm/bow->SparseArray))
 

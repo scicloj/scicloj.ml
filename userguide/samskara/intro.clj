@@ -9,7 +9,7 @@
   (note/init-with-browser)
   (note/eval-this-notespace)
   (note/reread-this-notespace)
-  (note/render-static-html)
+  (note/render-static-html "docs/userguide-intro.html")
   (note/init)
   (note/update-config)
 
@@ -119,12 +119,17 @@ but this is hidden from the user, but is listed here for completeness."]
 ["[Smile](https://haifengl.github.io/) is a complete data science package for Java.
 Various smile models are made available to Clojure by `tech.ml.smile` " ]
 
-["The setup for the following code needs a single dependencies in deps.edn or project.clj"]
 
+["In order to give easier accesss to the variuos libraries, the samskara project library was created.
+It unifies teh access to the libaries above in three namespaces.
+"]
+
+
+["The setup for the following code needs a single dependencies in deps.edn or project.clj"]
 
 ["
 {:deps {
-        scicloj.ml/scicloj.ml {:mvn/version \"0.1.0\"}} }
+        samskara/samskara {:mvn/version \"0.1.0\"}} }
 "]
 
 
@@ -143,14 +148,63 @@ Various smile models are made available to Clojure by `tech.ml.smile` " ]
 
 
 
-["The we need to require s few namespaces from the three libraries"]
+["To start we need to require a few namespaces"]
 
 (require '[samskara.ml :as ml]
          '[samskara.metamorph :as mm]
          '[samskara.dataset :as ds]
          '[tech.v3.libs.smile.nlp :as nlp]
          )
-["First we load and split the data."]
+["First we load the data."]
+(def titanic-train
+  (ds/dataset "https://github.com/scicloj/metamorph-examples/raw/main/data/titanic/train.csv"
+               {:key-fn keyword
+               :parser-fn :string
+                }))
+
+(def titanic-test
+  (->
+   (ds/dataset "https://github.com/scicloj/metamorph-examples/raw/main/data/titanic/test.csv"
+               {:key-fn keyword
+                :parser-fn :string
+                })
+   (ds/add-column :Survived ["0"])
+   ))
+
+["Then we define the pipeline and it steps:"]
+
+(def pipe-fn
+  (ml/pipeline
+   (mm/select-columns [:Survived :Sex ])
+   (mm/categorical->number [:Survived :Sex])
+   (mm/set-inference-target :Survived)
+   (mm/model {:model-type :smile.classification/logistic-regression})))
+
+["Now we execute the pipeline in mode :fit,
+which will as well train the model. "]
+
+(def trained-ctx
+  (pipe-fn {:metamorph/data titanic-train
+            :metamorph/mode :fit}))
+
+["Now we execute the pipeline in :transform,
+which wil make a prediction "]
+
+(def test-ctx
+  (pipe-fn
+   (assoc trained-ctx
+          :metamorph/data titanic-test
+          :metamorph/mode :transform)))
+
+["Prediction:"]
+^kind/dataset
+(:metamorph/data test-ctx)
+
+
+
+["More advanced use case, as we need to pass the vocab size betweenn steps"]
+
+
 (def reviews
   (ds/dataset "https://github.com/scicloj/metamorph-examples/raw/main/data/reviews.csv.gz"
               {:key-fn keyword}))
@@ -158,22 +212,24 @@ Various smile models are made available to Clojure by `tech.ml.smile` " ]
   (first
    (ds/split->seq reviews :holdout)))
 
-
-["Then we define the pipeline and it steps:"]
-
 (def pipe-fn
   (ml/pipeline
-   (mm/select-columns [:Text :Score])
-   (mm/count-vectorize :Text :bow nlp/default-text->bow {})
-   (mm/bow->sparse-array :bow :bow-sparse #(nlp/->vocabulary-top-n % 1000))
+   (mm/select-columns [:Text :Score ])
+   (mm/count-vectorize :Text :bow)
+   (mm/bow->sparse-array :bow :bow-sparse)
    (mm/set-inference-target :Score)
    (mm/select-columns [:bow-sparse :Score])
-   (mm/model {:p 1000
-              :model-type :smile.classification/maxent-multinomial
-              :sparse-column :bow-sparse})
+   (fn [ctx]
+     (let [p (-> ctx :tech.v3.libs.smile.metamorph/count-vectorize-vocabulary
+                 :vocab
+                 count
+                 )]
+       ((mm/model {:p p
+                   :model-type :smile.classification/maxent-multinomial
+                   :sparse-column :bow-sparse})
+        ctx)))
    ))
 
-["Now we execute the pipeline, which will as well train the model. "]
 (def trained-ctx
   (pipe-fn {:metamorph/data (:train reviews-split)
             :metamorph/mode :fit}))
