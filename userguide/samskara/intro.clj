@@ -147,6 +147,7 @@ Various smile models are made available to Clojure by `tech.ml.smile` " ]
 
 (require '[samskara.ml :as ml]
          '[samskara.metamorph :as mm]
+         '[samskara.dataset :as ds]
          '[tech.v3.libs.smile.nlp :as nlp]
          )
 ["First we load and split the data."]
