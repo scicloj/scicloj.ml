@@ -1,9 +1,13 @@
-(ns scicloj.ml.dataset
+(ns samskara.dataset
+  "
+  This namespace contains functions which operate on a dataset
+  and mostly return a dataset.
 
+  The namespaces scicloj.ml.metamorph and scicloj.ml.dataset contain
+  functions with the same name. But they operate on either a context
+  map (ns metamorph) or on a dataset (ns dataset)
 
-  "This namespace contains functions which operate on a dataset and mostly return a dataset.
-
-  Functions are re-exported from:
+  The functions in tis namespace are re-exported from:
 
   * tabecloth.api
   * tech.v3.dataset.modelling
@@ -11,7 +15,7 @@
 "
   (:refer-clojure :exclude [boolean concat drop first group-by last rand-nth shuffle])
   (:require [tech.v3.datatype.export-symbols :as exporter]
-            [scicloj.ml.utils :refer :all]
+            [samskara.utils :refer :all]
             [tech.v3.dataset.modelling]
             [tech.v3.dataset.column-filters]
             [tablecloth.api]

@@ -1,11 +1,15 @@
-(ns scicloj.ml.metamorph
-  "This ns contains functions, which operate on a metamorph context.
+(ns samskara.metamorph
+  "This namespace contains functions, which operate on a metamorph context.
   They all return the context as well.
 
- So all functions in this ns are metamorph compliant and can be placed in a
- metamorph pipeline. 
+  So all functions in this namespace are metamorph compliant and can
+  be placed in a metamorph pipeline.
 
-  The functions are re-exported from :
+  The namespaces scicloj.ml.metamorph and scicloj.ml.dataset contain
+  functions with the same name. But they operate on either a context
+  map (ns metamorph) or on a dataset (ns dataset)
+
+  The functions in this namesspaces are re-exported from :
   
   * tablecloth.pipeline
   * tech.v3.libs.smile.metamorph
@@ -15,7 +19,7 @@
  " 
   (:refer-clojure :exclude [boolean concat drop first group-by last rand-nth shuffle filter sort-by update take-nth])
   (:require [tech.v3.datatype.export-symbols :as exporter]
-            [scicloj.ml.utils :refer :all]
+            [samskara.utils :refer :all]
             [tablecloth.pipeline]
             [tech.v3.dataset.metamorph]
             [tech.v3.libs.smile.nlp]
