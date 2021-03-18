@@ -133,11 +133,11 @@ Various smile models are made available to Clojure by `tech.ml.smile` " ]
 ^kind/md-nocode
 ["
 
-| namespace         | purpose                                                  |
-|-------------------|----------------------------------------------------------|
-| scicloj.ml.core   | core functionality for machine learning                  |
-| scicloj.ml.ds     | functions to manipulate a dataset                        |
-| scicloj.ml.mm     | metamorph compliant functions to be used in ml pipelines |
+| namespace           | purpose                                                  |
+|---------------------|----------------------------------------------------------|
+| samskara.ml         | core functionality for machine learning                  |
+| samskara.dataset    | functions to manipulate a dataset                        |
+| samskara.methamorph | metamorph compliant functions to be used in ml pipelines |
 
  "]
 
@@ -147,6 +147,7 @@ Various smile models are made available to Clojure by `tech.ml.smile` " ]
 
 (require '[samskara.ml :as ml]
          '[samskara.metamorph :as mm]
+         '[samskara.dataset :as ds]
          '[tech.v3.libs.smile.nlp :as nlp]
          )
 ["First we load and split the data."]
