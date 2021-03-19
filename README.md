@@ -1,6 +1,6 @@
 # samskara
 
-Proposal for a Clojure machine learnining library
+Proposal for a Clojure machine learning library
 
 Docu is here:
 https://behrica.github.io/samskara/userguide-intro.html
