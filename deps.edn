@@ -24,7 +24,7 @@
                                  :artifact "samskara.jar"}
                      }
            :codox {:extra-deps {codox/codox {:mvn/version "0.10.7" :exclusions [org.ow2.asm/asm-all]}
-                                codox-theme-rdash/codox-theme-rdash {:mvn/version "0.1.2"}
+                                ;codox-theme-rdash/codox-theme-rdash {:mvn/version "0.1.2"}
                                 hiccup/hiccup {:mvn/version "1.0.5"}
                                 enlive/enlive {:mvn/version "1.1.6"}
                                 org.pegdown/pegdown {:mvn/version "1.6.0"}
@@ -32,7 +32,7 @@
                    :exec-fn codox.main/generate-docs
                    :exec-args {:language :clojure
                                :metadata {:doc/format :markdown}
-                               :themes [:rdash]
+                               ;:themes [:rdash]
                                :output-path "docs"}}
 
            }
