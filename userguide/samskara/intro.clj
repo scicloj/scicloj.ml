@@ -11,7 +11,6 @@
   (note/reread-this-notespace)
   (note/render-static-html "docs/userguide-intro.html")
   (note/init)
-  (note/update-config)
 
 (notespace.api/update-config
   #(assoc % :source-base-path "userguide"))
@@ -21,10 +20,12 @@
 ["# Clojure and machine learning "]
 
 ["In order to practice machine learning and create an ecosystem of models around it,
-we need 2 pieces."]
+we need 3  pieces."]
 
 ["1. A standard way to store data."]
-["2. A standard way to express steps of data manipulations including train/predict of a model"]
+["2. Models"]
+["3. A standard way to express steps of data manipulations including train/predict of a model"]
+
 
 ["The Clojure language and core libraries do not have build-in, specific support for this,
 so some libraries are required. "]
@@ -48,6 +49,19 @@ but lacks consistency in some parts.
 
 ["So we have now a very reliable, mature, easy to use library to store and manipulate tabular data, including text."]
 
+["## Models"]
+["Models are the core of most machine learning libraries. In Samskara we rely on an common `abstraction` for all
+machine learning models and one Java library [Smile](https://github.com/haifengl/smile) providing models,
+which we bridge into Clojure via the abstraction.
+So we use Java models internally, but without the need for Java interop.
+
+Documentation for existing models is appearing here:
+https://behrica.github.io/samskara/userguide-models.html
+
+The abstraction is independent from Smile, so we could makes bridges to other libraries, even in non JVM languages (python, R)
+
+
+"]
 
 ["## Data transformation pipelines."]
 
