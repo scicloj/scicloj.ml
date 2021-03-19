@@ -10,13 +10,10 @@
 
 (comment
 
-  (note/init)
+  (note/init-with-browser)
   (notespace.api/update-config
    #(assoc % :source-base-path "userguide"))
-
-  (note/init-with-browser)
   (note/eval-this-notespace)
-  (note/reread-this-notespace)
   (note/render-static-html "docs/userguide-models.html")
 
 

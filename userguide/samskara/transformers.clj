@@ -6,6 +6,15 @@
    )
   )
 
+(comment
+
+  (note/init-with-browser)
+  (notespace.api/update-config
+   #(assoc % :source-base-path "userguide"))
+  (note/eval-this-notespace)
+  (note/render-static-html "docs/userguide-transformers.html")
+  )
+
 (defn docu-fn [v]
   (let [m (meta v)]
     (kind/override
@@ -15,13 +24,7 @@
      kind/md-nocode
      )))
 
-(comment
 
-  (note/init-with-browser)
-  (notespace.api/update-config
-   #(assoc % :source-base-path "userguide"))
-  (note/eval-this-notespace)
-  (note/render-static-html "docs/userguide-transformers.html"))
 
 (docu-fn (var mm/count-vectorize))
 

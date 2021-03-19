@@ -5,7 +5,26 @@
   So all functions in this namespace are metamorph compliant and can
   be placed in a metamorph pipeline.
 
-  The namespaces scicloj.ml.metamorph and scicloj.ml.dataset contain
+  Most functions here are only manipulating the dataset, which is in the ctx map
+  under the key :metamorph/data.
+  And they behave the same in pipeline mode :fit and :transform.
+
+
+  A few functions manipulate other keys inside the ctx map, and/or behave
+  different in :fit and :transform.
+
+  This is documented per function in this form:
+
+  metamorph                            | .
+  -------------------------------------|------------------------------
+  Behaviour in mode :fit               | .
+  Behaviour in mode :transform         | .
+  Reads keys from ctx                  | .
+  Writes keys to ctx                   | .
+
+
+
+  The namespaces samskara.metamorph and samskara.ml.dataset contain
   functions with the same name. But they operate on either a context
   map (ns metamorph) or on a dataset (ns dataset)
 
