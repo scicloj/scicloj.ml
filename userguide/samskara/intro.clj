@@ -1,5 +1,4 @@
 (ns samskara.intro
-
   (:require
    [notespace.api :as note]
    [notespace.kinds :as kind ]))
@@ -7,23 +6,25 @@
 
 (comment
   (note/init-with-browser)
+  (notespace.api/update-config
+   #(assoc % :source-base-path "userguide"))
+
   (note/eval-this-notespace)
   (note/reread-this-notespace)
   (note/render-static-html "docs/userguide-intro.html")
   (note/init)
 
-(notespace.api/update-config
-  #(assoc % :source-base-path "userguide"))
+
 
   )
 
 ["# Clojure and machine learning "]
 
 ["In order to practice machine learning and create an ecosystem of models around it,
-we need 3 component."]
+we need 3 components."]
 
 ["1. A standard way to manage tabular data in memory."]
-["2. Various machine learning Models"]
+["2. Various machine learning models"]
 ["3. A standard way to express steps of data manipulations including train/predict of a model"]
 
 
@@ -43,14 +44,15 @@ highly optimized and linking in its root to native memory and allow zero-copy in
 but lacks consistency in some parts.
 "]
 
-["This was addressed by an other library, layering on top of it, called `tablecloth`"
- "It is available [here](https://github.com/scicloj/tablecloth)"
+["This was addressed by an other library, layering on top of it, called
+`tablecloth`. It is available [here](https://github.com/scicloj/tablecloth)"
  ]
 
 ["So we have now a very reliable, mature, easy to use library to store and manipulate tabular data, including text."]
 
 ["## Models"]
-["Models are the core of most machine learning libraries. In Samskara we rely on an common `abstraction` for all
+["Models are the core of most machine learning libraries. In Samskara we
+ rely on an common **abstraction** for all
 machine learning models and one Java library [Smile](https://github.com/haifengl/smile) providing models,
 which we bridge into Clojure via the abstraction.
 So we use Java models internally, but without the need for Java
@@ -68,20 +70,25 @@ The abstraction is independent from Smile, so we could makes bridges to other li
 
 ["In order to apply machine learning, the data needs to be transformed from its original form ,
 (often as a data file), into the form required my the model.
- Sometimes these transformation are simple, like chaining encoding, sometimes very complex.
- In some contexts this is as well called feature engineering, which can result in arbitrary
+ Sometimes these transformation are simple, like re-encode data,
+sometimes they are very complex. In some contexts this is as well called
+ feature engineering, which can result in arbitrary
 complex dataset transformations.
-This transformations are dataset->dataset transformations.
+This transformations are mostly dataset to dataset transformations.
 "
  ]
 
-["This pipelines need to be repeatable and self-contained, as they need to run several times
-with different data or in variants for either cross validation or hyper-parameter tuning."]
+["These pipelines need to be repeatable and self-contained,
+as they need to run several times with different data or in variants
+for either cross validation or hyper-parameter tuning."]
 
-["Clojure and the `tablecoth` library contains already the concept of running a  pipeline"]
+["Clojure and the `tablecoth` library contains already
+the concept of running a pipeline"]
 
-["These simpler form of a pipeline in Clojure and Tablecloth, can just make use of the fact that all tablecloth functions take a dataset as
- the first parameter and return a dataset. So they can be chained together with the pipe (`->`) operator of Clojure, example:"]
+["These simpler form of a pipeline in Clojure and Tablecloth, can just make use of the fact that all tablecloth
+ functions take a dataset as the first parameter and return a dataset.
+So they can be chained together with the pipe (`->`) operator of Clojure,
+ example:"]
 
 (require '[samskara.dataset :as ds])
 (def my-data
@@ -90,14 +97,15 @@ with different data or in variants for either cross validation or hyper-paramete
       (ds/add-or-replace-column :symbol (fn [ds] (map clojure.string/lower-case  (ds :symbol)) ))
       ))
 
-["This form of pipeline works to manipulate a dataset, but has three disadvantages."]
+["This form of pipeline works to manipulate a dataset,
+but has three disadvantages."]
 
 ["
 1. `->` is a macro, so we cannot compose pipelines easily
 
-2. We move a dataset object through the pipeline steps, so the only object we have nicely inside the pipeline, accessible to all steps, is the dataset itself.  But sometimes we need non-tabular, auxiliary data to be shared across the pipeline steps, which is not possible with passing a dataset only.Using this simple pipelines, would force to hold auxiliary data in a global state of some form.This makes is very hard to execute pipelines repeatedly, as they are not self-contained.
+2. We move a dataset object through the pipeline steps, so the only object we have nicely inside the pipeline, accessible to all steps, is the dataset itself.  But sometimes we need non-tabular, auxiliary, data to be shared across the pipeline steps, which is not possible with passing a dataset only.Using this simple pipelines, would force to hold auxiliary data in a global state of some form.This makes is very hard to execute pipelines repeatedly, as they are not self-contained.
 
-3. This simple pipeline has no notion of running a pipeline in several modes. In machine learning a pipeline need to behave differently in `fit` and in `transform`. (often called `train` vs `predict`). The models learns from data in the `fit` and it applies what it has learned in `transform`.
+3. These simpler pipeline concepts have no notion of running a pipeline in several modes. In machine learning a pipeline need to behave differently in `fit` and in `transform`. (often called `train` vs `predict`). The models learns from data in the `fit` and it applies what it has learned in `transform`.
 "]
 
 ["Due to this, the idea of the `metamorph` pipeline concept was born."]
@@ -109,31 +117,37 @@ with different data or in variants for either cross validation or hyper-paramete
 ["As we see in the metamorph documentation, a pipeline can be composed of functions, which adhere to some simple standards
 regarding input and output, as explained here: https://github.com/scicloj/metamorph#compliant-operations"]
 
-["Tablecloth contains such operations in the `tablecloth.pipeline` namespace. All functions of the `tablecloth.api` namespace are replicated there,
- but metamorph compliant"]
+["Tablecloth contains such operations in the `tablecloth.pipeline`
+namespace. All functions of the `tablecloth.api` namespace are replicated
+there, but metamorph compliant"]
 
 ["## Samskara"]
 
-["The Clojure ML ecosystem is based on different libraries working together, as
-idiomatic in Clojure"]
+["The Clojure ML ecosystem is based on different libraries working
+together, as typic and idiomatic in Clojure"]
 
-["Four main libraries are used internally, to create a complete machine learning library,
-but this is hidden from the user, and is listed here only for completeness."]
+["Some existing ibraries are used internally in Samskara, to create a
+complete machine learning library, but this is hidden from the user,
+and is listed here only for completeness."]
 
 ["
-1. `tablecloth` for general manipulation of the dataset
-1. `tech.v3.dataset` to finally prepare a dataset for the machine learing models
-1.  `metamorph.ml` for running pipelines and machine learning core functions
-1.  `tech.ml.smile` containing ML models and NLP functions based on Smile
-"]
+1. `tablecloth` - for general manipulation of the dataset
+1. `tech.v3.dataset` - to finally prepare a dataset for the machine learing models
+1. `metamorph.ml` - for running pipelines and machine learning core functions
+1. `Smile`  Java data science library containing lots of models
+1. `tech.ml`  - Core ML functions and bridge to Smile models and NLP functions"]
 
 
-["[Smile](https://haifengl.github.io/) is a complete data science package for Java.
-Various smile models are made available to Clojure by `tech.ml.smile` " ]
+["These libraries can be used standalone as well. `tech.ml` was changed  in order
+to work with Samskara in a incompatible way.
+So it will be re-released under a different name.
+The others can be used by Samskara without any change.
+ "]
 
 
-["In order to give easier accesss to the variuos libraries, the Samskara  library was created.
-It unifies the access to the libaries above in three namespaces.
+["In order to give easier access to the various libraries, the Samskara
+ library was created.It unifies the access to the libraries above
+in three simple namespaces.
 "]
 
 ["## Machine learning using Samskara"]
@@ -197,7 +211,7 @@ which will as well train the model. "]
   (pipe-fn {:metamorph/data titanic-train
             :metamorph/mode :fit}))
 
-["Now we have a trained model inside train-ctx. This is a usual map, so can be inspected in the repl."]
+["Now we have a trained model inside trained-ctx. This is a usual map, so can be inspected in the repl."]
 
 ["Now we execute the pipeline in mode :transform,
 which wil make a prediction "]
@@ -217,6 +231,22 @@ which wil make a prediction "]
 
 ["The documentation of `mm/model` here https://behrica.github.io/samskara/samskara.metamorph.html#var-model"
  "documents this special behavior of the function" ]
+
+
+["## Custom dataset->dataset transforming functions in a metamorph pipeline"]
+["### inline fn"]
+["### Custom metamorph compliant function"]
+["### Lifting a existing dataset->dataset transformation fn"]
+
+["## Keep auxilary data in pipeline"]
+
+
+["## Special keys in metamorph context map"]
+:metamorph/data
+:metamorph/mode
+:metamorph/id
+
+["## Debugging a metamorph pipeline"]
 
 
 ["## More advanced use case, as we need to pass the vocab size betweenn steps"]
