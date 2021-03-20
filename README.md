@@ -1,6 +1,6 @@
 # samskara
 
-## Documenttaion
+## Documentation
 
 Proposal for a Clojure machine learning library
 
