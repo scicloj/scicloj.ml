@@ -21,7 +21,9 @@
 
 ;; register models
 (require '[tech.v3.libs.smile.classification]
-         '[tech.v3.libs.smile.regression])
+         '[tech.v3.libs.smile.regression]
+         '[tech.v3.libs.xgboost]
+         )
 
 ;; (scicloj.metamorph.ml/)
 (export-all [scicloj.metamorph.ml

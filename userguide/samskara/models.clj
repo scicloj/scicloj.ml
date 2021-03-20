@@ -4,41 +4,34 @@
  [notespace.kinds :as kind ]
  [notespace.view :as view]
  [tablecloth.api :as tc]
- [samskara.ml]
- )
-)
+ [samskara.ml]))
 
+
+^kind/hidden
 (comment
-
   (note/init-with-browser)
   (notespace.api/update-config
    #(assoc % :source-base-path "userguide"))
   (note/eval-this-notespace)
-  (note/render-static-html "docs/userguide-models.html")
+  (note/render-static-html "docs/userguide-models.html"))
 
-
-  )
-
+^kind/hidden
 (def model-keys
   (keys @samskara.ml/model-definitions*))
 
+^kind/hidden
 (def model-options
   (map
    :options
    (vals @samskara.ml/model-definitions*)))
 
-^kind/dataset
-(tc/dataset
- {:model-key model-keys
-  :options model-options
-  }
- )
-
+^kind/hidden
 (defmethod kind/kind->behaviour ::dataset-nocode
   [_]
   {:render-src?   false
    :value->hiccup #'view/dataset->md-hiccup})
 
+^kind/hidden
 (defn docu-options [model-key]
   (kind/override
    (tc/dataset
@@ -47,6 +40,7 @@
    )
   )
 
+^kind/hidden
 (comment
 
   (run!
@@ -60,6 +54,7 @@
             @samskara.ml/model-definitions*)
    )
   )
+
 
 
 ["## Models"]
@@ -134,4 +129,88 @@
 
 ["### :smile.regression/ridge"]
 (docu-options :smile.regression/ridge)
+["null"]
+
+["### :xgboost/binary-hinge-loss"]
+(docu-options :xgboost/binary-hinge-loss)
+["null"]
+
+["### :xgboost/classification"]
+(docu-options :xgboost/classification)
+["null"]
+
+["### :xgboost/count-poisson"]
+(docu-options :xgboost/count-poisson)
+["null"]
+
+["### :xgboost/gamma-regression"]
+(docu-options :xgboost/gamma-regression)
+["null"]
+
+["### :xgboost/gpu-binary-logistic-classification"]
+(docu-options :xgboost/gpu-binary-logistic-classification)
+["null"]
+
+["### :xgboost/gpu-binary-logistic-raw-classification"]
+(docu-options :xgboost/gpu-binary-logistic-raw-classification)
+["null"]
+
+["### :xgboost/gpu-linear-regression"]
+(docu-options :xgboost/gpu-linear-regression)
+["null"]
+
+["### :xgboost/gpu-logistic-regression"]
+(docu-options :xgboost/gpu-logistic-regression)
+["null"]
+
+["### :xgboost/linear-regression"]
+(docu-options :xgboost/linear-regression)
+["null"]
+
+["### :xgboost/logistic-binary-classification"]
+(docu-options :xgboost/logistic-binary-classification)
+["null"]
+
+["### :xgboost/logistic-binary-raw-classification"]
+(docu-options :xgboost/logistic-binary-raw-classification)
+["null"]
+
+["### :xgboost/logistic-regression"]
+(docu-options :xgboost/logistic-regression)
+["null"]
+
+["### :xgboost/multiclass-softmax"]
+(docu-options :xgboost/multiclass-softmax)
+["null"]
+
+["### :xgboost/multiclass-softprob"]
+(docu-options :xgboost/multiclass-softprob)
+["null"]
+
+["### :xgboost/rank-map"]
+(docu-options :xgboost/rank-map)
+["null"]
+
+["### :xgboost/rank-ndcg"]
+(docu-options :xgboost/rank-ndcg)
+["null"]
+
+["### :xgboost/rank-pairwise"]
+(docu-options :xgboost/rank-pairwise)
+["null"]
+
+["### :xgboost/regression"]
+(docu-options :xgboost/regression)
+["null"]
+
+["### :xgboost/squared-error-regression"]
+(docu-options :xgboost/squared-error-regression)
+["null"]
+
+["### :xgboost/survival-cox"]
+(docu-options :xgboost/survival-cox)
+["null"]
+
+["### :xgboost/tweedie-regression"]
+(docu-options :xgboost/tweedie-regression)
 ["null"]
