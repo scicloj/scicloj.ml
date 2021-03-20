@@ -11,7 +11,12 @@
   (:require [tech.v3.datatype.export-symbols :as exporter]
             [samskara.utils :refer :all]
             [scicloj.metamorph.core]
-            [scicloj.metamorph.ml]))
+            [scicloj.metamorph.ml]
+            [scicloj.metamorph.ml.loss]
+            [scicloj.metamorph.ml.gridsearch]
+            [scicloj.metamorph.ml.classification]
+
+            ))
 
 
 ;; register models
@@ -19,7 +24,11 @@
          '[tech.v3.libs.smile.regression])
 
 ;; (scicloj.metamorph.ml/)
-(export-all [scicloj.metamorph.ml]
+(export-all [scicloj.metamorph.ml
+             scicloj.metamorph.ml.loss
+             scicloj.metamorph.ml.classification
+             scicloj.metamorph.ml.gridsearch
+             ]
             [model])
 
 
