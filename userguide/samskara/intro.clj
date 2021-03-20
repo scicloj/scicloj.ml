@@ -245,8 +245,10 @@ which wil make a prediction "]
 :metamorph/data
 :metamorph/mode
 :metamorph/id
+[ "## Set custom id"]
 
 ["## Debugging a metamorph pipeline"]
+
 
 
 ["## More advanced use case, as we need to pass the vocab size betweenn steps"]
