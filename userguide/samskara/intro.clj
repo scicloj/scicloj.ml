@@ -195,8 +195,17 @@ in three simple namespaces.
                 :parser-fn :string})
    (ds/add-column :Survived ["0"])))
 
-["Then we define the pipeline and it steps. Inside the pipeline we only use functions from namespace samskara.metamorph"]
+["Then we define the pipeline and it steps. Inside the pipeline we only use functions
+from namespace samskara.metamorph"]
 
+["In Samskara the model functions receives a single dataset,
+in which the inference target column is marked as such."
+
+ "The model to use is a parameter of the `model` function. All built-in
+models are listed here: https://behrica.github.io/samskara/userguide-models.html"
+
+
+ ]
 (def pipe-fn
   (ml/pipeline
    (mm/select-columns [:Survived :Sex ])
