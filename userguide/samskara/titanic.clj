@@ -9,7 +9,8 @@
    #(assoc % :source-base-path "userguide"))
   (note/eval-this-notespace)
   (note/reread-this-notespace)
-  (note/render-static-html)
+  (note/render-static-html "docs/userguide-titanic.html")
+
   (note/init)
   )
 
@@ -23,25 +24,12 @@
          '[clojure.string :as str]
          )
 
-;; (require '[scicloj.metamorph.core :as morph]
-;;          '[tablecloth.pipeline :as tc-mm]
-;;          '[tablecloth.api]
-;;          '[tech.v3.ml.metamorph :as ml-mm]
-;;          '[tech.v3.dataset.metamorph :as ds-mm]
-;;          '[tech.v3.dataset.column-filters :as cf]
-;;          '[camel-snake-kebab.core :as csk]
-;;          '[clojure.string :as str]
-;;          '[scicloj.metamorph.ml :as eval-mm]
-;;          '[tech.v3.ml.loss :as loss]
-;;          '[tech.v3.ml.gridsearch :as grid]
-;;          '[tech.v3.libs.smile.classification]
-;;          '[tech.v3.ml.classification :as classif])
 
 ["## Introduction "]
 
 [" In this example, we will train a model which is able to predict the survival of passengers from the Titanic dataset."
  "In a real analysis, this would contain as well explorative analysis of the data, which I will skip here,
-as the purpose is to showcase methamorph.ml, which is about model evaluation and selection."
+as the purpose is to showcase machine learninig with Samskara, which is about model evaluation and selection."
  ]
 
 

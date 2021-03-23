@@ -1,11 +1,14 @@
 {:deps {scicloj/metamorph.ml       {:mvn/version "0.3.0-alpha1" }
         techascent/tech.ml.smile   {:mvn/version "5.02-SNAPSHOT"}
         techascent/tech.ml.xgboost {:mvn/version "5.02-SNAPSHOT"}
-        scicloj/notespace          {:mvn/version "3-beta5"}
         scicloj/tablecloth         {:mvn/version "5.05.1"}
-        techascent/tech.ml.dataset {:mvn/version "5.05"}
+        ;; techascent/tech.ml.dataset {:mvn/version "5.05"}
+
         }
  :aliases {
+           :test {:extra-deps {clj-djl/clj-djl            {:mvn/version "0.1.5"}
+                               scicloj/notespace          {:mvn/version "3-beta5"}
+                               scicloj/sklearn-clj        {:mvn/version "0.3.0"}}}
            :uberjar {:replace-deps {com.github.seancorfield/depstar {:mvn/version "2.0.193"}}
                      :exec-fn hf.depstar/uberjar
                      :exec-args {:aot true}}

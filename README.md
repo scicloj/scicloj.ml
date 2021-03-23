@@ -9,6 +9,8 @@ Docu is here:
 * https://behrica.github.io/samskara/userguide-models.html
 * https://behrica.github.io/samskara/userguide-transformers.html
 * https://behrica.github.io/samskara/userguide-titanic.html
+* https://behrica.github.io/samskara/userguide-sklearnclj.html
+* https://behrica.github.io/samskara/userguide-cljdjl.html
 
 API documentation:
 https://behrica.github.io/samskara/
