@@ -1,5 +1,10 @@
 # samskara
 
+***Everything here is **alpha** status and might change without notice.***
+
+Nevertheless,  it will likely not diverge a lot from the reference projecs below, so it is worth to have a look at them
+for machine learning in Clojure.
+
 ## Documentation
 
 Proposal for a Clojure machine learning library
