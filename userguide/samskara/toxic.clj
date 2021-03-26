@@ -19,7 +19,7 @@
 
   )
 
-(def num-grid-points 20)
+(def num-grid-points 50)
 (def num-test-rows 159570)
 ;; (def num-test-rows 1000)
 
@@ -223,35 +223,3 @@
 
 
 (println "Finished")
-
-(comment
-  (require '[clojure.string :as str])
-  (def p
-    (ml/pipeline
-
-     (ml/lift str/upper-case)
-     (fn [ctx]
-       (println "mode-1" (:metamorph/mode ctx))
-       ctx)
-
-     (ml/pipeline
-      (ml/lift str/reverse)
-      (fn [ctx]
-        (println "mode-2" (:metamorph/mode ctx))
-        ctx))
-
-     (fn [ctx]
-       (println "mode-3" (:metamorph/mode ctx))
-       ctx
-       )))
-
-  (def q
-    (ml/pipeline
-     p
-     )
-    )
-
-  (p {:metamorph/data "low" :metamorph/mode :fit})
-  (q {:metamorph/data "low"})
-
-  )

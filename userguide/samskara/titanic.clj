@@ -15,13 +15,14 @@
   )
 
 
-;; (require '[samskara.dataset :as ds])
+(require '[samskara.dataset :as ds])
 (require '[samskara.ml :as ml]
          '[samskara.metamorph :as mm]
-         '[samskara.dataset :refer [dataset add-column] ]
+         ;; '[samskara.dataset :refer [dataset add-column] ]
          '[camel-snake-kebab.core :as csk]
          '[scicloj.metamorph.ml.loss :as loss]
          '[clojure.string :as str]
+         '[samskara.metamorph :as morph]
          )
 
 
@@ -29,7 +30,7 @@
 
 [" In this example, we will train a model which is able to predict the survival of passengers from the Titanic dataset."
  "In a real analysis, this would contain as well explorative analysis of the data, which I will skip here,
-as the purpose is to showcase machine learninig with Samskara, which is about model evaluation and selection."
+as the purpose is to showcase machine learning with Samskara, which is about model evaluation and selection."
  ]
 
 
@@ -50,11 +51,12 @@ as the purpose is to showcase machine learninig with Samskara, which is about mo
                                                                :split-names [:train-val :test]}
                                                       )))
 
-["Create a sequence of train/test  (k-fold with k=5) splits used to evaluate the pipeline."]
+["Create a sequence of train/test  (k-fold with k=10) splits used to evaluate the pipeline."]
 (def train-val-splits
     (ds/split->seq
      (:train-val ds-split)
      :kfold
+     {:k 10}
 
      ))
 
@@ -83,7 +85,7 @@ which is a typical case of feature engineering."]
 ["The pipeline definition"]
 
 (def pipeline-fn
-  (morph/pipeline
+  (ml/pipeline
    (mm/select-columns [:survived :pclass :name :sex :age])
 
    ;; included th custom function via lifting in the pipeline
@@ -114,8 +116,8 @@ which is a typical case of feature engineering."]
    :accuracy))
 
 
-["The default k-fold splits makes 5 folds,
-so we train 5 models, each having its own loss."]
+["The default k-fold splits makes 10 folds,
+so we train 10 models, each having its own loss."]
 
 ["The `evaluate-pipelines` fn averages the models per pipe-fn,
 and returns the best.
@@ -137,28 +139,29 @@ which `model` function is in the pipeline"]
 
 (def models
   (->> evaluations
+       flatten
        (map
-        #(hash-map :model (ml/thaw-model (get-in % [:fitted-ctx :model]))
-                   :mean (:mean %)
-                   :fitted-ctx (:fitted-ctx %)
-                   :data (get-in % [:fitted-ctx :metamorph/data])))
+        #(hash-map :model (ml/thaw-model (get-in % [:fit-ctx :model]))
+                   :metric (:metric %)
+                   :fit-ctx (:fit-ctx %)
+                   ;; :data (get-in % [:fit-ctx :metamorph/data])
+                   ))
        (sort-by :mean)
        reverse))
 
 
-["The 1 (best out of 5) trained model is:"]
-(map #(dissoc % :data :fitted-ctx) models)
+["The accuracy of the 10 trained model is:"]
+(map #(dissoc % :data :fit-ctx) models)
 
 ["The one with the highest accuracy is then:"]
 (:model (first models))
 
- ["with a mean accuracy of :"]
+ ["with a  accuracy of :"]
+(:metric (first models))
 
-(:mean (first models))
-
-["The pre-processed data is:"]
-^kind/dataset-grid
-(:data (first models))
+;; ["The pre-processed data is:"]
+;; ^kind/dataset-grid
+;; (:data (first models))
 
 
 
@@ -172,7 +175,7 @@ the posterior probabilities per class."]
   (->
    (pipeline-fn
     (assoc
-     (:fitted-ctx (first models))
+     (:fit-ctx (first models))
      :metamorph/data (:test ds-split)
      :metamorph/mode :transform))
    :metamorph/data))
@@ -222,8 +225,8 @@ This is an example how pipeline-options can be grid searched in the same way the
 
   (ml/pipeline
    (if (:use-age? options)
-     (tc-mm/select-columns [:survived :pclass :name :sex :age])
-     (tc-mm/select-columns [:survived :pclass :name :sex])
+     (mm/select-columns [:survived :pclass :name :sex :age])
+     (mm/select-columns [:survived :pclass :name :sex])
      )
    (ml/lift name->title)
    (mm/categorical->number [:survived :pclass :sex :title])
@@ -264,7 +267,7 @@ which cover in a smart way the hyper-parameter space."]
    train-val-splits
    ml/classification-accuracy
    :accuracy
-   100
+
    ))
 
 ["Get the key information from the evaluations and sort by the metric function used,
@@ -272,12 +275,13 @@ which cover in a smart way the hyper-parameter space."]
 
 (def models
   (->> evaluations
+       flatten
        (map
         #(assoc
-          (select-keys % [:metric :mean :fitted-ctx])
-          :model (ml/thaw-model (get-in % [:fitted-ctx :model]))
-          :data (get-in % [:fitted-ctx :metamorph/data])))
-       (sort-by :mean)
+          (select-keys % [:metric :mean :fit-ctx])
+          :model (ml/thaw-model (get-in % [:fit-ctx :model]))
+          :data (get-in % [:fit-ctx :metamorph/data])))
+       (sort-by :metric)
        reverse))
 
 
@@ -291,4 +295,4 @@ which cover in a smart way the hyper-parameter space."]
   "and a mean accuracy of " (:mean best-model)]
 
 ["using options: "]
-(-> best-model :fitted-ctx :model :options)
+(-> best-model :fit-ctx :model :options)

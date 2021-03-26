@@ -278,9 +278,9 @@ which wil make a prediction "]
    (mm/set-inference-target :Score)
    (mm/select-columns [:bow-sparse :Score])
    (fn [ctx]
-     (let [p (-> ctx :tech.v3.libs.smile.metamorph/count-vectorize-vocabulary
-                 :vocab
-                 count
+     (let [p (-> ctx :tech.v3.libs.smile.metamorph/bow->sparse-vocabulary
+                  :vocab
+                  count
                  )]
        ((mm/model {:p p
                    :model-type :smile.classification/maxent-multinomial
