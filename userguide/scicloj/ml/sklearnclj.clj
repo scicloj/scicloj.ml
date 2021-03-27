@@ -1,9 +1,9 @@
-(ns samskara.sklearnclj
+(ns scicloj.ml.sklearnclj
   (:require
    [notespace.api :as note]
    [notespace.kinds :as kind]
    [scicloj.sklearn-clj.ml]
-   [samskara.ug-utils :refer :all])
+   [scicloj.ml.ug-utils :refer :all])
   )
 
 (comment
@@ -69,3 +69,4 @@
     (def end (time)))
 
 (- end start)
+)

@@ -2,7 +2,7 @@
 
 ***Everything here is **alpha** status and might change without notice.***
 
-Nevertheless,  it will likely not diverge a lot from the reference projecs below, so it is worth to have a look at them
+Nevertheless,  it will likely not diverge a lot from the reference projetcs below, so it is worth to have a look at them
 for machine learning in Clojure.
 
 ## Documentation
@@ -10,12 +10,12 @@ for machine learning in Clojure.
 Proposal for a Clojure machine learning library
 
 Docu is here:
-* https://behrica.github.io/samskara/userguide-intro.html
-* https://behrica.github.io/samskara/userguide-models.html
-* https://behrica.github.io/samskara/userguide-transformers.html
-* https://behrica.github.io/samskara/userguide-titanic.html
-* https://behrica.github.io/samskara/userguide-sklearnclj.html
-* https://behrica.github.io/samskara/userguide-cljdjl.html
+* https://scicloj.github.io/scicloj.ml/userguide-intro.html
+* https://scicloj.github.io/scicloj.ml/userguide-models.html
+* https://scicloj.github.io/scicloj.ml/userguide-transformers.html
+* https://scicloj.github.io/scicloj.ml/userguide-titanic.html
+* https://scicloj.github.io/scicloj.ml/userguide-sklearnclj.html
+* https://scicloj.github.io/scicloj.ml/userguide-cljdjl.html
 
 API documentation:
 https://behrica.github.io/samskara/

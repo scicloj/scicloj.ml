@@ -1,4 +1,4 @@
-(ns samskara.cljdjl
+(ns scicloj.ml.cljdjl
 
 (:require
    [notespace.api :as note]
@@ -18,9 +18,9 @@
 
 (require '[clj-djl.mmml])
 
-(require '[samskara.ml :as ml]
-         '[samskara.metamorph :as mm]
-         '[samskara.dataset  :as ds]
+(require '[scicloj.ml.core :as ml]
+         '[scicloj.ml.metamorph :as mm]
+         '[scicloj.ml.dataset  :as ds]
          '[tech.v3.datatype.functional :as dfn]
          )
 

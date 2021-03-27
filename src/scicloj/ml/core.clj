@@ -1,4 +1,4 @@
-(ns samskara.ml
+(ns scicloj.ml.core
   "Core functions for machine learninig.
 
   Functions are re-exported from:
@@ -9,7 +9,7 @@
   "
   (:refer-clojure :exclude [boolean concat drop first group-by last rand-nth shuffle])
   (:require [tech.v3.datatype.export-symbols :as exporter]
-            [samskara.utils :refer :all]
+            [scicloj.ml.utils :refer :all]
             [scicloj.metamorph.core]
             [scicloj.metamorph.ml]
             [scicloj.metamorph.ml.loss]

@@ -16,7 +16,7 @@ clj-python/libpython-clj {:mvn/version "2.00-beta-12"}
            ;; build a jar (library):
            :jar {:replace-deps {com.github.seancorfield/depstar {:mvn/version "2.0.193"}}
                  :exec-fn hf.depstar/jar
-                 :exec-args {:jar "samskara.jar"}}
+                 :exec-args {:jar "scicloj.ml.jar"}}
            ;; generic depstar alias, use with jar or uberjar function name:
            :depstar {:replace-deps {com.github.seancorfield/depstar {:mvn/version "2.0.193"}}
                      :ns-default hf.depstar
@@ -26,7 +26,7 @@ clj-python/libpython-clj {:mvn/version "2.00-beta-12"}
                      :exec-fn deps-deploy.deps-deploy/deploy
                      :exec-args {:installer :local
 
-                                 :artifact "samskara.jar"}
+                                 :artifact "scicloj.ml.jar"}
                      }
            :codox {:extra-deps {codox/codox {:mvn/version "0.10.7" :exclusions [org.ow2.asm/asm-all]}
                                 codox-theme-rdash/codox-theme-rdash {:mvn/version "0.1.2"}

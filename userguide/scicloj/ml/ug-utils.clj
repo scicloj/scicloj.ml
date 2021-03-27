@@ -1,17 +1,17 @@
-(ns samskara.ug-utils
+(ns scicloj.ml.ug-utils
   (:require [clojure.string :as str]
             [notespace.kinds :as kind]
             [notespace.view :as view]
-            samskara.ml
+            [scicloj.ml.core]
             [tablecloth.api :as tc]))
 
 (def model-keys
-  (keys @samskara.ml/model-definitions*))
+  (keys @scicloj.ml.core/model-definitions*))
 
 (def model-options
   (map
    :options
-   (vals @samskara.ml/model-definitions*)))
+   (vals @scicloj.ml.core/model-definitions*)))
 
 
 (defmethod kind/kind->behaviour ::dataset-nocode
@@ -22,7 +22,7 @@
 (defn docu-options [model-key]
   (kind/override
    (tc/dataset
-    (get-in @samskara.ml/model-definitions* [model-key :options] ))
+    (get-in @scicloj.ml.core/model-definitions* [model-key :options] ))
    ::dataset-nocode
    )
   )
@@ -38,7 +38,7 @@
 (defn docu-doc-string [model-key]
   (text->hiccup
    (or
-    (get-in @samskara.ml/model-definitions* [model-key :documentation :doc-string] )
+    (get-in @scicloj.ml.core/model-definitions* [model-key :documentation :doc-string] )
     ""
     )
 
@@ -52,8 +52,9 @@
      [:a {:href x} text]]
     )
   )
+
 (defn render-key-info [prefix]
-  (->> @samskara.ml/model-definitions*
+  (->> @scicloj.ml.core/model-definitions*
        (sort-by first)
        (filter #(str/starts-with? (first %) prefix ))
        (map

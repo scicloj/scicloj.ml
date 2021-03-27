@@ -1,4 +1,4 @@
-(ns samskara.metamorph
+(ns scicloj.ml.metamorph
   "This namespace contains functions, which operate on a metamorph context.
   They all return the context as well.
 
@@ -38,7 +38,7 @@
  " 
   (:refer-clojure :exclude [boolean concat drop first group-by last rand-nth shuffle filter sort-by update take-nth])
   (:require [tech.v3.datatype.export-symbols :as exporter]
-            [samskara.utils :refer :all]
+            [scicloj.ml.utils :refer :all]
             [tablecloth.pipeline]
             [tech.v3.dataset.metamorph]
             [tech.v3.libs.smile.nlp]

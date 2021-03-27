@@ -1,4 +1,4 @@
-(ns samskara.toxic
+(ns scicloj.ml.toxic
 (:require
    [notespace.api :as note]
    [notespace.kinds :as kind ])
@@ -19,15 +19,15 @@
 
   )
 
-(def num-grid-points 50)
-(def num-test-rows 159570)
+(def num-grid-points 1)
+(def num-test-rows 1000)
 ;; (def num-test-rows 1000)
 
 
-(require '[samskara.ml :as ml]
+(require '[scicloj.ml.core :as ml]
          '[scicloj.metamorph.ml.gridsearch :as gs]
-         '[samskara.metamorph :as mm]
-         '[samskara.dataset :as ds]
+         '[scicloj.ml.metamorph :as mm]
+         '[scicloj.ml.dataset :as ds]
          '[scicloj.metamorph.ml.loss :as loss]
          '[tech.v3.libs.smile.nlp :as nlp]
          '[pppmap.core :as ppp]

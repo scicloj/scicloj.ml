@@ -1,4 +1,4 @@
-(ns samskara.intro
+(ns scicloj.ml.intro
   (:require
    [notespace.api :as note]
    [notespace.kinds :as kind ]))
@@ -90,7 +90,7 @@ the concept of running a pipeline"]
 So they can be chained together with the pipe (`->`) operator of Clojure,
  example:"]
 
-(require '[samskara.dataset :as ds])
+(require '[scicloj.ml.dataset :as ds])
 (def my-data
   (-> (ds/dataset "https://raw.githubusercontent.com/techascent/tech.ml.dataset/master/test/data/stocks.csv" {:key-fn keyword})
       (ds/select-columns [:symbol :price])
@@ -177,9 +177,9 @@ in three simple namespaces.
 
 ["To start we need to require a few namespaces"]
 
-(require '[samskara.ml :as ml]
-         '[samskara.metamorph :as mm]
-         '[samskara.dataset :refer [dataset add-column] ]
+(require '[scicloj.ml.core :as ml]
+         '[scicloj.ml.metamorph :as mm]
+         '[scicloj.ml.dataset :refer [dataset add-column] ]
          )
 ["First we load the data."]
 (def titanic-train

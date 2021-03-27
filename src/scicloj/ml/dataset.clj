@@ -1,4 +1,4 @@
-(ns samskara.dataset
+(ns scicloj.ml.dataset
   "
   This namespace contains functions which operate on a dataset
   and mostly return a dataset.
@@ -15,7 +15,7 @@
 "
   (:refer-clojure :exclude [boolean concat drop first group-by last rand-nth shuffle])
   (:require [tech.v3.datatype.export-symbols :as exporter]
-            [samskara.utils :refer :all]
+            [scicloj.ml.utils :refer :all]
             [tech.v3.dataset.modelling]
             [tech.v3.dataset.column-filters]
             [tablecloth.api]

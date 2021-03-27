@@ -1,14 +1,13 @@
-(ns samskara.models
+(ns scicloj.ml.models
 (:require
  [notespace.api :as note]
  [notespace.kinds :as kind ]
  [notespace.view :as view]
  [tablecloth.api :as tc]
- [samskara.ml]
+ [scicloj.ml.core]
  [scicloj.sklearn-clj.ml]
  [clojure.string :as str]
- [samskara.utils :refer :all]
- ))
+ [scicloj.ml.ug-utils :refer :all]))
 
 
 ^kind/hidden

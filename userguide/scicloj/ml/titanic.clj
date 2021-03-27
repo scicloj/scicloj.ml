@@ -1,4 +1,4 @@
-(ns samskara.titanic
+(ns scicloj.ml.titanic
   (:require
    [notespace.api :as note]
    [notespace.kinds :as kind ]))
@@ -15,14 +15,13 @@
   )
 
 
-(require '[samskara.dataset :as ds])
-(require '[samskara.ml :as ml]
-         '[samskara.metamorph :as mm]
+(require '[scicloj.ml.dataset :as ds])
+(require '[scicloj.ml.core :as ml]
+         '[scicloj.ml.metamorph :as mm]
          ;; '[samskara.dataset :refer [dataset add-column] ]
          '[camel-snake-kebab.core :as csk]
          '[scicloj.metamorph.ml.loss :as loss]
          '[clojure.string :as str]
-         '[samskara.metamorph :as morph]
          )
 
 

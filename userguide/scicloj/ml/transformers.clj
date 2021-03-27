@@ -1,8 +1,8 @@
-(ns samskara.transformers
+(ns scicloj.ml.transformers
   (:require
    [notespace.api :as note]
    [notespace.kinds :as kind]
-   [samskara.metamorph :as mm]
+   [scicloj.ml.metamorph :as mm]
    )
   )
 
@@ -12,7 +12,7 @@
   (notespace.api/update-config
    #(assoc % :source-base-path "userguide"))
   (note/eval-this-notespace)
-  (note/render-static-html "docs/userguide-transformers.html")
+  (note/render-static-html "docs/userguide-transformers.html") /
   )
 
 (defn docu-fn [v]

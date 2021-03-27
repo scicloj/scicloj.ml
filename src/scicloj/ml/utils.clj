@@ -1,4 +1,4 @@
-(ns samskara.utils)
+(ns scicloj.ml.utils)
 
 
 (defn ns-symbols [ns except]
