@@ -1,5 +1,7 @@
 # scicloj.ml
 
+Proposal for a Clojure machine learning library.
+
 ***Everything here is **alpha** status and might change without notice.***
 
 Nevertheless,  it will likely not diverge a lot from the reference projets below, so it is worth to have a look at them
@@ -7,7 +9,6 @@ for machine learning in Clojure.
 
 ## Documentation
 
-Proposal for a Clojure machine learning library
 
 Docu is here:
 * https://scicloj.github.io/scicloj.ml/userguide-intro.html
