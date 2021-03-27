@@ -2,7 +2,7 @@
 
 ***Everything here is **alpha** status and might change without notice.***
 
-Nevertheless,  it will likely not diverge a lot from the reference projetcs below, so it is worth to have a look at them
+Nevertheless,  it will likely not diverge a lot from the reference projets below, so it is worth to have a look at them
 for machine learning in Clojure.
 
 ## Documentation
