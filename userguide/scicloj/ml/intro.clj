@@ -12,11 +12,8 @@
   (note/eval-this-notespace)
   (note/reread-this-notespace)
   (note/render-static-html "docs/userguide-intro.html")
-  (note/init)
+  (note/init) )
 
-
-
-  )
 
 ["# Clojure and machine learning "]
 
