@@ -41,12 +41,12 @@
             [scicloj.ml.utils :refer :all]
             [tablecloth.pipeline]
             [tech.v3.dataset.metamorph]
-            [tech.v3.libs.smile.nlp]
+            [scicloj.ml.smile.nlp]
             [scicloj.metamorph.ml]
             )
   )
 
-(exporter/export-symbols tech.v3.libs.smile.metamorph
+(exporter/export-symbols scicloj.ml.smile.metamorph
                          count-vectorize
                          bow->sparse-array
                          bow->SparseArray
@@ -58,7 +58,8 @@
                          model
                          )
 
-(-> 'tech.v3.libs.smile.nlp ns-publics keys sort)
+
+
 (export-all [tech.v3.dataset.metamorph
              tablecloth.pipeline
 

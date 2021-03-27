@@ -261,33 +261,42 @@ which wil make a prediction "]
 
 
 ["## More advanced use case, as we need to pass the vocab size betweenn steps"]
+["Not working yet"]
 
+(comment
+  (def reviews
+    (ds/dataset "https://github.com/scicloj/metamorph-examples/raw/main/data/reviews.csv.gz"
+                {:key-fn keyword}))
+  (def reviews-split
+    (first
+     (ds/split->seq reviews :holdout)))
 
-(def reviews
-  (ds/dataset "https://github.com/scicloj/metamorph-examples/raw/main/data/reviews.csv.gz"
-              {:key-fn keyword}))
-(def reviews-split
-  (first
-   (ds/split->seq reviews :holdout)))
+  (def pipe-fn
+    (ml/pipeline
+     (mm/select-columns [:Text :Score ])
+     (mm/count-vectorize :Text :bow)
+     (mm/bow->sparse-array :bow :bow-sparse)
+     (mm/set-inference-target :Score)
+     (mm/select-columns [:bow-sparse :Score])
+     ;; This looks ugly...
+     ;; It takes key :scicloj.ml.smile.metamorph/bow->sparse-vocabulary
+     ;; from ctx and sets it in the next step
+     (fn [ctx]
+       (let [p (-> ctx :scicloj.ml.smile.metamorph/bow->sparse-vocabulary
+                   :vocab
+                   count
+                   )]
+         ((mm/model {:p p
+                     :model-type :smile.classification/maxent-multinomial
+                     :sparse-column :bow-sparse})
+          ctx)
+         )
+       ctx
+       )
+     ))
 
-(def pipe-fn
-  (ml/pipeline
-   (mm/select-columns [:Text :Score ])
-   (mm/count-vectorize :Text :bow)
-   (mm/bow->sparse-array :bow :bow-sparse)
-   (mm/set-inference-target :Score)
-   (mm/select-columns [:bow-sparse :Score])
-   (fn [ctx]
-     (let [p (-> ctx :tech.v3.libs.smile.metamorph/bow->sparse-vocabulary
-                  :vocab
-                  count
-                 )]
-       ((mm/model {:p p
-                   :model-type :smile.classification/maxent-multinomial
-                   :sparse-column :bow-sparse})
-        ctx)))
-   ))
+  (def trained-ctx
+    (pipe-fn {:metamorph/data (:train reviews-split)
+              :metamorph/mode :fit}))
 
-(def trained-ctx
-  (pipe-fn {:metamorph/data (:train reviews-split)
-            :metamorph/mode :fit}))
+  )

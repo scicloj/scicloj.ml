@@ -14,15 +14,14 @@
             [scicloj.metamorph.ml]
             [scicloj.metamorph.ml.loss]
             [scicloj.metamorph.ml.gridsearch]
-            [scicloj.metamorph.ml.classification]
 
             ))
 
 
 ;; register models
-(require '[tech.v3.libs.smile.classification]
-         '[tech.v3.libs.smile.regression]
-         '[tech.v3.libs.xgboost]
+(require '[scicloj.ml.smile.classification]
+         '[scicloj.ml.smile.regression]
+         '[scicloj.ml.xgboost]
          )
 
 ;; (scicloj.metamorph.ml/)

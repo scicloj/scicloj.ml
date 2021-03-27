@@ -2,14 +2,14 @@
         scicloj/scicloj.ml.smile   {:mvn/version "5.02"}
         scicloj/scicloj.ml.xgboost {:mvn/version "5.02"}
         scicloj/tablecloth         {:mvn/version "5.05.1" :exclusions [ch.qos.logback/logback-classic]}
-        ;; techascent/tech.ml.dataset {:mvn/version "5.05"}
-clj-python/libpython-clj {:mvn/version "2.00-beta-12"}
         }
  :aliases {
-           :test {:extra-deps {clj-djl/clj-djl                {:mvn/version "0.1.5" :exclusions [org.slf4j/slf4j-simple]}
+           :test {:extra-deps {clj-djl/clj-djl {:mvn/version "0.1.5" :exclusions [org.slf4j/slf4j-simple]}
                                ch.qos.logback/logback-classic {:mvn/version "1.2.3"}
-                               scicloj/notespace              {:mvn/version "3-beta5"}
-                               scicloj/sklearn-clj            {:mvn/version "0.3.0"}}}
+                               scicloj/notespace {:mvn/version "3-beta5"}
+                               scicloj/sklearn-clj {:mvn/version "0.3.0"}}
+                               clj-python/libpython-clj {:mvn/version "2.00-beta-12"}
+                  }
            :uberjar {:replace-deps {com.github.seancorfield/depstar {:mvn/version "2.0.193"}}
                      :exec-fn hf.depstar/uberjar
                      :exec-args {:aot true}}
