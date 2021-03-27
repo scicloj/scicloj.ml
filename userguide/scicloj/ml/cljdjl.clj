@@ -38,12 +38,9 @@
 
   )
 
-(count test-ds)
 (defn numeric-features [ds]
-  (def ds ds)
   (ds/intersection (ds/numeric ds)
                    (ds/feature ds))
-
   )
 
 (defn update-columns
