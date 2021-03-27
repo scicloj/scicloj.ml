@@ -1,4 +1,4 @@
-# samskara
+# scicloj.ml
 
 ***Everything here is **alpha** status and might change without notice.***
 
@@ -18,10 +18,10 @@ Docu is here:
 * https://scicloj.github.io/scicloj.ml/userguide-cljdjl.html
 
 API documentation:
-https://behrica.github.io/samskara/
+https://scicloj.github.io/scicloj.ml
 
 
-## Reference to projects Samskara is using/based on:
+## Reference to projects scicloj.ml is using/based on:
 
 * https://github.com/techascent/tech.ml
 * https://github.com/scicloj/tablecloth

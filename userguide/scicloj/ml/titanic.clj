@@ -29,7 +29,7 @@
 
 [" In this example, we will train a model which is able to predict the survival of passengers from the Titanic dataset."
  "In a real analysis, this would contain as well explorative analysis of the data, which I will skip here,
-as the purpose is to showcase machine learning with Samskara, which is about model evaluation and selection."
+as the purpose is to showcase machine learning with scicloj.ml, which is about model evaluation and selection."
  ]
 
 

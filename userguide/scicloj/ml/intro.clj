@@ -51,7 +51,7 @@ but lacks consistency in some parts.
 ["So we have now a very reliable, mature, easy to use library to store and manipulate tabular data, including text."]
 
 ["## Models"]
-["Models are the core of most machine learning libraries. In Samskara we
+["Models are the core of most machine learning libraries. In scicloj.ml we
  rely on an common **abstraction** for all
 machine learning models and one Java library [Smile](https://github.com/haifengl/smile) providing models,
 which we bridge into Clojure via the abstraction.
@@ -59,7 +59,7 @@ So we use Java models internally, but without the need for Java
 interop by the user.
 
 Documentation for existing models is appearing here:
-https://behrica.github.io/samskara/userguide-models.html
+https://scicloj.github.io/scicloj.ml/userguide-models.html
 
 The abstraction is independent from Smile, so we could makes bridges to other libraries, even in non JVM languages (python, R)
 
@@ -121,12 +121,12 @@ regarding input and output, as explained here: https://github.com/scicloj/metamo
 namespace. All functions of the `tablecloth.api` namespace are replicated
 there, but metamorph compliant"]
 
-["## Samskara"]
+["## scicloj.ml"]
 
 ["The Clojure ML ecosystem is based on different libraries working
 together, as typic and idiomatic in Clojure"]
 
-["Some existing ibraries are used internally in Samskara, to create a
+["Some existing ibraries are used internally in scicloj.ml, to create a
 complete machine learning library, but this is hidden from the user,
 and is listed here only for completeness."]
 
@@ -139,24 +139,24 @@ and is listed here only for completeness."]
 
 
 ["These libraries can be used standalone as well. `tech.ml` was changed  in order
-to work with Samskara in a incompatible way.
+to work with scicloj.ml in a incompatible way.
 So it will be re-released under a different name.
-The others can be used by Samskara without any change.
+The others can be used by scicloj.ml without any change.
  "]
 
 
-["In order to give easier access to the various libraries, the Samskara
+["In order to give easier access to the various libraries, the scicloj.ml
  library was created.It unifies the access to the libraries above
 in three simple namespaces.
 "]
 
-["## Machine learning using Samskara"]
+["## Machine learning using scicloj.ml"]
 
 ["The setup for the following code needs a single dependencies in deps.edn or project.clj"]
 
 ["
 {:deps {
-        samskara/samskara {:mvn/version \"0.1.0\"}} }
+        scicloj/scicloj.ml {:mvn/version \"0.1.0\"}} }
 "]
 
 
@@ -165,11 +165,11 @@ in three simple namespaces.
 ^kind/md-nocode
 ["
 
-| namespace           | purpose                                                  |
-|---------------------|----------------------------------------------------------|
-| samskara.ml         | core functionality for machine learning                  |
-| samskara.dataset    | functions to manipulate a dataset                        |
-| samskara.methamorph | metamorph compliant functions to be used in ml pipelines |
+| namespace             | purpose                                                  |
+|-----------------------|----------------------------------------------------------|
+| scicloj.ml.core       | core functionality for machine learning                  |
+| scicloj.ml.dataset    | functions to manipulate a dataset                        |
+| scicloj.ml.methamorph | metamorph compliant functions to be used in ml pipelines |
 
  "]
 
@@ -196,13 +196,13 @@ in three simple namespaces.
    (ds/add-column :Survived ["0"])))
 
 ["Then we define the pipeline and it steps. Inside the pipeline we only use functions
-from namespace samskara.metamorph"]
+from namespace scicloj.ml.metamorph"]
 
-["In Samskara the model functions receives a single dataset,
+["In scicloj.ml the model functions receives a single dataset,
 in which the inference target column is marked as such."
 
  "The model to use is a parameter of the `model` function. All built-in
-models are listed here: https://behrica.github.io/samskara/userguide-models.html"
+models are listed here: https://scicloj.github.io/scicloj.ml/userguide-models.html"
 
 
  ]
@@ -238,7 +238,7 @@ which wil make a prediction "]
 ^kind/dataset
 (:metamorph/data test-ctx)
 
-["The documentation of `mm/model` here https://behrica.github.io/samskara/samskara.metamorph.html#var-model"
+["The documentation of `mm/model` here https://scicloj.github.io/scicloj.ml/scicloj.ml.metamorph.html#var-model"
  "documents this special behavior of the function" ]
 
 

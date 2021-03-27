@@ -24,7 +24,7 @@
 
 
 
-  The namespaces samskara.metamorph and samskara.ml.dataset contain
+  The namespaces scicloj.ml.metamorph and scicloj.ml.dataset contain
   functions with the same name. But they operate on either a context
   map (ns metamorph) or on a dataset (ns dataset)
 
