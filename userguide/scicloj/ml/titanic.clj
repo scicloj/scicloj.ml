@@ -15,14 +15,12 @@
   )
 
 
-(require '[scicloj.ml.dataset :as ds])
-(require '[scicloj.ml.core :as ml]
+(require '[scicloj.ml.dataset :as ds]
+         '[scicloj.ml.core :as ml]
          '[scicloj.ml.metamorph :as mm]
-         ;; '[samskara.dataset :refer [dataset add-column] ]
          '[camel-snake-kebab.core :as csk]
          '[scicloj.metamorph.ml.loss :as loss]
-         '[clojure.string :as str]
-         )
+         '[clojure.string :as str])
 
 
 ["## Introduction "]
@@ -55,9 +53,7 @@ as the purpose is to showcase machine learning with scicloj.ml, which is about m
     (ds/split->seq
      (:train-val ds-split)
      :kfold
-     {:k 10}
-
-     ))
+     {:k 10}))
 
 
 
@@ -93,14 +89,6 @@ which is a typical case of feature engineering."]
    (mm/categorical->number [:survived :pclass :sex :title])
    (mm/set-inference-target :survived)
 
-   ;; this key in the data is required by the function
-   ;; scicloj.metamorph.ml/evaluate-pipeline
-   ;; and need to contain the target variable (the truth)
-   ;; as a dataset
-   (fn [ctx]
-     (assoc ctx
-            :scicloj.metamorph.ml/target-ds (ds/target (:metamorph/data ctx))))
-
    ;; we overwrite the id, so the model function will store
    ;; it's output (the model) in the pipeline ctx under key :model
    {:metamorph/id :model}
@@ -124,11 +112,14 @@ So we get a single model back, as we only have one pipe fn"]
 
 ["Often we consider the model with the lowest loss to be the best."]
 
-["The evaluation results contains all data sets for test and prediction
-, all models, and the loss
-for each cross validation"]
+["Return a single model only (as a list of 1) , namely the best over all
+ pipeline functions
+and all cross validations is the default behavoiur, but can be changed
+with the `tune options`."]
 
-["`tech.ml` stores the models ion the context in a serialzed form,
+["They controll as well which information is returned."]
+
+["`tech.ml` stores the models in the context in a serialzed form,
 and the function `thaw-model` can be used to get the original model back.
 This is a Java class in the case of
  model :smile.classification/random.forest, but this depends on the
@@ -143,25 +134,16 @@ which `model` function is in the pipeline"]
         #(hash-map :model (ml/thaw-model (get-in % [:fit-ctx :model]))
                    :metric (:metric %)
                    :fit-ctx (:fit-ctx %)
-                   ;; :data (get-in % [:fit-ctx :metamorph/data])
                    ))
        (sort-by :mean)
        reverse))
 
 
-["The accuracy of the 10 trained model is:"]
-(map #(dissoc % :data :fit-ctx) models)
+["The accuracy of the best trained model is:"]
+(-> models first :metric )
 
 ["The one with the highest accuracy is then:"]
-(:model (first models))
-
- ["with a  accuracy of :"]
-(:metric (first models))
-
-;; ["The pre-processed data is:"]
-;; ^kind/dataset-grid
-;; (:data (first models))
-
+(-> models first :model )
 
 
 ["We can get the predictions on new-data, which for classification contain as well
@@ -230,12 +212,6 @@ This is an example how pipeline-options can be grid searched in the same way the
    (ml/lift name->title)
    (mm/categorical->number [:survived :pclass :sex :title])
    (mm/set-inference-target :survived)
-   (fn [ctx]
-     (assoc ctx
-            :scicloj.metamorph.ml/target-ds (ds/target (:metamorph/data ctx))))
-   ;; any plain map in a pipeline definition get merged into the context
-   ;; this is used here to configure the if for the next step
-   ;; so the id can be set by the user
    {:metamorph/id :model}
    (mm/model
     (merge options
@@ -259,14 +235,18 @@ which cover in a smart way the hyper-parameter space."]
 (def pipeline-fns (map make-pipeline-fn search-grid))
 
 
-["Evaluate all 10 pipelines"]
+["Evaluate all 10 pipelines and keep results"]
 (def evaluations
   (ml/evaluate-pipelines
    pipeline-fns
    train-val-splits
    ml/classification-accuracy
    :accuracy
-
+   {:keep-best-pipeline-only false
+    :keep-best-cross-validation-only false
+    :map-fn :pmap
+    :result-dissoc-seq []
+    }
    ))
 
 ["Get the key information from the evaluations and sort by the metric function used,
@@ -277,21 +257,21 @@ which cover in a smart way the hyper-parameter space."]
        flatten
        (map
         #(assoc
-          (select-keys % [:metric :mean :fit-ctx])
-          :model (ml/thaw-model (get-in % [:fit-ctx :model]))
-          :data (get-in % [:fit-ctx :metamorph/data])))
+          (select-keys % [:metric :fit-ctx])
+          :model (ml/thaw-model (get-in % [:fit-ctx :model]))))
        (sort-by :metric)
        reverse))
 
+["As we did 10 pipelines and 10 fold cross validation, we have 100 models ttrained in total "]
+(count models)
 
-["As we sorted by mean accuracy, the first evaluation result is te best model,"]
+["As we sorted by mean accuracy, the first evaluation result is the best model,"]
 (def best-model (first models))
 
 ["which is: "]
 (:model best-model)
 
- ["with a accuracy of "  (:metric best-model)
-  "and a mean accuracy of " (:mean best-model)]
+["with a accuracy of "  (:metric best-model)]
 
 ["using options: "]
 (-> best-model :fit-ctx :model :options)
