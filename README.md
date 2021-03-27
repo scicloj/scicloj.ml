@@ -18,6 +18,11 @@ Docu is here:
 * https://scicloj.github.io/scicloj.ml/userguide-sklearnclj.html
 * https://scicloj.github.io/scicloj.ml/userguide-cljdjl.html
 
+which is based on notespace files in here:
+https://github.com/scicloj/scicloj.ml/tree/main/userguide/scicloj/ml
+
+To run them, the alias "test" in deps.edn need to be activated via `clj -Atest` or similar
+
 API documentation:
 https://scicloj.github.io/scicloj.ml
 
