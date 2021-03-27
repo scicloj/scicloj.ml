@@ -1,6 +1,6 @@
 {:deps {scicloj/metamorph.ml       {:mvn/version "0.3.0-alpha3" }
-        techascent/tech.ml.smile   {:mvn/version "5.02-SNAPSHOT"}
-        techascent/tech.ml.xgboost {:mvn/version "5.02-SNAPSHOT"}
+        scicloj/scicloj.ml.smile   {:mvn/version "5.02"}
+        scicloj/scicloj.ml.xgboost {:mvn/version "5.02"}
         scicloj/tablecloth         {:mvn/version "5.05.1" :exclusions [ch.qos.logback/logback-classic]}
         ;; techascent/tech.ml.dataset {:mvn/version "5.05"}
 clj-python/libpython-clj {:mvn/version "2.00-beta-12"}
