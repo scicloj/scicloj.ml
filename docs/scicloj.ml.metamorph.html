@@ -31,7 +31,7 @@
     </tr>
   </tbody>
 </table>
-<p>The namespaces samskara.metamorph and samskara.ml.dataset contain functions with the same name. But they operate on either a context map (ns metamorph) or on a dataset (ns dataset)</p>
+<p>The namespaces scicloj.ml.metamorph and scicloj.ml.dataset contain functions with the same name. But they operate on either a context map (ns metamorph) or on a dataset (ns dataset)</p>
 <p>The functions in this namesspaces are re-exported from :</p>
 <ul>
   <li>tablecloth.pipeline</li>
@@ -68,7 +68,7 @@
     </tr>
     <tr>
       <td>Writes keys to ctx </td>
-      <td>:tech.v3.libs.smile.metamorph/bow-&gt;sparse-vocabulary</td>
+      <td>:scicloj.ml.smile.metamorph/bow-&gt;sparse-vocabulary</td>
     </tr>
   </tbody>
 </table></div></div></div><div class="public anchor" id="var-bow-.3Esparse-array"><h3>bow-&gt;sparse-array</h3><div class="usage"><code>(bow-&gt;sparse-array bow-col indices-col options)</code><code>(bow-&gt;sparse-array bow-col indices-col)</code></div><div class="doc"><div class="markdown"><p>Converts a bag-of-word column <code>bow-col</code> to sparse indices column <code>indices-col</code>,  as needed by the Maxent model.  <code>vocab size</code> is the size of vocabluary used, sorted by token frequency</p>
@@ -94,7 +94,7 @@
     </tr>
     <tr>
       <td>Writes keys to ctx </td>
-      <td>:tech.v3.libs.smile.metamorph/count-vectorize-vocabulary</td>
+      <td>:scicloj.ml.smile.metamorph/count-vectorize-vocabulary</td>
     </tr>
   </tbody>
 </table></div></div></div><div class="public anchor" id="var-bow-.3ESparseArray"><h3>bow-&gt;SparseArray</h3><div class="usage"><code>(bow-&gt;SparseArray bow-col indices-col options)</code><code>(bow-&gt;SparseArray bow-col indices-col)</code></div><div class="doc"><div class="markdown"><p>Converts a bag-of-word column <code>bow-col</code> to sparse indices column <code>indices-col</code>,  as needed by the discrete naive bayes model. <code>vocab size</code> is the size of vocabluary used, sorted by token frequency</p>
@@ -120,7 +120,7 @@
     </tr>
     <tr>
       <td>Writes keys to ctx </td>
-      <td>:tech.v3.libs.smile.metamorph/count-vectorize-vocabulary</td>
+      <td>:scicloj.ml.smile.metamorph/count-vectorize-vocabulary</td>
     </tr>
   </tbody>
 </table></div></div></div><div class="public anchor" id="var-bow-.3Etfidf"><h3>bow-&gt;tfidf</h3><div class="usage"><code>(bow-&gt;tfidf bow-column tfidf-column)</code></div><div class="doc"><div class="markdown"><p>Calculates the tfidf score from bag-of-words (as token frequency maps)  in column <code>bow-column</code> and stores them in a new column <code>tfid-column</code> as maps of token-&gt;tfidf-score.</p>
@@ -213,7 +213,7 @@
 </ul></div></div></div><div class="public anchor" id="var-group-by-.3Eindexes"><h3>group-by-&gt;indexes</h3><div class="usage"><code>(group-by-&gt;indexes key-fn)</code></div><div class="doc"><div class="markdown"></div></div></div><div class="public anchor" id="var-group-by-column"><h3>group-by-column</h3><div class="usage"><code>(group-by-column colname)</code></div><div class="doc"><div class="markdown"></div></div></div><div class="public anchor" id="var-group-by-column-.3Eindexes"><h3>group-by-column-&gt;indexes</h3><div class="usage"><code>(group-by-column-&gt;indexes colname)</code></div><div class="doc"><div class="markdown"></div></div></div><div class="public anchor" id="var-grouped.3F"><h3>grouped?</h3><div class="usage"><code>(grouped?)</code></div><div class="doc"><div class="markdown"><p>Is <code>dataset</code> represents grouped dataset (result of <code>group-by</code>)?</p></div></div></div><div class="public anchor" id="var-groups-.3Emap"><h3>groups-&gt;map</h3><div class="usage"><code>(groups-&gt;map)</code></div><div class="doc"><div class="markdown"><p>Convert grouped dataset to the map of groups</p></div></div></div><div class="public anchor" id="var-groups-.3Eseq"><h3>groups-&gt;seq</h3><div class="usage"><code>(groups-&gt;seq)</code></div><div class="doc"><div class="markdown"></div></div></div><div class="public anchor" id="var-has-column.3F"><h3>has-column?</h3><div class="usage"><code>(has-column? column-name)</code></div><div class="doc"><div class="markdown"></div></div></div><div class="public anchor" id="var-head"><h3>head</h3><div class="usage"><code>(head)</code><code>(head n)</code></div><div class="doc"><div class="markdown"></div></div></div><div class="public anchor" id="var-inference-column.3F"><h3>inference-column?</h3><div class="usage"><code>(inference-column?)</code></div><div class="doc"><div class="markdown"></div></div></div><div class="public anchor" id="var-inference-target-column-names"><h3>inference-target-column-names</h3><div class="usage"><code>(inference-target-column-names)</code></div><div class="doc"><div class="markdown"></div></div></div><div class="public anchor" id="var-inference-target-ds"><h3>inference-target-ds</h3><div class="usage"><code>(inference-target-ds)</code></div><div class="doc"><div class="markdown"></div></div></div><div class="public anchor" id="var-inference-target-label-inverse-map"><h3>inference-target-label-inverse-map</h3><div class="usage"><code>(inference-target-label-inverse-map &amp; [label-columns])</code></div><div class="doc"><div class="markdown"></div></div></div><div class="public anchor" id="var-inference-target-label-map"><h3>inference-target-label-map</h3><div class="usage"><code>(inference-target-label-map &amp; [label-columns])</code></div><div class="doc"><div class="markdown"></div></div></div><div class="public anchor" id="var-info"><h3>info</h3><div class="usage"><code>(info)</code><code>(info result-type)</code></div><div class="doc"><div class="markdown"></div></div></div><div class="public anchor" id="var-inner-join"><h3>inner-join</h3><div class="usage"><code>(inner-join ds-right columns-selector)</code><code>(inner-join ds-right columns-selector options)</code></div><div class="doc"><div class="markdown"></div></div></div><div class="public anchor" id="var-intersect"><h3>intersect</h3><div class="usage"><code>(intersect ds-right)</code><code>(intersect ds-right options)</code></div><div class="doc"><div class="markdown"></div></div></div><div class="public anchor" id="var-join-columns"><h3>join-columns</h3><div class="usage"><code>(join-columns target-column columns-selector)</code><code>(join-columns target-column columns-selector options)</code></div><div class="doc"><div class="markdown"></div></div></div><div class="public anchor" id="var-labels"><h3>labels</h3><div class="usage"><code>(labels)</code></div><div class="doc"><div class="markdown"></div></div></div><div class="public anchor" id="var-last"><h3>last</h3><div class="usage"><code>(last)</code></div><div class="doc"><div class="markdown"></div></div></div><div class="public anchor" id="var-left-join"><h3>left-join</h3><div class="usage"><code>(left-join ds-right columns-selector)</code><code>(left-join ds-right columns-selector options)</code></div><div class="doc"><div class="markdown"></div></div></div><div class="public anchor" id="var-map-columns"><h3>map-columns</h3><div class="usage"><code>(map-columns column-name map-fn)</code><code>(map-columns column-name columns-selector map-fn)</code><code>(map-columns column-name new-type columns-selector map-fn)</code></div><div class="doc"><div class="markdown"></div></div></div><div class="public anchor" id="var-mapseq-reader"><h3>mapseq-reader</h3><div class="usage"><code>(mapseq-reader)</code></div><div class="doc"><div class="markdown"></div></div></div><div class="public anchor" id="var-mark-as-group"><h3>mark-as-group</h3><div class="usage"><code>(mark-as-group)</code></div><div class="doc"><div class="markdown"><p>Add grouping tag</p></div></div></div><div class="public anchor" id="var-missing"><h3>missing</h3><div class="usage"><code>(missing)</code></div><div class="doc"><div class="markdown"></div></div></div><div class="public anchor" id="var-model"><h3>model</h3><div class="usage"><code>(model options)</code></div><div class="doc"><div class="markdown"><p>Executes a machine learning model in train or predict from the <code>metamorph.ml</code> model registry.</p>
 <p>Options: - <code>:model-type</code> - Keyword for the model too use</p>
 <p>Further options get passed to <code>train</code> functions and are model specific.</p>
-<p>See here for an overview for the models build into scicloj.ml:</p>
+<p>See here for an overview for the models build into Samskara:</p>
 <p><a href="https://behrica.github.io/samskara/userguide-models.html">https://behrica.github.io/samskara/userguide-models.html</a></p>
 <p>Other libraries might contribute other models, which are documented as part of the library.</p>
 <table>

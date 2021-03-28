@@ -18,9 +18,40 @@
 
   )
 
+["# sklearn-clj"]
+
+["The scicloj.ml plugin [sklearn-clj](https://github.com/scicloj/sklearn-clj)
+ gives easy access to all models from [scikit-learn](https://scikit-learn.org/stable/)" ]
+
+["After [libpython.clj](https://github.com/clj-python/libpython-clj)
+ has been setup with the python packagen sklearn installed,
+the following lines show how to use any sklearn model in a usual scicloj.ml pipeline:"]
+
+(require '[scicloj.ml.core :as ml]
+         '[scicloj.ml.metamorph :as mm]
+         '[tech.v3.dataset.tensor :as dst]
+         '[scicloj.sklearn-clj]
+         )
+
+(def ds (-> (dst/tensor->dataset [[0, 0 0 ], [1, 1 1 ], [2, 2 2]])))
+(def pipe
+  (ml/pipeline
+   (mm/set-inference-target 2)
+   (mm/model {:model-type :sklearn.classification/logistic-regression
+              :max-iter 100
+              })))
+
+(pipe {:metamorph/data ds
+       :metamorph/mode :fit})
+
+
+["Below all models are listed with their parameters and the original documentation.
+
+The parameters are given as clojure keys in cemal-case. As the docuemnt texts are imported from python
+they refer to the python spelling of the parameter. But the translation between the tow should be farely obvoius."
+]
 
 ["# Models"]
-
 
 
 ["## Sklearn classification"]
@@ -31,42 +62,3 @@
 ["## Sklearn regression"]
 ^kind/hiccup-nocode
 (render-key-info ":sklearn.regression")
-
-
-(comment
-  (require '[libpython-clj2.require :refer [require-python]]
-           '[libpython-clj2.python :refer [py. py.. py.-] :as py]
-           '[tech.v3.datatype :as dtype])
-
-  (require-python '[sklearn.datasets :refer [make_classification]]
-                  '[sklearn.ensemble :refer [RandomForestClassifier]]
-                  '[time :refer [time]]
-                  )
-
-  (def classification
-    (make_classification :n_samples 10000
-                         :n_features 20
-                         :n_informative 15
-                         :n_redundant 5
-                         :random_state 3))
-
-  (def X (first classification))
-  (def y (second classification))
-  (def model (RandomForestClassifier :n_estimators 500 :n_jobs 1))
-
-  (do
-    (def start (time))
-    (py. model fit X y)
-    (def end (time)))
-
-  (- end start)
-;; => 10.843264818191528
-
-(def model (RandomForestClassifier :n_estimators 500 :n_jobs -1))
-(do
-    (def start (time))
-    (py. model fit X y)
-    (def end (time)))
-
-(- end start)
-)

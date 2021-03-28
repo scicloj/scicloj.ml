@@ -21,6 +21,26 @@
 
 ["# Models"]
 
+["scicloj.ml uses the plugin `scicloj.ml.smiles` and
+`scicloj.ml.xgboost` by default,
+which gives access to a lot of model from the java librarys [Smile](https://haifengl.github.io/)
+and [Xgboost](https://xgboost.readthedocs.io/en/latest/jvm/index.html)"]
+
+["Below is a list of all such models, and which parameter they take."]
+
+["All models are availanble in the same way:"]
+
+(comment
+  (require '[scicloj.ml.metamorph :as mm])
+  ;; last step in pipeline
+  (mm/model {:model-type :smile.classification/ada-boost
+             :trees 200
+             :max-depth 100
+             :max-nodes 50
+             }))
+
+["The documentation below points as well to the javadoc and user-guide chapter (for Smile models)"]
+
 ["## Smile classification"]
 ^kind/hiccup-nocode
 (render-key-info ":smile.classification")
