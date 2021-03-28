@@ -24,7 +24,7 @@
  gives easy access to all models from [scikit-learn](https://scikit-learn.org/stable/)" ]
 
 ["After [libpython.clj](https://github.com/clj-python/libpython-clj)
- has been setup with the python packagen sklearn installed,
+ has been setup with the python package sklearn installed,
 the following lines show how to use any sklearn model in a usual scicloj.ml pipeline:"]
 
 (require '[scicloj.ml.core :as ml]
@@ -47,8 +47,8 @@ the following lines show how to use any sklearn model in a usual scicloj.ml pipe
 
 ["Below all models are listed with their parameters and the original documentation.
 
-The parameters are given as clojure keys in cemal-case. As the docuemnt texts are imported from python
-they refer to the python spelling of the parameter. But the translation between the tow should be farely obvoius."
+The parameters are given as Clojure keys in kebap-case. As the document texts are imported from python
+they refer to the python spelling of the parameter. But the translation between the two should be obvious."
 ]
 
 ["# Models"]
