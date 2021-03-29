@@ -3,7 +3,8 @@
    [notespace.api :as note]
    [notespace.kinds :as kind]
    [scicloj.sklearn-clj.ml]
-   [scicloj.ml.ug-utils :refer :all])
+   [scicloj.ml.ug-utils :refer :all]
+   )
   )
 
 (comment
@@ -17,6 +18,13 @@
   (note/init)
 
   )
+
+
+
+
+
+;; ^kind/md
+;; (slurp "/tmp/myfile.md")
 
 ["# sklearn-clj"]
 

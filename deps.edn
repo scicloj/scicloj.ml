@@ -1,15 +1,15 @@
-{:deps {scicloj/metamorph.ml       {:mvn/version "0.3.0-alpha3" }
-        scicloj/scicloj.ml.smile   {:mvn/version "5.03"}
+{:deps {scicloj/metamorph.ml       {:mvn/version "0.3.0-alpha4-SNAPSHOT" }
+        scicloj/scicloj.ml.smile   {:mvn/version "5.04-SNAPSHOT"}
         scicloj/scicloj.ml.xgboost {:mvn/version "5.02"}
         scicloj/tablecloth         {:mvn/version "5.05.1" :exclusions [ch.qos.logback/logback-classic]}
         }
  :aliases {
-           :test {:extra-deps {clj-djl/clj-djl {:mvn/version "0.1.5" :exclusions [org.slf4j/slf4j-simple]}
+           :test {:extra-paths ["test"]
+                  :extra-deps {clj-djl/clj-djl {:mvn/version "0.1.5" :exclusions [org.slf4j/slf4j-simple]}
                                ch.qos.logback/logback-classic {:mvn/version "1.2.3"}
                                scicloj/notespace {:mvn/version "3-beta5"}
                                scicloj/sklearn-clj {:mvn/version "0.3.0"}}
-                               clj-python/libpython-clj {:mvn/version "2.00-beta-12"}
-                  }
+                  clj-python/libpython-clj {:mvn/version "2.00-beta-12"}}
            :uberjar {:replace-deps {com.github.seancorfield/depstar {:mvn/version "2.0.193"}}
                      :exec-fn hf.depstar/uberjar
                      :exec-args {:aot true}}

@@ -3,7 +3,13 @@
             [notespace.kinds :as kind]
             [notespace.view :as view]
             [scicloj.ml.core]
-            [tablecloth.api :as tc]))
+            [tablecloth.api :as tc]
+            [libpython-clj2.python :as py]
+            ))
+
+(def doc->markdown (py/import-module "docstring_to_markdown"))
+
+
 
 (def model-keys
   (keys @scicloj.ml.core/model-definitions*))
@@ -36,14 +42,13 @@
                (with-meta % {:key (gensym "br-")})))))
 
 (defn docu-doc-string [model-key]
-  (text->hiccup
-   (or
-    (get-in @scicloj.ml.core/model-definitions* [model-key :documentation :doc-string] )
-    ""
-    )
+  (try
+    (view/markdowns->hiccup
+     (py/py. doc->markdown convert
+             (or
+              (get-in @scicloj.ml.core/model-definitions* [model-key :documentation :doc-string] ) "")))
+    (catch Exception e "")))
 
-   )
-  )
 
 (defn anchor-or-nothing [x text]
   (if (empty? x)

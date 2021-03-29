@@ -14,7 +14,6 @@
   (note/render-static-html "docs/userguide-intro.html")
   (note/init) )
 
-
 ["# Clojure and machine learning "]
 
 ["In order to practice machine learning and create an ecosystem of models around it,
@@ -79,7 +78,7 @@ This transformations are mostly dataset to dataset transformations.
 as they need to run several times with different data or in variants
 for either cross validation or hyper-parameter tuning."]
 
-["Clojure and the `tablecoth` library contains already
+["Clojure and the `tablecloth` library contains already
 the concept of running a pipeline"]
 
 ["These simpler form of a pipeline in Clojure and Tablecloth, can just make use of the fact that all tablecloth
@@ -123,7 +122,7 @@ there, but metamorph compliant"]
 ["The Clojure ML ecosystem is based on different libraries working
 together, as typic and idiomatic in Clojure"]
 
-["Some existing ibraries are used internally in scicloj.ml, to create a
+["Some existing libraries are used internally in scicloj.ml, to create a
 complete machine learning library, but this is hidden from the user,
 and is listed here only for completeness."]
 
@@ -180,33 +179,49 @@ in three simple namespaces.
          )
 ["First we load the data."]
 (def titanic-train
-  (ds/dataset "https://github.com/scicloj/metamorph-examples/raw/main/data/titanic/train.csv"
+  (->
+   (ds/dataset "https://github.com/scicloj/metamorph-examples/raw/main/data/titanic/train.csv"
                {:key-fn keyword
-               :parser-fn :string
-                }))
+                :parser-fn :string
+                })))
 
 (def titanic-test
   (->
    (ds/dataset "https://github.com/scicloj/metamorph-examples/raw/main/data/titanic/test.csv"
                {:key-fn keyword
                 :parser-fn :string})
-   (ds/add-column :Survived ["0"])))
+   (ds/add-column :Survived [""])))
 
 ["Then we define the pipeline and it steps. Inside the pipeline we only use functions
 from namespace scicloj.ml.metamorph"]
 
 ["In scicloj.ml the model functions receives a single dataset,
-in which the inference target column is marked as such."
-
- "The model to use is a parameter of the `model` function. All built-in
+in which the inference target column is marked as such. The model
+to use is a parameter of the `model` function. All built-in
 models are listed here: https://scicloj.github.io/scicloj.ml/userguide-models.html"
-
-
  ]
+
+["In the titanic dataset the `survived` column is a categorical variable.
+All target variables for classification need to be transformed first
+into numbers, the model can work with. This is done by the function
+`categorical->number`. The mapping for this is stored in the dataset on the column
+and can be later retrieved to transform the numeric prediction back to its
+categorical form."
+ ]
+
+["In `scicloj.ml` we pass a whole dataset to a model, so we need to mark
+the inference target via function `set-inference-target`.
+All other columns are used as feature columns.
+To avoid this, I simply remove them in this example"]
+
+["Now the dataset is ready for the model, which is called in the last step.
+It is a logistic regression model, which gets trained to predict column
+:Survived from column :Plass"]
+
 (def pipe-fn
   (ml/pipeline
-   (mm/select-columns [:Survived :Sex ])
-   (mm/categorical->number [:Survived :Sex])
+   (mm/select-columns [:Survived :Pclass ])
+   (mm/categorical->number [:Survived :Pclass])
    (mm/set-inference-target :Survived)
    (mm/model {:model-type :smile.classification/logistic-regression})))
 
@@ -220,10 +235,11 @@ which will as well train the model. "]
 ["Now we have a trained model inside trained-ctx. This is a usual map, so can be inspected in the repl."]
 
 ["Now we execute the pipeline in mode :transform,
-which wil make a prediction "]
+which will make a prediction "]
 
-["We combine the previously obtained context (which contains the trained model)",
- "with the test data"]
+["We combine the previously obtained context
+ (which contains the trained model)",
+ "with the test data and mode :transform"]
 
 (def test-ctx
   (pipe-fn
@@ -231,33 +247,66 @@ which wil make a prediction "]
           :metamorph/data titanic-test
           :metamorph/mode :transform)))
 
-["Prediction:"]
+
+
+
+["Prediction is now part of the ctx obtained.
+The `predict` function returns always teh raw prediction of teh model, which
+     ;; This looks ugly...
+we can easily transform into the original categories.
+"]
+
+["First we get the the inverse "]
+(def label-inverse-map
+  (ds/inference-target-label-inverse-map
+   (-> trained-ctx :metamorph/data )))
+
 ^kind/dataset
-(:metamorph/data test-ctx)
+(->
+ (:metamorph/data test-ctx)
+ (ds/add-or-replace-column
+  :Survived
+  (fn [ds]
+    (map
+     #(label-inverse-map (int %))
+     (:Survived ds)))))
+
+
+
+["This show the predicted survival and the posterior probabilities of it. "]
 
 ["The documentation of `mm/model` here https://scicloj.github.io/scicloj.ml/scicloj.ml.metamorph.html#var-model"
  "documents this special behavior of the function" ]
 
+["Any form of feature-engineering takes know the same form.
+We will successively
+add more and more steps into the pipeline to improve the model."]
 
-["## Custom dataset->dataset transforming functions in a metamorph pipeline"]
+["This can be build-in function or custom functions as we see later"]
+
+["### Debugging a metamorph pipeline"]
+
+
+["#### Model selection"]
+
+["### Custom dataset->dataset transforming functions in a metamorph pipeline"]
 ["### inline fn"]
 ["### Custom metamorph compliant function"]
 ["### Lifting a existing dataset->dataset transformation fn"]
+["### Keep auxiliary data in pipeline"]
 
-["## Keep auxilary data in pipeline"]
 
-
-["## Special keys in metamorph context map"]
+["### Special keys in metamorph context map"]
 :metamorph/data
 :metamorph/mode
 :metamorph/id
-[ "## Set custom id"]
-
-["## Debugging a metamorph pipeline"]
+[ "### Set custom id"]
 
 
 
-["## More advanced use case, as we need to pass the vocab size betweenn steps"]
+
+["## More advanced use case, as we need to pass the vocab size between
+ steps"]
 ["Not working yet"]
 
 (comment
@@ -275,7 +324,6 @@ which wil make a prediction "]
      (mm/bow->sparse-array :bow :bow-sparse)
      (mm/set-inference-target :Score)
      (mm/select-columns [:bow-sparse :Score])
-     ;; This looks ugly...
      ;; It takes key :scicloj.ml.smile.metamorph/bow->sparse-vocabulary
      ;; from ctx and sets it in the next step
      (fn [ctx]

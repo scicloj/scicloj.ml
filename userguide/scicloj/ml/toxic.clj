@@ -19,8 +19,8 @@
 
   )
 
-(def num-grid-points 1)
-(def num-test-rows 1000)
+(def num-grid-points 20)
+(def num-test-rows 159571)
 ;; (def num-test-rows 1000)
 
 
@@ -29,7 +29,7 @@
          '[scicloj.ml.metamorph :as mm]
          '[scicloj.ml.dataset :as ds]
          '[scicloj.metamorph.ml.loss :as loss]
-         '[tech.v3.libs.smile.nlp :as nlp]
+         '[scicloj.ml.smile.nlp :as nlp]
          '[pppmap.core :as ppp]
          )
 
@@ -49,27 +49,27 @@
 (frequencies
  (:toxic df))
 
-(def freqs->SparseArray
-  (memoize nlp/freqs->SparseArray)
-  )
+;; (def freqs->SparseArray
+;;   (memoize nlp/freqs->SparseArray)
+;;   )
 
-(defn tfidf->sparse [tfidf-col sparse-col]
-  (fn [ctx]
-    (assoc ctx
-           :metamorph/data
-           (ds/add-column
-            (:metamorph/data ctx)
-            tfidf-col
-            (fn [ds]
-              (ppp/ppmap-with-progress "tfidf->sparse" 1000
-               #(freqs->SparseArray
-                 %
-                 (-> ctx :tech.v3.libs.smile.metamorph/bow->sparse-vocabulary :vocab->index-map))
-               (get ds sparse-col ds)
-               )
-              )
+;; (defn tfidf->sparse [tfidf-col sparse-col]
+;;   (fn [ctx]
+;;     (assoc ctx
+;;            :metamorph/data
+;;            (ds/add-column
+;;             (:metamorph/data ctx)
+;;             tfidf-col
+;;             (fn [ds]
+;;               (ppp/ppmap-with-progress "tfidf->sparse" 1000
+;;                #(freqs->SparseArray
+;;                  %
+;;                  (-> ctx :tech.v3.libs.smile.metamorph/bow->sparse-vocabulary :vocab->index-map))
+;;                (get ds sparse-col ds)
+;;                )
+;;               )
 
-            ))))
+;;             ))))
 
 
 
@@ -93,8 +93,8 @@
 
 (def fixed-pipe
   (ml/pipeline
-   (mm/count-vectorize :comment_text :comment_text {:text->bow-fn text->bow})
-   (mm/bow->tfidf :comment_text :comment_text))
+   (mm/count-vectorize :comment_text :bow {:text->bow-fn text->bow})
+   (mm/bow->tfidf :bow :tfidf))
 
   )
 
@@ -109,35 +109,44 @@
    (fn [ctx]
      (assoc ctx :pipe-opts pipe-opts)
      )
-   (mm/select-columns [:id :comment_text (:target pipe-opts)])
-   (mm/bow->sparse-array :comment_text :dummy {:create-vocab-fn (make-vocab-fn  (pipe-opts :n)) })
-   (tfidf->sparse :comment_text :comment_text)
-   (mm/select-columns [:id :comment_text (:target pipe-opts)])
+   (mm/bow->SparseArray :tfidf :sparse {:create-vocab-fn (make-vocab-fn  (pipe-opts :n)) })
+   (mm/select-columns [:id :sparse (:target pipe-opts)])
    (mm/set-inference-target (:target pipe-opts))
    (mm/categorical->number [(:target pipe-opts)])
    (mm/model (merge pipe-opts
                     {:model-type :smile.classification/sparse-logistic-regression
-                     :sparse-column :comment_text
+                     :sparse-column :sparse
                      :n-sparse-columns (pipe-opts :n)
                      })
              )))
 
-(def test-ds
-  (-> (ds/dataset "data/toxic/test.csv" {:key-fn keyword :parser-fn :string} )
-      (ds/rename-columns {:text :comment_text})
+  (def test-ds
+    (-> (ds/dataset "data/toxic/test.csv" {:key-fn keyword :parser-fn :string} )
+        (ds/rename-columns {:text :comment_text})
+        ))
 
-      ;; (ds/drop-columns [:id])
-      ))
+  (def test-ids (:id test-ds))
 
-(def test-ids (:id test-ds))
+  (def test-ds
+    (->
+     (fixed-pipe {:metamorph/data test-ds})
+     :metamorph/data)
+    )
+(comment
 
-(def test-ds
-  (->
-   (fixed-pipe {:metamorph/data test-ds})
-   :metamorph/data)
-  )
+  (def df
+    (->
+     (fixed-pipe {:metamorph/data df})
+     :metamorph/data)
+    )
 
+  (def pipe
+    (make-pipe {:n 100 :target :toxic}))
 
+  (pipe
+   {:metamorph/data df
+    :metamorph/mode :fit
+    }))
 
 (defn train-and-eval [target]
 
@@ -182,6 +191,9 @@
 
         test-ds-with-target
         (ds/add-column test-ds target  ["a"])
+
+        _ (def test-ds-with-target test-ds-with-target)
+        _ (def best best)
 
         prediction-on-test
         (
