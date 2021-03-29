@@ -3,9 +3,7 @@
    [notespace.api :as note]
    [notespace.kinds :as kind]
    [scicloj.sklearn-clj.ml]
-   [scicloj.ml.ug-utils :refer :all]
-   )
-  )
+   [scicloj.ml.ug-utils :refer :all]))
 
 (comment
   (note/init-with-browser)
@@ -18,14 +16,6 @@
   (note/init)
 
   )
-
-
-
-
-
-;; ^kind/md
-;; (slurp "/tmp/myfile.md")
-
 ["# sklearn-clj"]
 
 ["The scicloj.ml plugin [sklearn-clj](https://github.com/scicloj/sklearn-clj)
