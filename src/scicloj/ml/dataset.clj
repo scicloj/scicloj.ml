@@ -18,12 +18,15 @@
             [scicloj.ml.utils :refer :all]
             [tech.v3.dataset.modelling]
             [tech.v3.dataset.column-filters]
+            [tech.v3.dataset.categorical]
+
             [tablecloth.api]
             )
   )
 
 (export-all [tech.v3.dataset.modelling
              tech.v3.dataset.column-filters
+             tech.v3.dataset.categorical
              tablecloth.api]
             [let-dataset without-grouping->])
 
