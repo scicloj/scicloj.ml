@@ -1,9 +1,9 @@
 (ns scicloj.ml.core
-  "Core functions for machine learninig.
+  "Core functions for machine learninig and pipeline execution.
 
   Functions are re-exported from:
 
-  * scicloj.metamorph.ml
+  * scicloj.metamorph.ml.*
   * scicloj.metamorph.core
 
   "
@@ -27,7 +27,7 @@
              scicloj.metamorph.ml.classification
              scicloj.metamorph.ml.gridsearch
              ]
-            [model])
+            [model predict train safe-inc])
 
 
 (exporter/export-symbols scicloj.metamorph.core

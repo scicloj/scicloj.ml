@@ -46,7 +46,10 @@
                    :exec-args {:language :clojure
                                :metadata {:doc/format :markdown}
                                :themes [:rdash]
-                               :output-path "docs"}}
+                               :output-path "docs"
+                               }
+
+                   }
 
            }
  }

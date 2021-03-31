@@ -1,4 +1,5 @@
-(ns scicloj.ml.utils)
+(ns scicloj.ml.utils
+  (:require [clojure.set]))
 
 
 (defn ns-symbols [ns except]
