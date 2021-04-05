@@ -90,8 +90,7 @@ So they can be chained together with the pipe (`->`) operator of Clojure,
 (def my-data
   (-> (ds/dataset "https://raw.githubusercontent.com/techascent/tech.ml.dataset/master/test/data/stocks.csv" {:key-fn keyword})
       (ds/select-columns [:symbol :price])
-      (ds/add-or-replace-column :symbol (fn [ds] (map clojure.string/lower-case  (ds :symbol)) ))
-      ))
+      (ds/add-or-replace-column :symbol (fn [ds] (map clojure.string/lower-case  (ds :symbol)) ))))
 
 ["This form of pipeline works to manipulate a dataset,
 but has three disadvantages."]
@@ -99,7 +98,7 @@ but has three disadvantages."]
 ["
 1. `->` is a macro, so we cannot compose pipelines easily
 
-2. We move a dataset object through the pipeline steps, so the only object we have nicely inside the pipeline, accessible to all steps, is the dataset itself.  But sometimes we need non-tabular, auxiliary, data to be shared across the pipeline steps, which is not possible with passing a dataset only.Using this simple pipelines, would force to hold auxiliary data in a global state of some form.This makes is very hard to execute pipelines repeatedly, as they are not self-contained.
+2. We move a dataset object through the pipeline steps, so the only object we have nicely inside the pipeline, accessible to all steps, is the dataset itself.  But sometimes we need non-tabular, auxiliary, data to be shared across the pipeline steps, which is not possible with passing a dataset only.Using this simple pipelines, would force to hold auxiliary data in a global state of some form. This makes is very hard to execute pipelines repeatedly, as they are not self-contained.
 
 3. These simpler pipeline concepts have no notion of running a pipeline in several modes. In machine learning a pipeline need to behave differently in `fit` and in `transform`. (often called `train` vs `predict`). The models learns from data in the `fit` and it applies what it has learned in `transform`.
 "]
@@ -131,18 +130,19 @@ and is listed here only for completeness."]
 1. `tech.v3.dataset` - to finally prepare a dataset for the machine learing models
 1. `metamorph.ml` - for running pipelines and machine learning core functions
 1. `Smile`  Java data science library containing lots of models
-1. `tech.ml`  - Core ML functions and bridge to Smile models and NLP functions"]
+"
+]
 
 
 ["These libraries can be used standalone as well. `tech.ml` was changed  in order
 to work with scicloj.ml in a incompatible way.
-So it will be re-released under a different name.
+So it is re-released under a new name `metamorph.ml`.
 The others can be used by scicloj.ml without any change.
  "]
 
 
 ["In order to give easier access to the various libraries, the scicloj.ml
- library was created.It unifies the access to the libraries above
+ library was created. It unifies the access to the libraries above
 in three simple namespaces.
 "]
 
@@ -211,12 +211,12 @@ categorical form."
 
 ["In `scicloj.ml` we pass a whole dataset to a model, so we need to mark
 the inference target via function `set-inference-target`.
-All other columns are used as feature columns.
-To avoid this, I simply remove them in this example"]
+All other columns are used then as feature columns.
+To restric the feature column, I simply remove most of them and keep only one, :Pclass"]
 
 ["Now the dataset is ready for the model, which is called in the last step.
 It is a logistic regression model, which gets trained to predict column
-:Survived from column :Plass"]
+:Survived from column :Pclass"]
 
 (def pipe-fn
   (ml/pipeline
@@ -225,14 +225,18 @@ It is a logistic regression model, which gets trained to predict column
    (mm/set-inference-target :Survived)
    (mm/model {:model-type :smile.classification/logistic-regression})))
 
-["Now we execute the pipeline in mode :fit,
-which will as well train the model. "]
+["So the `ml/pipeline` function returns a function, which can be called with the ctx map."]
+
+["We execute the pipeline in mode :fit,
+which will execute all pipeline steps and train as well the model. "]
 
 (def trained-ctx
   (pipe-fn {:metamorph/data titanic-train
             :metamorph/mode :fit}))
 
-["Now we have a trained model inside trained-ctx. This is a usual map, so can be inspected in the repl."]
+["Now we have a trained model inside trained-ctx. This is a usual map, so can be inspected in the repl.
+ As the model is based on Smile, the trained-ctx contains the java class representing the trained model internally.
+"]
 
 ["Now we execute the pipeline in mode :transform,
 which will make a prediction "]
@@ -249,99 +253,26 @@ which will make a prediction "]
 
 
 
-
 ["Prediction is now part of the ctx obtained.
-The `predict` function returns always teh raw prediction of teh model, which
-     ;; This looks ugly...
-we can easily transform into the original categories.
+The internally called `predict` function of `metamorph.ml` returns always the raw prediction of the model,
+which we can easily transform into the original categories.
 "]
 
-["First we get the the inverse "]
-(def label-inverse-map
-  (ds/inference-target-label-inverse-map
-   (-> trained-ctx :metamorph/data )))
-
-^kind/dataset
-(->
- (:metamorph/data test-ctx)
- (ds/add-or-replace-column
-  :Survived
-  (fn [ds]
-    (map
-     #(label-inverse-map (int %))
-     (:Survived ds)))))
 
 
+;; ^kind/dataset
+(-> test-ctx :metamorph/data
+    (ds/column-values->categorical :Survived)
+    )
 
-["This show the predicted survival and the posterior probabilities of it. "]
+
+["This show the predicted survival. "]
 
 ["The documentation of `mm/model` here https://scicloj.github.io/scicloj.ml/scicloj.ml.metamorph.html#var-model"
  "documents this special behavior of the function" ]
 
-["Any form of feature-engineering takes know the same form.
+["Any form of feature-engineering takes now the same form.
 We will successively
 add more and more steps into the pipeline to improve the model."]
 
 ["This can be build-in function or custom functions as we see later"]
-
-["### Debugging a metamorph pipeline"]
-
-
-["#### Model selection"]
-
-["### Custom dataset->dataset transforming functions in a metamorph pipeline"]
-["### inline fn"]
-["### Custom metamorph compliant function"]
-["### Lifting a existing dataset->dataset transformation fn"]
-["### Keep auxiliary data in pipeline"]
-
-
-["### Special keys in metamorph context map"]
-:metamorph/data
-:metamorph/mode
-:metamorph/id
-[ "### Set custom id"]
-
-
-
-
-["## More advanced use case, as we need to pass the vocab size between
- steps"]
-["Not working yet"]
-
-(comment
-  (def reviews
-    (ds/dataset "https://github.com/scicloj/metamorph-examples/raw/main/data/reviews.csv.gz"
-                {:key-fn keyword}))
-  (def reviews-split
-    (first
-     (ds/split->seq reviews :holdout)))
-
-  (def pipe-fn
-    (ml/pipeline
-     (mm/select-columns [:Text :Score ])
-     (mm/count-vectorize :Text :bow)
-     (mm/bow->sparse-array :bow :bow-sparse)
-     (mm/set-inference-target :Score)
-     (mm/select-columns [:bow-sparse :Score])
-     ;; It takes key :scicloj.ml.smile.metamorph/bow->sparse-vocabulary
-     ;; from ctx and sets it in the next step
-     (fn [ctx]
-       (let [p (-> ctx :scicloj.ml.smile.metamorph/bow->sparse-vocabulary
-                   :vocab
-                   count
-                   )]
-         ((mm/model {:p p
-                     :model-type :smile.classification/maxent-multinomial
-                     :sparse-column :bow-sparse})
-          ctx)
-         )
-       ctx
-       )
-     ))
-
-  (def trained-ctx
-    (pipe-fn {:metamorph/data (:train reviews-split)
-              :metamorph/mode :fit}))
-
-  )
