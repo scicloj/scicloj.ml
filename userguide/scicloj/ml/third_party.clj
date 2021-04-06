@@ -4,7 +4,9 @@
  [notespace.api :as note]
  [notespace.kinds :as kind ]
 
-   [scicloj.ml.ug-utils :refer :all]
+ [scicloj.ml.ug-utils :refer :all]
+ [dk.simongray.datalinguist.ml.crf]
+ [clj-djl.mmml]
  )
   )
 
@@ -15,7 +17,7 @@
 
   (note/eval-this-notespace)
   (note/reread-this-notespace)
-  (note/render-static-html "docs/userguide-cljdjl.html")
+  (note/render-static-html "docs/userguide-third_party.html")
   (note/init)
   )
 
@@ -56,7 +58,6 @@
                      update-fn))
 
 (require
- '[clj-djl.mmml]
  '[clj-djl.nn :as nn]
  '[clj-djl.training :as t]
  '[clj-djl.training.loss :as loss]
@@ -118,4 +119,11 @@
 
 
 ^kind/hiccup-nocode
-(render-key-info ":clj-djl")
+(render-key-info ":clj-djl/djl")
+
+
+["# A NER model from Standford CorenLP"]
+
+^kind/hiccup-nocode
+(render-key-info ":corenlp")
+

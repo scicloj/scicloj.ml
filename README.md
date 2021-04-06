@@ -16,7 +16,7 @@ Docu is here:
 * https://scicloj.github.io/scicloj.ml/userguide-transformers.html
 * https://scicloj.github.io/scicloj.ml/userguide-titanic.html
 * https://scicloj.github.io/scicloj.ml/userguide-sklearnclj.html
-* https://scicloj.github.io/scicloj.ml/userguide-cljdjl.html
+* https://scicloj.github.io/scicloj.ml/userguide-third_party.html
 
 which is based on notespace files in here:
 https://github.com/scicloj/scicloj.ml/tree/main/userguide/scicloj/ml

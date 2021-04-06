@@ -26,12 +26,23 @@
    :value->hiccup #'view/dataset->md-hiccup})
 
 (defn docu-options [model-key]
+  (def model-key model-key)
   (kind/override
-   (tc/dataset
-    (get-in @scicloj.ml.core/model-definitions* [model-key :options] ))
+   (->
+    (tc/dataset
+     (get-in @scicloj.ml.core/model-definitions* [model-key :options] ))
+    (tc/reorder-columns :name :type :default)
+    )
    ::dataset-nocode
    )
   )
+
+;; (->
+;;  (tc/dataset
+;;   (get-in @scicloj.ml.core/model-definitions* [:corenlp/crf :options] ))
+;; (tc/reorder-columns :name :type :default)
+;;  )
+
 (defn text->hiccup
   "Convert newlines to [:br]'s."
   [text]
