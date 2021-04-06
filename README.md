@@ -1,3 +1,5 @@
+[![Clojars Project](https://img.shields.io/clojars/v/scicloj/scicloj.ml.svg)](https://clojars.org/scicloj/scicloj.ml)
+
 # scicloj.ml
 
 Proposal for a Clojure machine learning library.
