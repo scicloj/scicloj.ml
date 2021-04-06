@@ -10,11 +10,15 @@ for machine learning in Clojure.
 
 ## Quickstart
 
+Dependencies: 
+
 ``` clojure
 {:deps
  {scicloj/scicloj.ml {:mvn/version "0.1.0-alpha1"}}}
 ```
 
+
+Code:
 
 ```clojure
 (require '[scicloj.ml.core :as ml]
@@ -38,12 +42,11 @@ for machine learning in Clojure.
    (ds/add-column :Survived [""])))
    
    
-;; construct pipeline function including Logistic Regression model  
+;; construct pipeline function including Logistic Regression model
 (def pipe-fn
   (ml/pipeline
    (mm/select-columns [:Survived :Pclass ])
-   (mm/add-column :Survived (fn [ds] 
-    (map #(case % "1" "yes" "0" "no" "" "" nil "") (:Survived titanic-train))))
+   (mm/add-column :Survived (fn [ds] (map #(case % "1" "yes" "0" "no" nil "") (:Survived ds))))
    (mm/categorical->number [:Survived :Pclass])
    (mm/set-inference-target :Survived)
    (mm/model {:model-type :smile.classification/logistic-regression})
