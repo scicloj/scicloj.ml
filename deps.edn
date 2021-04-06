@@ -14,25 +14,28 @@
                   clj-python/libpython-clj {:mvn/version "2.00-beta-12"}}
 
            :runner {:extra-deps {com.cognitect/test-runner
-                        {:git/url "https://github.com/cognitect-labs/test-runner"
-                         :sha "3cb0a9daf1cb746259dc8309b218f9211ad3b33b"}}
-           :main-opts ["-m" "cognitect.test-runner"
-                       "-d" "test"
-                       ]}
+                                 {:git/url "https://github.com/cognitect-labs/test-runner"
+                                  :sha "3cb0a9daf1cb746259dc8309b218f9211ad3b33b"}}
+                    :main-opts ["-m" "cognitect.test-runner"
+                                "-d" "test"
+                                ]}
+           :deploy {:replace-deps {slipset/deps-deploy {:mvn/version "0.1.5"}}
+                    :exec-fn deps-deploy.deps-deploy/deploy
+                    :exec-args {:installer :remote :artifact "scicloj.ml.jar"}}
 
-           :uberjar {:replace-deps {com.github.seancorfield/depstar {:mvn/version "2.0.193"}}
+           :uberjar {:replace-deps {com.github.seancorfield/depstar {:mvn/version "2.0.211"}}
                      :exec-fn hf.depstar/uberjar
                      :exec-args {:aot true}}
            ;; build a jar (library):
-           :jar {:replace-deps {com.github.seancorfield/depstar {:mvn/version "2.0.193"}}
+           :jar {:replace-deps {com.github.seancorfield/depstar {:mvn/version "2.0.211"}}
                  :exec-fn hf.depstar/jar
                  :exec-args {:jar "scicloj.ml.jar"}}
            ;; generic depstar alias, use with jar or uberjar function name:
-           :depstar {:replace-deps {com.github.seancorfield/depstar {:mvn/version "2.0.193"}}
+           :depstar {:replace-deps {com.github.seancorfield/depstar {:mvn/version "2.0.211"}}
                      :ns-default hf.depstar
                      :exec-args {}}
 
-           :install {:extra-deps {slipset/deps-deploy {:mvn/version "RELEASE"}}
+           :install {:extra-deps {slipset/deps-deploy {:mvn/version "0.1.5"}}
                      :exec-fn deps-deploy.deps-deploy/deploy
                      :exec-args {:installer :local
 

@@ -4,7 +4,7 @@
   <packaging>jar</packaging>
   <groupId>scicloj</groupId>
   <artifactId>scicloj.ml</artifactId>
-  <version>0.1.0-alpha1</version>
+  <version>0.1.0-beta1</version>
   <name>scicloj.ml</name>
   <dependencies>
     <dependency>
