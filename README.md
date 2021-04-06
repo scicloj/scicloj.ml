@@ -25,7 +25,6 @@ Code:
          '[scicloj.ml.metamorph :as mm]
          '[scicloj.ml.dataset :as ds])
 
-(ns user)
 ;; read train and test datasets
 (def titanic-train
   (->
