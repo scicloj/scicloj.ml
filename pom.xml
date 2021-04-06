@@ -10,22 +10,33 @@
     <dependency>
       <groupId>org.clojure</groupId>
       <artifactId>clojure</artifactId>
-      <version>1.10.2</version>
+      <version>1.10.3</version>
+    </dependency>
+    <dependency>
+      <groupId>scicloj</groupId>
+      <artifactId>scicloj.ml.xgboost</artifactId>
+      <version>5.03</version>
     </dependency>
     <dependency>
       <groupId>scicloj</groupId>
       <artifactId>tablecloth</artifactId>
-      <version>5.05</version>
+      <version>5.05.1</version>
+      <exclusions>
+        <exclusion>
+          <groupId>ch.qos.logback</groupId>
+          <artifactId>logback-classic</artifactId>
+        </exclusion>
+      </exclusions>
+    </dependency>
+    <dependency>
+      <groupId>scicloj</groupId>
+      <artifactId>scicloj.ml.smile</artifactId>
+      <version>5.04</version>
     </dependency>
     <dependency>
       <groupId>scicloj</groupId>
       <artifactId>metamorph.ml</artifactId>
-      <version>0.3.0-alpha1</version>
-    </dependency>
-    <dependency>
-      <groupId>techascent</groupId>
-      <artifactId>tech.ml.smile</artifactId>
-      <version>5.02-SNAPSHOT</version>
+      <version>0.3.0-beta1</version>
     </dependency>
   </dependencies>
   <build>
