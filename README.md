@@ -30,8 +30,7 @@ Code:
   (->
    (ds/dataset "https://github.com/scicloj/metamorph-examples/raw/main/data/titanic/train.csv"
                {:key-fn keyword
-                :parser-fn :string
-                })))
+                :parser-fn :string})))
                 
 (def titanic-test
   (->
@@ -48,8 +47,7 @@ Code:
    (mm/add-column :Survived (fn [ds] (map #(case % "1" "yes" "0" "no" nil "") (:Survived ds))))
    (mm/categorical->number [:Survived :Pclass])
    (mm/set-inference-target :Survived)
-   (mm/model {:model-type :smile.classification/logistic-regression})
-   ))
+   (mm/model {:model-type :smile.classification/logistic-regression})))
    
 ;;  execute pipeline with train data including model fit
 (def trained-ctx
@@ -67,6 +65,7 @@ Code:
 ;; extract prediction from pipeline function result
 (-> test-ctx :metamorph/data
     (ds/column-values->categorical :Survived))
+    
 ;; => #tech.v3.dataset.column<string>[418]
 ;;    :Survived
 ;;    [no, no, yes, no, no, no, no, yes, no, no, no, no, no, yes, no, yes, yes, no, no, no...]   
