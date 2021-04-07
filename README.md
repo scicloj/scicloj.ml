@@ -4,7 +4,7 @@
 
 Proposal for a Clojure machine learning library.
 
-***Everything here is **alpha** status and might change without notice.***
+***Everything here is **beta** status. Breaking changes are possible, but unlikely***
 
 Nevertheless,  it will likely not diverge a lot from the reference projects below, so it is worth to have a look at them
 for machine learning in Clojure.
