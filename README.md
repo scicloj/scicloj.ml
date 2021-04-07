@@ -101,6 +101,6 @@ https://scicloj.github.io/scicloj.ml
 * https://github.com/techascent/tech.ml
 * https://github.com/scicloj/tablecloth
 * https://github.com/scicloj/metamorph
-* https://github.com/scicloj/metamorph.ml (branch https://github.com/scicloj/metamorph.ml/tree/mergeTechML)
+* https://github.com/scicloj/metamorph.ml 
 * https://github.com/techascent/tech.ml.dataset
 * https://github.com/haifengl/smile
