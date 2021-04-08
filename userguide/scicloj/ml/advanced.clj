@@ -15,15 +15,153 @@
   (note/init) )
 
 
+["### Special keys in metamorph context map"]
+:metamorph/data
+:metamorph/mode
+:metamorph/id
 
-["### Debugging a metamorph pipeline"]
+["## Debugging a metamorph pipeline"]
+
+["A metamorph pipeline can be debugged by two simple techniques."]
+
+["The first is to comment out parts of the pipeline, run it and
+ inspect the result, the context"]
 
 
-["### Model selection"]
+(def train-data
+  (ds/dataset {:time [1 2 3]
+               :val [1 3 4]}))
 
-["### Custom dataset->dataset transforming functions in a metamorph pipeline"]
-["### inline fn"]
+(def pipe-fn
+  (ml/pipeline
+   (mm/select-columns [:time])
+   ;; (mm/step-2)
+   ;; (mm/step-3)
+   ;; (mm/step-4)
+   ))
+
+(def trained-ctx
+  (pipe-fn {:metamorph/data train-data
+            :metamorph/mode :fit}))
+
+trained-ctx
+
+["The second alternative is to capture the state of the ctx in arbitrary
+ steps"]
+
+(def pipe-fn
+  (ml/pipeline
+   (fn [ctx] (def ctx-1 ctx) ctx)
+   (mm/select-columns [:time])
+   (fn [ctx] (def ctx-2 ctx) ctx)
+   ;; (mm/step-2)
+   ;; (mm/step-3)
+   ;; (mm/step-4)
+   ))
+
+(def ctx
+  (pipe-fn {:metamorph/data train-data
+            :metamorph/mode :fit}))
+
+ctx-1
+ctx-2
+
+["The context contains as well the dataset, which could be large.
+ So other tools for inspecting Clojure maps, are usefull."]
+
+
 ["### Custom metamorph compliant function"]
+
+["Custom steps in metamorp pipelines are normal Clojure, functions."]
+["Conceptualy we habe three types of functions, they differ by which keys in the context they manipulate."]
+
+["1. Data manipulation functions. Use only :metamorph/data
+  2. Model type of functions. They use :metamorph/data , :metamorph/mode, :metamorph:id
+     and behave different in mode :fit  and :mode transform. Eventually they use other keys in the context.
+  3. They use other keys in the context to pass auxiliary data
+"
+ ]
+
+["## Custom dataset->dataset transforming functions "]
+
+["Most steps of a pipeline are about modifying the dataset, so most custom code will be here.
+In machine learning, this is as well known as feature engineering, as new features get created from existing features."
+ ]
+
+["For a custom data manipulation function to be able to participate in a metamorph pipeline it needs to:
+
+1. Take a context map as input
+2. Return a context map
+3. Modify the dataset at key :metamorph/data
+4. Not use any other key in ctx
+5. Not change any other key ctx
+
+"]
+
+["Lets take as an example, a function which encodes a column with a numerical value to 3 categorical values:
+
+ - < 0         -> :negative
+ - > 0 - 1000  -> :low
+ - > 1000      -> :high
+
+ "]
+
+["Helper function which doe the transformation of a single value"]
+(defn ->cat [x]
+  (cond (< x 0 )          :negative
+        (and (pos? x)
+             (< x 1000) ) :low
+        true              :high))
+
+
+["We have now three different ways to write a metamorph compliant function"]
+
+
+["### Inline fn"]
+
+["WE can define inline a metamorph compliant function"]
+(def pipe-fn-inline
+  (ml/pipeline
+   (fn [{:metamorph/keys [data]}]
+     (ds/add-or-replace-column data :val (fn [ds] (map ->cat (:val ds))))
+     )
+   ))
+
+["### Lift a dataset->dataset function"]
+
+["First we create a functions which manipulates the dataset as we want"]
+(defn ds->cat [ds]
+  (ds/add-or-replace-column ds :val (fn [ds] (map ->cat (:val ds))))
+  )
+
+["And then we include it into the pipeline via
+lifting the ds->ds function into
+a :metamorph/data -> :metamorph/data function"]
+(def pipe-fn-lift
+  (ml/pipeline
+   (ml/lift ds->cat)))
+
+
+["### Metamorph compliant function"]
+["We write directly a metamorph compliant, named , function."]
+
+(defn mm->cat []
+  (fn [{:metamorph/keys [data]}]
+    (ds/add-or-replace-column data :val (fn [ds] (map ->cat (:val ds))))
+    ))
+
+(def pipe-fn-mm
+  (ml/pipeline
+   (mm->cat)))
+
+
+(pipe-fn-inline {:metamorph/data (ds/dataset {:val [-2 100 2000]})})
+(pipe-fn-lift {:metamorph/data (ds/dataset {:val [-2 100 2000]})})
+(pipe-fn-mm {:metamorph/data (ds/dataset {:val [-2 100 2000]})})
+
+
+
+
 ["### Custom model function"]
 
 ["In this chapter we see how to build a custom metamorph compliant function, which behaves like a simple model.
@@ -37,7 +175,7 @@ It takes the mean of the training data and applies this the to the test data.
 
 ["Here we create dummy training data, which is like a time series.
 We have values for time step 1-10, and want to predict (using the mean),
-the value for future timestpes.
+the value for future timesteps.
 "]
 (def train-data
   (ds/dataset {:time [1 2 3 4 5 6 7 8 9 10]
@@ -110,23 +248,18 @@ prediction
  ;;    |     14 | 10.66666667 |
  ;;    |     15 | 10.66666667 |
 
-["### Lifting a existing dataset->dataset transformation fn"]
+
 ["### Keep auxiliary data in pipeline"]
 
 
-["### Special keys in metamorph context map"]
-:metamorph/data
-:metamorph/mode
-:metamorph/id
-[ "### Set custom id"]
+["### Set custom id"]
 
 
 
 
-["## More advanced use case, as we need to pass the vocab size between
- steps"]
-["Not working yet"]
+["## More advanced use case, as we need to pass the vocab size between steps"]
 
+^kind/hidden
 (comment
   (def reviews
     (ds/dataset "https://github.com/scicloj/metamorph-examples/raw/main/data/reviews.csv.gz"
