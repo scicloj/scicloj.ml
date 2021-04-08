@@ -4,10 +4,9 @@
 
 Proposal for a Clojure machine learning library.
 
-***Everything here is **alpha** status and might change without notice.***
+***Everything here is **beta** status. Breaking changes are possible, but unlikely***
 
-Nevertheless,  it will likely not diverge a lot from the reference projects below, so it is worth to have a look at them
-for machine learning in Clojure.
+
 
 
 ## Quickstart
@@ -103,6 +102,6 @@ https://scicloj.github.io/scicloj.ml
 * https://github.com/techascent/tech.ml
 * https://github.com/scicloj/tablecloth
 * https://github.com/scicloj/metamorph
-* https://github.com/scicloj/metamorph.ml (branch https://github.com/scicloj/metamorph.ml/tree/mergeTechML)
+* https://github.com/scicloj/metamorph.ml 
 * https://github.com/techascent/tech.ml.dataset
 * https://github.com/haifengl/smile
