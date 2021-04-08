@@ -127,16 +127,13 @@ In machine learning, this is as well known as feature engineering, as new featur
 (def pipe-fn-inline
   (ml/pipeline
    (fn [{:metamorph/keys [data]}]
-     (ds/add-or-replace-column data :val (fn [ds] (map ->cat (:val ds))))
-     )
-   ))
+     (ds/add-or-replace-column data :val (fn [ds] (map ->cat (:val ds)))))))
 
 ["### Lift a dataset->dataset function"]
 
 ["First we create a functions which manipulates the dataset as we want"]
 (defn ds->cat [ds]
-  (ds/add-or-replace-column ds :val (fn [ds] (map ->cat (:val ds))))
-  )
+  (ds/add-or-replace-column ds :val (fn [ds] (map ->cat (:val ds)))))
 
 ["And then we include it into the pipeline via
 lifting the ds->ds function into
@@ -153,8 +150,7 @@ The body of the function is the same as the body of the inline fn from before.
 
 (defn mm->cat []
   (fn [{:metamorph/keys [data]}]
-    (ds/add-or-replace-column data :val (fn [ds] (map ->cat (:val ds))))
-    ))
+    (ds/add-or-replace-column data :val (fn [ds] (map ->cat (:val ds))))))
 
 (def pipe-fn-mm
   (ml/pipeline
