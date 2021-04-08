@@ -16,9 +16,31 @@
 
 
 ["### Special keys in metamorph context map"]
-:metamorph/data
-:metamorph/mode
-:metamorph/id
+["A metamorph context map can contain arbitrary keys. Three keys are
+ special and they enable the functioning of the pipeline . All steps should
+handle them in the same way."]
+
+[" `:metamorph/data` contains the main data object, the pipeline
+ is supposed to manipulate. The type of object can be anything, but all
+functionality on `scicloj.ml` requires it to be a `tech.v3.dataset`
+ instance. For further information see in
+ [metamorph](https://github.com/scicloj/metamorph)" ]
+
+
+["`:metamorph/mode` is used by 'model' functions, which get fitted from data or transform data.
+Two modes are standardized, namelye: `:fit` and `:transform`. In machine learninig they often are called train / predict.
+`sciform.ml` requires them to be `:fit` and `:transform`, and
+third party libraries should adhere to this convention.
+"]
+
+["`:metamorph/id` contains at every step a different , unique, id. A model function can use it
+to store the trained model in :fit and use it it :transform for prediction"]
+
+["Two functions in `scicloj.ml` use two further keys with the purpose of model evaluation, see further down in this guide."]
+["`scicloj.ml.core/model` stores the feature-dataset and the inference-target-dataset in the ctx before doing a prediction
+at keys `:scicloj.metamorph.ml/feature-ds` and  `:scicloj.metamorph.ml/target-ds`"]
+
+["These are then used by function `scicloj.ml.core/evaluate-pipelines` to do performace measurements of a model"]
 
 ["## Debugging a metamorph pipeline"]
 
@@ -72,7 +94,7 @@ ctx-2
 
 ["### Custom metamorph compliant function"]
 
-["Custom steps in metamorph pipelines are normal Clojure, functions."]
+["Custom steps in metamorph pipelines are normal Clojure functions."]
 ["Conceptually we have three types of functions, they differ by which keys in
  the context they manipulate."]
 
