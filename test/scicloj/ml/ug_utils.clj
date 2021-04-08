@@ -26,16 +26,19 @@
    :value->hiccup #'view/dataset->md-hiccup})
 
 (defn docu-options [model-key]
-  (def model-key model-key)
   (kind/override
    (->
     (tc/dataset
-     (get-in @scicloj.ml.core/model-definitions* [model-key :options] ))
+     (or
+      (get-in @scicloj.ml.core/model-definitions* [model-key :options]  )
+      {:name [] :type [] :default []}
+      ))
     (tc/reorder-columns :name :type :default)
     )
    ::dataset-nocode
    )
   )
+
 
 ;; (->
 ;;  (tc/dataset
@@ -86,6 +89,14 @@
 
            [:span
             (docu-doc-string key)]
+
+           [:hr]
+           [:div "Example:"]
+           [:div
+            [:p/code {:code (str
+                             (get-in definition [:documentation :code-example]
+                                     "" ))
+                      :bg-class "bg-light"}]]
 
            [:hr]
            ]))))

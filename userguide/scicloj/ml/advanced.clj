@@ -24,70 +24,92 @@
 ["### Custom dataset->dataset transforming functions in a metamorph pipeline"]
 ["### inline fn"]
 ["### Custom metamorph compliant function"]
-["### Custom function which behaves like a model"]
-(comment
-  (require  '[scicloj.ml.core :as ml]
-            '[scicloj.ml.metamorph :as mm]
-            '[scicloj.ml.dataset :as ds]
-            '[tech.v3.datatype.functional :as fun]
-            )
+["### Custom model function"]
 
-  (def train-data
-    (ds/dataset {:time [1 2 3 4 5 6 7 8 9 10]
-                 :val [1 3 4 4 20 3 4 18 39 23]}))
-  (def test-data
-    (ds/dataset {:time [11 12 13 14 15]
-                 :val [nil nil  nil nil nil ]}))
+["In this chapter we see how to build a custom metamorph complinat function, which behaves like a simple model.
+It takes the mean of the training data and applies this the to the test data.
+"]
+(require  '[scicloj.ml.core :as ml]
+          '[scicloj.ml.metamorph :as mm]
+          '[scicloj.ml.dataset :as ds]
+          '[tech.v3.datatype.functional :as fun]
+          )
 
+["Here we create dummy training data, which is like a time series.
+We have values for time step 1-10, and want to predict (using the mean),
+the value for future timestpes.
+"]
+(def train-data
+  (ds/dataset {:time [1 2 3 4 5 6 7 8 9 10]
+               :val [1 3 4 4 20 3 4 18 39 23]}))
+(def test-data
+  (ds/dataset {:time [11 12 13 14 15]
+               :val [nil nil  nil nil nil ]}))
 
-  (defn MEAN-model []
-    (fn [ctx]
-       (case (:metamorph/mode ctx)
-         :fit
-         (let [vals-so-far (-> ctx :metamorph/data :val seq)
-               mean-so-far (fun/mean vals-so-far)
-               step-id (:metamorph/id ctx)
-               ]
-           (assoc ctx step-id mean-so-far)
-           )
-         :transform
-         (let [step-id (:metamorph/id ctx)
-               mean-so-far (get ctx step-id)
-               ds (:metamorph/data ctx)
-               updated-ds (-> ds
-                              (ds/add-or-replace-column :val mean-so-far ))]
-           (assoc ctx :metamorph/data updated-ds))))
-    )
+["Next we create the moddel function. It makes use of namespaced
+key destructuring, which allows very compact code.
 
-  (def pipe
-    (ml/pipeline
-     (MEAN-model)
-     ))
+The :id,:data and :mode keys from the context ctx,
+become local bindings.
 
+In :mode :fit, we calculate the mean of the (training) data and store it in ctx under an `id` which is passed to
+the function by `metamorph` and is a unique id of the step.
+This we use then as key to store the mean in the context, so that in :transform we can read it from the ctx under the same `id`.
+The `id` passed into the function is the same in :fit and :transform (but unique per step)
+So we see how to pass data from the pipeline run in mode :fit to the run in mode :transform.
+"
+ ]
 
-  (def trained-ctx
-    (pipe {:metamorph/data train-data
-           :metamorph/mode :fit}))
+(defn mean-model []
+  (fn [{:metamorph/keys [id data mode] :as ctx}]
+    (case mode
+      :fit
+      (let [vals-so-far (-> data :val seq)
+            mean-so-far (fun/mean vals-so-far)
+            ]
+        (assoc ctx id mean-so-far)
+        )
+      :transform
+      (let [mean-so-far (get ctx id)
+            updated-ds (-> data
+                           (ds/add-or-replace-column :val mean-so-far ))]
+        (assoc ctx :metamorph/data updated-ds)))))
 
-  (def predicted-ctx
-    (pipe
-     (merge trained-ctx
-            {:metamorph/data test-data
-             :metamorph/mode :transform})))
+["The piplein has only one step, the model function itself."]
+(def pipe-fn
+  (ml/pipeline
+   (mean-model)
+   ))
 
-  (def prediction
-    (:metamorph/data predicted-ctx))
+["We run the training as usual, passing a map of data and mode. (The id gets added automatically)"]
 
-  prediction
-  ;; => _unnamed [5 2]:
-  ;;    |  :time |        :val |
-  ;;    |--------|-------------|
-  ;;    |     11 | 10.66666667 |
-  ;;    |     12 | 10.66666667 |
-  ;;    |     13 | 10.66666667 |
-  ;;    |     14 | 10.66666667 |
-  ;;    |     15 | 10.66666667 |
-  )
+(def trained-ctx
+  (pipe-fn {:metamorph/data train-data
+         :metamorph/mode :fit}))
+
+[ "Same for the prediction, in mode :transform, merging in the trained-ctx but overwritting data and mode"]
+
+(def predicted-ctx
+  (pipe-fn
+   (merge trained-ctx
+          {:metamorph/data test-data
+           :metamorph/mode :transform})))
+
+["This runs the pipeline again and we have the prediction available in :metamorph/data"]
+
+(def prediction
+  (:metamorph/data predicted-ctx))
+
+prediction
+ ;; => _unnamed [5 2]:
+ ;;    |  :time |        :val |
+ ;;    |--------|-------------|
+ ;;    |     11 | 10.66666667 |
+ ;;    |     12 | 10.66666667 |
+ ;;    |     13 | 10.66666667 |
+ ;;    |     14 | 10.66666667 |
+ ;;    |     15 | 10.66666667 |
+
 ["### Lifting a existing dataset->dataset transformation fn"]
 ["### Keep auxiliary data in pipeline"]
 

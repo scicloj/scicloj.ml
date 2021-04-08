@@ -1,14 +1,10 @@
 (ns scicloj.ml.third-party
+(:require [notespace.api :as note]
+          [notespace.kinds :as kind ]
 
-(:require
- [notespace.api :as note]
- [notespace.kinds :as kind ]
-
- [scicloj.ml.ug-utils :refer :all]
- [dk.simongray.datalinguist.ml.crf]
- [clj-djl.mmml]
- )
-  )
+          [scicloj.ml.ug-utils :refer :all]
+          [dk.simongray.datalinguist.ml.crf]
+          [clj-djl.mmml]))
 
 (comment
   (note/init-with-browser)
@@ -29,7 +25,7 @@
          '[tech.v3.datatype.functional :as dfn])
 
 
-["# Deep learning model via clj-djl "]
+["# Deep learning models via clj-djl "]
 
 
 

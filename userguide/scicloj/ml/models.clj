@@ -9,7 +9,6 @@
  [clojure.string :as str]
  [scicloj.ml.ug-utils :refer :all]))
 
-
 ^kind/hidden
 (comment
   (note/init-with-browser)
@@ -54,4 +53,3 @@ and [Xgboost](https://xgboost.readthedocs.io/en/latest/jvm/index.html)"]
 ["## Xgboost"]
 ^kind/hiccup-nocode
 (render-key-info ":xgboost")
-
