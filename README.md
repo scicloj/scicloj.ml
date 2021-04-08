@@ -82,6 +82,7 @@ Code:
 
 Docu is here:
 * https://scicloj.github.io/scicloj.ml/userguide-intro.html
+* https://scicloj.github.io/scicloj.ml/userguide-advanced.html
 * https://scicloj.github.io/scicloj.ml/userguide-models.html
 * https://scicloj.github.io/scicloj.ml/userguide-transformers.html
 * https://scicloj.github.io/scicloj.ml/userguide-titanic.html
