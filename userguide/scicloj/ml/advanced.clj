@@ -72,8 +72,9 @@ ctx-2
 
 ["### Custom metamorph compliant function"]
 
-["Custom steps in metamorp pipelines are normal Clojure, functions."]
-["Conceptualy we habe three types of functions, they differ by which keys in the context they manipulate."]
+["Custom steps in metamorph pipelines are normal Clojure, functions."]
+["Conceptually we have three types of functions, they differ by which keys in
+ the context they manipulate."]
 
 ["1. Data manipulation functions. Use only :metamorph/data
   2. Model type of functions. They use :metamorph/data , :metamorph/mode, :metamorph:id
@@ -115,11 +116,14 @@ In machine learning, this is as well known as feature engineering, as new featur
 
 
 ["We have now three different ways to write a metamorph compliant function"]
-
+["1. Inline
+  2. Lifting
+  3. Named function
+"]
 
 ["### Inline fn"]
 
-["WE can define inline a metamorph compliant function"]
+["We can define inline a metamorph compliant function"]
 (def pipe-fn-inline
   (ml/pipeline
    (fn [{:metamorph/keys [data]}]
@@ -143,7 +147,9 @@ a :metamorph/data -> :metamorph/data function"]
 
 
 ["### Metamorph compliant function"]
-["We write directly a metamorph compliant, named , function."]
+["We write directly a metamorph compliant, named , function.
+The body of the function is the same as the body of the inline fn from before.
+"]
 
 (defn mm->cat []
   (fn [{:metamorph/keys [data]}]
