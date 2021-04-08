@@ -26,7 +26,7 @@
 ["### Custom metamorph compliant function"]
 ["### Custom model function"]
 
-["In this chapter we see how to build a custom metamorph complinat function, which behaves like a simple model.
+["In this chapter we see how to build a custom metamorph compliant function, which behaves like a simple model.
 It takes the mean of the training data and applies this the to the test data.
 "]
 (require  '[scicloj.ml.core :as ml]
@@ -46,7 +46,7 @@ the value for future timestpes.
   (ds/dataset {:time [11 12 13 14 15]
                :val [nil nil  nil nil nil ]}))
 
-["Next we create the moddel function. It makes use of namespaced
+["Next we create the model function. It makes use of namespaced
 key destructuring, which allows very compact code.
 
 The :id,:data and :mode keys from the context ctx,
@@ -75,7 +75,7 @@ So we see how to pass data from the pipeline run in mode :fit to the run in mode
                            (ds/add-or-replace-column :val mean-so-far ))]
         (assoc ctx :metamorph/data updated-ds)))))
 
-["The piplein has only one step, the model function itself."]
+["The pipeline has only one step, the model function itself."]
 (def pipe-fn
   (ml/pipeline
    (mean-model)
@@ -87,7 +87,7 @@ So we see how to pass data from the pipeline run in mode :fit to the run in mode
   (pipe-fn {:metamorph/data train-data
          :metamorph/mode :fit}))
 
-[ "Same for the prediction, in mode :transform, merging in the trained-ctx but overwritting data and mode"]
+[ "Same for the prediction, in mode :transform, merging in the trained-ctx but overwriting data and mode"]
 
 (def predicted-ctx
   (pipe-fn
