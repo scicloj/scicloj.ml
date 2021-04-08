@@ -4,6 +4,7 @@
    [notespace.kinds :as kind ])
   )
 
+^kind/hidden
 (comment
   (note/init-with-browser)
   (notespace.api/update-config
@@ -13,6 +14,12 @@
   (note/reread-this-notespace)
   (note/render-static-html "docs/userguide-advanced.html")
   (note/init) )
+
+(require  '[scicloj.ml.core :as ml]
+          '[scicloj.ml.metamorph :as mm]
+          '[scicloj.ml.dataset :as ds]
+          '[tech.v3.datatype.functional :as fun]
+          )
 
 
 ["### Special keys in metamorph context map"]
@@ -48,6 +55,7 @@ at keys `:scicloj.metamorph.ml/feature-ds` and  `:scicloj.metamorph.ml/target-ds
 
 ["The first is to comment out parts of the pipeline, run it and
  inspect the result, the context"]
+
 
 
 (def train-data
@@ -99,8 +107,8 @@ ctx-2
  the context they manipulate."]
 
 ["1. Data manipulation functions. Use only :metamorph/data
-  2. Model type of functions. They use :metamorph/data , :metamorph/mode, :metamorph:id
-     and behave different in mode :fit  and :mode transform. Eventually they use other keys in the context.
+  2. Model type of functions. They use :metamorph/data , :metamorph/mode,
+ :metamorph/id  and behave different in mode :fit  and :mode transform. Eventually they use other keys in the context.
   3. They use other keys in the context to pass auxiliary data
 "
  ]
@@ -129,7 +137,7 @@ In machine learning, this is as well known as feature engineering, as new featur
 
  "]
 
-["Helper function which doe the transformation of a single value"]
+["Helper function which does the transformation of a single value"]
 (defn ->cat [x]
   (cond (< x 0 )          :negative
         (and (pos? x)
@@ -191,11 +199,7 @@ The body of the function is the same as the body of the inline fn from before.
 ["In this chapter we see how to build a custom metamorph compliant function, which behaves like a simple model.
 It takes the mean of the training data and applies this the to the test data.
 "]
-(require  '[scicloj.ml.core :as ml]
-          '[scicloj.ml.metamorph :as mm]
-          '[scicloj.ml.dataset :as ds]
-          '[tech.v3.datatype.functional :as fun]
-          )
+
 
 ["Here we create dummy training data, which is like a time series.
 We have values for time step 1-10, and want to predict (using the mean),
