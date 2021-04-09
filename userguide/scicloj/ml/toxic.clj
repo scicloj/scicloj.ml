@@ -19,10 +19,12 @@
 
   )
 
-(def num-grid-points 20)
-(def num-test-rows 159571)
-;; (def num-test-rows 1000)
+(def num-grid-points 50)
+(def num-train-rows 159571)
+;; (def num-train-rows 1000)
 
+(def num-test-rows 153164)
+;; (def num-test-rows 1000)
 
 (require '[scicloj.ml.core :as ml]
          '[scicloj.metamorph.ml.gridsearch :as gs]
@@ -30,6 +32,7 @@
          '[scicloj.ml.dataset :as ds]
          '[scicloj.metamorph.ml.loss :as loss]
          '[scicloj.ml.smile.nlp :as nlp]
+         '[tech.v3.datatype.functional :as dtf]
          '[pppmap.core :as ppp]
          )
 
@@ -39,37 +42,8 @@
   (->
    (ds/dataset "data/toxic/train.csv.gz" {:key-fn keyword :parser-fn :string} )
    ;; (ds/shuffle)
-   (ds/head num-test-rows)
+   (ds/head num-train-rows)
    ))
-
-
-
-
-
-(frequencies
- (:toxic df))
-
-;; (def freqs->SparseArray
-;;   (memoize nlp/freqs->SparseArray)
-;;   )
-
-;; (defn tfidf->sparse [tfidf-col sparse-col]
-;;   (fn [ctx]
-;;     (assoc ctx
-;;            :metamorph/data
-;;            (ds/add-column
-;;             (:metamorph/data ctx)
-;;             tfidf-col
-;;             (fn [ds]
-;;               (ppp/ppmap-with-progress "tfidf->sparse" 1000
-;;                #(freqs->SparseArray
-;;                  %
-;;                  (-> ctx :tech.v3.libs.smile.metamorph/bow->sparse-vocabulary :vocab->index-map))
-;;                (get ds sparse-col ds)
-;;                )
-;;               )
-
-;;             ))))
 
 
 
@@ -80,23 +54,17 @@
 
 
 (def ->vocabulary-top-n
-  (memoize nlp/->vocabulary-top-n)
-  )
+  (memoize nlp/->vocabulary-top-n))
 
 (defn make-vocab-fn [n]
   (fn [bows]
-    (->vocabulary-top-n bows n)
-    ))
-
-;; (def pipe-opts {:n 10})
+    (->vocabulary-top-n bows n)))
 
 
 (def fixed-pipe
   (ml/pipeline
    (mm/count-vectorize :comment_text :bow {:text->bow-fn text->bow})
-   (mm/bow->tfidf :bow :tfidf))
-
-  )
+   (mm/bow->tfidf :bow :tfidf)))
 
 (def splits
   (->
@@ -117,12 +85,12 @@
                     {:model-type :smile.classification/sparse-logistic-regression
                      :sparse-column :sparse
                      :n-sparse-columns (pipe-opts :n)
-                     })
-             )))
+                     }))))
 
   (def test-ds
     (-> (ds/dataset "data/toxic/test.csv" {:key-fn keyword :parser-fn :string} )
         (ds/rename-columns {:text :comment_text})
+        (ds/head num-test-rows)
         ))
 
   (def test-ids (:id test-ds))
@@ -130,23 +98,8 @@
   (def test-ds
     (->
      (fixed-pipe {:metamorph/data test-ds})
-     :metamorph/data)
-    )
-(comment
+     :metamorph/data))
 
-  (def df
-    (->
-     (fixed-pipe {:metamorph/data df})
-     :metamorph/data)
-    )
-
-  (def pipe
-    (make-pipe {:n 100 :target :toxic}))
-
-  (pipe
-   {:metamorph/data df
-    :metamorph/mode :fit
-    }))
 
 (defn train-and-eval [target]
 
@@ -163,10 +116,8 @@
          pipes
          splits
          loss/classification-accuracy
-         :accuracy
-         )
+         :accuracy)
 
-        _ (def evals evals)
         m
         (map
          #(merge (select-keys % [:metric :pipe-fn])
@@ -206,32 +157,46 @@
 
 
         probs (-> prediction-on-test :metamorph/data (#(get % "1")))]
-
-    probs
+    {target
+     {:metric (:metric best)
+      :probs probs}}
 
     )
   )
 
 
 
+(def model-results
+  (mapv
+   train-and-eval
 
 
+   [:toxic
+    :severe_toxic
+    :obscene
+    :threat
+    :insult
+    :identity_hate]))
+
+(def model-results
+  (apply merge model-results)
+  )
+
+
+
+
+(def over-all-accuracy
+  (dtf/mean (map :metric (vals model-results))))
 
 (def submission
   (ds/dataset
-   {:id test-ids
-    :toxic (train-and-eval :toxic)
-    :severe_toxic (train-and-eval :severe_toxic)
-    :obscene (train-and-eval :obscene)
-    :threat (train-and-eval :threat)
-    :insult (train-and-eval :insult)
-    :identity_hate (train-and-eval :identity_hate)
-    }
-   )
-  )
+   (assoc
+    (zipmap
+     (keys model-results)
+     (map :probs  (vals model-results)) )
+    :id test-ids)))
 
+(println "accuracy: " over-all-accuracy)
 (ds/write-csv! submission "submission.csv" )
-
-
 
 (println "Finished")
