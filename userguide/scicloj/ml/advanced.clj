@@ -1,10 +1,8 @@
 (ns scicloj.ml.advanced
-(:require
- [notespace.api :as note]
- [notespace.kinds :as kind ]
- [scicloj.ml.ug-utils :refer :all]
- )
-  )
+  (:require
+   [notespace.api :as note]
+   [notespace.kinds :as kind ]
+   [scicloj.ml.ug-utils :refer :all]))
 
 ^kind/hidden
 (comment
@@ -22,8 +20,7 @@
 (require  '[scicloj.ml.core :as ml]
           '[scicloj.ml.metamorph :as mm]
           '[scicloj.ml.dataset :as ds]
-          '[tech.v3.datatype.functional :as fun]
-          )
+          '[tech.v3.datatype.functional :as fun])
 
 
 ["### Special keys in metamorph context map"]
@@ -261,10 +258,8 @@ Conceptually this function is a pair of train/predict functions, which behaves l
     (case mode
       :fit
       (let [vals-so-far (-> data :val seq)
-            mean-so-far (fun/mean vals-so-far)
-            ]
-        (assoc ctx id mean-so-far)
-        )
+            mean-so-far (fun/mean vals-so-far)]
+        (assoc ctx id mean-so-far))
       :transform
       (let [mean-so-far (get ctx id)
             updated-ds (-> data
@@ -389,8 +384,7 @@ sequences."]
 (def titanic-data
   (->   (ds/dataset "https://github.com/scicloj/metamorph-examples/raw/main/data/titanic/train.csv"
                     {:key-fn keyword
-                     :parser-fn :string
-                     })))
+                     :parser-fn :string})))
 
 ["Now we create a seq of pipeline fns, in this case having only **one** pipeline function"]
 (def pipe-fn
@@ -425,6 +419,8 @@ the model for pretty printing purposes."]
  (in this example we have only one), these keys with the
 evaluation metrics and other information"]
 (keys (first (first eval-results)))
+
+["This result of `evaluate-pipelines` is documented in detail here:  [metamorph.ml](https://github.com/scicloj/metamorph.ml/blob/main/README.md#evaluate-pipelines)"]
 
 ["By default the `evaluate-pipeline` filters out the datasets already from the result,
 which would else wise be in as well. This can be configured in the options when calling it."]
@@ -471,10 +467,7 @@ which would else wise be in as well. This can be configured in the options when 
                                          ;; we return results of all pipelines and all folds
                                          ;; By default only the best fold of the best pipeline is returned
                                          {:return-best-pipeline-only false
-                                          :return-best-crossvalidation-only false
-                                          }
-
-                                         ))
+                                          :return-best-crossvalidation-only false}))
 
 
 ["This gives 2 * 10 = 20 results:"]
@@ -506,8 +499,7 @@ which would else wise be in as well. This can be configured in the options when 
   (->>
    (ml/sobol-gridsearch {:max-iterations (ml/linear 1 1000)
                          :lambda (ml/linear 0 1)
-                          :tolerance (ml/linear 1e-9 1e-1 20)
-                         })
+                          :tolerance (ml/linear 1e-9 1e-1 20)})
    (take 20)))
 
 ["This will produce an optimized search grid of all combinations of the options, by taking first larger and then smaller intervals in the boundaries of the options"
@@ -523,8 +515,7 @@ which would else wise be in as well. This can be configured in the options when 
                                          ml/classification-accuracy
                                          :accuracy
                                          {:return-best-pipeline-only false
-                                          :return-best-crossvalidation-only false
-                                          }))
+                                          :return-best-crossvalidation-only false}))
 
 ["This gives 10 * 20 = 200 model performance results ( 10 folds times 20 option combinations)
  for which I print here the distribution:"]
@@ -569,8 +560,7 @@ best-logistic-regression-model
  (best-pipe-fn
   (merge best-fit-ctx
          {:metamorph/data (-> titanic-data  (ds/shuffle {:seed 123})  (ds/head 10))
-          :metamorph/mode :transform
-          }))
+          :metamorph/mode :transform}))
  :metamorph/data
  (ds/column-values->categorical :Survived))
 
