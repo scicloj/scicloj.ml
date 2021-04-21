@@ -526,7 +526,7 @@ which would else wise be in as well. This can be configured in the options when 
                                           :return-best-crossvalidation-only false
                                           }))
 
-["This gives 10 * 20 = 10 model performance results (for 10 folds times 20 option combinations)
+["This gives 10 * 20 = 200 model performance results ( 10 folds times 20 option combinations)
  for which I print here the distribution:"]
 (frequencies
  (map :metric
