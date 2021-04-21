@@ -4,7 +4,7 @@
   <packaging>jar</packaging>
   <groupId>scicloj</groupId>
   <artifactId>scicloj.ml</artifactId>
-  <version>0.1.0-beta1</version>
+  <version>0.1.0-beta2</version>
   <name>scicloj.ml</name>
   <dependencies>
     <dependency>
@@ -31,12 +31,12 @@
     <dependency>
       <groupId>scicloj</groupId>
       <artifactId>scicloj.ml.smile</artifactId>
-      <version>5.04</version>
+      <version>5.05</version>
     </dependency>
     <dependency>
       <groupId>scicloj</groupId>
       <artifactId>metamorph.ml</artifactId>
-      <version>0.3.0-beta1</version>
+      <version>0.3.0-beta2</version>
     </dependency>
   </dependencies>
   <build>
