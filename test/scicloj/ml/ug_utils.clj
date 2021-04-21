@@ -100,3 +100,9 @@
 
            [:hr]
            ]))))
+
+(defn remove-deep [key-set data]
+  (clojure.walk/prewalk (fn [node] (if (map? node)
+                                    (apply dissoc node key-set)
+                                    node))
+                        data))
