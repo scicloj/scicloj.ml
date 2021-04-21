@@ -510,9 +510,9 @@ which would else wise be in as well. This can be configured in the options when 
                          })
    (take 20)))
 
-["This will produce an optimized search grid of all values between 1 1000, by taking first larger and then smaller intervals."
- "So taking the first 20 of these covers already the full space. See help of the ml/sobol-gridsearch for more information"
- "This gives us 20 grid points for our parameter search, which we can easily transform in a sequence 10 pipeline functions:"
+["This will produce an optimized search grid of all combinations of the options, by taking first larger and then smaller intervals in the boundaries of the options"
+ "So taking the first 20 of these covers already the full space roughly. See help of the ml/sobol-gridsearch for more information."
+ "This gives us 20 grid points for our parameter search, which we can easily transform in a sequence of 20 pipeline functions:"
  ]
 
 (def all-pipelines
@@ -526,7 +526,8 @@ which would else wise be in as well. This can be configured in the options when 
                                           :return-best-crossvalidation-only false
                                           }))
 
-["This gives 10 * 20 = 10 model performance results, for which I print here teh distribution:"]
+["This gives 10 * 20 = 10 model performance results (for 10 folds times 20 option combinations)
+ for which I print here the distribution:"]
 (frequencies
  (map :metric
       (flatten eval-results)))
