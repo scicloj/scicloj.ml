@@ -539,6 +539,12 @@ which would else wise be in as well. This can be configured in the options when 
        (sort-by :metric)
        last))
 
+["with a classification accuracy of:"]
+(:metric best-result)
+
+["and a mean classification accuracy over all folds of:"]
+(:mean best-result)
+
 ["Out of this can get the trained logistic regression model (in this case a Smile Java object), "]
 (def best-logistic-regression-model
   (ml/thaw-model (get-in best-result [:fit-ctx :model] )))
