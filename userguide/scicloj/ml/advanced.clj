@@ -29,8 +29,8 @@
 handle them in the same way."]
 
 [" `:metamorph/data` contains the main data object, the pipeline
- is supposed to manipulate. The type of object can be anything, but all
-functionality on `scicloj.ml` requires it to be a `tech.v3.dataset`
+ is supposed to manipulate. The type of object can be anything for `metamorph.ml`,
+but all functionality in `scicloj.ml` requires it to be a `tech.v3.dataset`
  instance. For further information see in
  [metamorph](https://github.com/scicloj/metamorph)" ]
 
@@ -221,6 +221,7 @@ The body of the function is the same as the body of the inline function from bef
 
 ["In this chapter we see how to build a custom metamorph compliant function, which behaves like a simple model.
 It takes the mean of the training data and applies this the to the test data.
+So this function need to behave differently in mode: fit then in mode :transform.
 "]
 
 
@@ -353,7 +354,8 @@ various types of grid search with various cross-validation schemes can be realiz
 
 
 
-["By leaving it to the user to provide the seq of pipeline-fns, the sequence of train/test pairs and teh metric function,
+["By leaving it to the user to provide the seq of pipeline-fns,
+ the sequence of train/test pairs and the metric function,
 the `evaluate-pipelines` function can be applied to a large variety of used cases. We will see below some examples, how to generate this
 sequences."]
 
@@ -405,10 +407,12 @@ a `tech.ml.dataset`)"
 
 (def train-test-data-pairs (ds/split->seq titanic-data :holdout))
 
+["This results in a sequence of lengt 1, having one train/test split."]
+
 (def eval-results (ml/evaluate-pipelines all-pipelines
-                                        train-test-data-pairs
-                                        ml/classification-accuracy
-                                        :accuracy))
+                                         train-test-data-pairs
+                                         ml/classification-accuracy
+                                         :accuracy))
 ["The result contains quite some information, I remove here the binary representation of
 the model for pretty printing purposes."]
 (remove-deep
@@ -416,7 +420,7 @@ the model for pretty printing purposes."]
  eval-results)
 
 ["On high level, the result contains for every fold and every pipe-fn
- (in this example we have only one), these keys with the
+ (in this example we have only one fold and one pipe-fn), these keys with the
 evaluation metrics and other information"]
 (keys (first (first eval-results)))
 
@@ -435,7 +439,8 @@ which would else wise be in as well. This can be configured in the options when 
 (def train-test-data-pairs (ds/split->seq titanic-data :kfold {:k 10}))
 
 ["And then we just create two pipeline function via copy/paste/adapt.
-(In reality we wanted to do this with a pipeline creating function taking parameters, see below).
+(In reality we wanted to do this with a pipeline creating function
+taking parameters, see below).
 "]
 
 
@@ -460,6 +465,7 @@ which would else wise be in as well. This can be configured in the options when 
 (def all-pipelines [pipe-fn-1 pipe-fn-2])
 
 
+["Running the evaluation of the 2 pipeline functions"]
 (def eval-results (ml/evaluate-pipelines all-pipelines
                                          train-test-data-pairs
                                          ml/classification-accuracy
@@ -476,8 +482,9 @@ which would else wise be in as well. This can be configured in the options when 
 
 ["#### Evaluate several pipeline with Titanic example - grid search pipelines"]
 
-["Now we will generate our seq of pipeline functions."
- "First we need a function which creates a pipeline function from parameters:"
+["Now we will **generate** our seq of pipeline functions."
+ "First we need a function which creates a pipeline function
+from parameters:"
  ]
 
 (defn create-pipe-fn [params]
@@ -493,7 +500,8 @@ which would else wise be in as well. This can be configured in the options when 
 
 (def pipe-fn (create-pipe-fn {:max-iterations 1}))
 
-["But we go one step further already and grid search over potential values using sobol sequences"]
+["But we go one step further already and grid search over
+potential values using sobol sequences"]
 
 (def all-options
   (->>
@@ -502,14 +510,19 @@ which would else wise be in as well. This can be configured in the options when 
                           :tolerance (ml/linear 1e-9 1e-1 20)})
    (take 20)))
 
-["This will produce an optimized search grid of all combinations of the options, by taking first larger and then smaller intervals in the boundaries of the options"
- "So taking the first 20 of these covers already the full space roughly. See help of the ml/sobol-gridsearch for more information."
- "This gives us 20 grid points for our parameter search, which we can easily transform in a sequence of 20 pipeline functions:"
+["This will produce an optimized search grid of all combinations of the
+options, by taking first larger and then smaller
+intervals in the boundaries of the options."
+ "So taking the first 20 of these covers already the full space coarse-grained.
+See help of the ml/sobol-gridsearch for more information."
+ "This gives us 20 grid points for our parameter search,
+which we can easily transform in a sequence of 20 pipeline functions:"
  ]
 
 (def all-pipelines
   (map create-pipe-fn all-options))
 
+["Evaluating all 20 pipeline functions:"]
 (def eval-results (ml/evaluate-pipelines all-pipelines
                                          train-test-data-pairs
                                          ml/classification-accuracy
@@ -517,7 +530,7 @@ which would else wise be in as well. This can be configured in the options when 
                                          {:return-best-pipeline-only false
                                           :return-best-crossvalidation-only false}))
 
-["This gives 10 * 20 = 200 model performance results ( 10 folds times 20 option combinations)
+["This gives 10 * 20 = 200 model performance results ( 10 folds times 20 pipeline)
  for which I print here the distribution:"]
 (frequencies
  (map :metric
@@ -536,7 +549,8 @@ which would else wise be in as well. This can be configured in the options when 
 ["and a mean classification accuracy over all folds of:"]
 (:mean best-result)
 
-["Out of this can get the trained logistic regression model (in this case a Smile Java object), "]
+["Out of this we can get the trained logistic regression model
+(in this case a Smile Java object), "]
 (def best-logistic-regression-model
   (ml/thaw-model (get-in best-result [:fit-ctx :model] )))
 

@@ -65,7 +65,7 @@ The abstraction is independent from Smile, so we could makes bridges to other li
 ["## Data transformation pipelines."]
 
 ["In order to apply machine learning, the data needs to be transformed from its original form ,
-(often as a data file), into the form required my the model.
+(often as a data file), into the form required by the model.
  Sometimes these transformation are simple, like re-encode data,
 sometimes they are very complex. In some contexts this is as well called
  feature engineering, which can result in arbitrary
@@ -152,7 +152,7 @@ in three simple namespaces.
 
 ["
 {:deps {
-        scicloj/scicloj.ml {:mvn/version \"0.1.0\"}} }
+        scicloj/scicloj.ml {:mvn/version \"0.1.0-beta2\"}} }
 "]
 
 
@@ -209,7 +209,7 @@ and can be later retrieved to transform the numeric prediction back to its
 categorical form."
  ]
 
-["In `scicloj.ml` we pass a whole dataset to a model, so we need to mark
+["In `scicloj.ml` we pass a whole dataset to a model, and we need to mark
 the inference target via function `set-inference-target`.
 All other columns are used then as feature columns.
 To restric the feature column, I simply remove most of them and keep only one, :Pclass"]
@@ -235,7 +235,7 @@ which will execute all pipeline steps and train as well the model. "]
             :metamorph/mode :fit}))
 
 ["Now we have a trained model inside trained-ctx. This is a usual map, so can be inspected in the repl.
- As the model is based on Smile, the trained-ctx contains the java class representing the trained model internally.
+ As the model is based on Smile, the trained-ctx contains the java class representing the trained model.
 "]
 
 ["Now we execute the pipeline in mode :transform,
@@ -266,13 +266,13 @@ which we can easily transform into the original categories.
     )
 
 
-["This show the predicted survival. "]
+["This shows the predicted survival. "]
 
 ["The documentation of `mm/model` here https://scicloj.github.io/scicloj.ml/scicloj.ml.metamorph.html#var-model"
- "documents this special behavior of the function" ]
+ "documents this special behavior of the function, which does somthing different in mode :fit vs mode :transform" ]
 
 ["Any form of feature-engineering takes now the same form.
 We will successively
 add more and more steps into the pipeline to improve the model."]
 
-["This can be build-in function or custom functions as we see later"]
+["This can be build-in functions or custom functions as we see later"]
