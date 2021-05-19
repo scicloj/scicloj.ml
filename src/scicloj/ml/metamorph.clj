@@ -43,6 +43,9 @@
             [tech.v3.dataset.metamorph]
             [scicloj.ml.smile.nlp]
             [scicloj.metamorph.ml]
+            [scicloj.ml.smile.projections]
+
+            [scicloj.metamorph.ml.preprocessing]
             )
   )
 
@@ -58,7 +61,12 @@
                          model
                          )
 
-
+(exporter/export-symbols scicloj.metamorph.ml.preprocessing
+                         std-scale
+                         )
+(exporter/export-symbols scicloj.ml.smile.projections
+                         reduce-dimensions
+                         )
 
 (export-all [tech.v3.dataset.metamorph
              tablecloth.pipeline
@@ -73,6 +81,5 @@
              split
              split->seq
              ])
-
 
 ;; (ns-publics  'scicloj.ml.mm)

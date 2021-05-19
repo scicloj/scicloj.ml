@@ -19,11 +19,18 @@
    :options
    (vals @scicloj.ml.core/model-definitions*)))
 
+(defn dataset->md-hiccup [mds]
+  (let [height (* 46 (- (count (str/split-lines (str mds))) 2))
+        height-limit (min height 800)]
+    [:div {:class "table table-striped table-hover table-condensed table-responsive"
+           ;; :style {:height (str height-limit "px")}
+           }
+     (view/markdowns->hiccup mds)]))
 
 (defmethod kind/kind->behaviour ::dataset-nocode
   [_]
   {:render-src?   false
-   :value->hiccup #'view/dataset->md-hiccup})
+   :value->hiccup #'dataset->md-hiccup})
 
 (defn docu-options [model-key]
   (kind/override
@@ -85,7 +92,7 @@
 
 
            [:span
-            (view/dataset->md-hiccup (docu-options key) )]
+            (dataset->md-hiccup (docu-options key) )]
 
            [:span
             (docu-doc-string key)]
