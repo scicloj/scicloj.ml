@@ -63,6 +63,7 @@
 
 (exporter/export-symbols scicloj.metamorph.ml.preprocessing
                          std-scale
+                         min-max-scale
                          )
 (exporter/export-symbols scicloj.ml.smile.projections
                          reduce-dimensions
