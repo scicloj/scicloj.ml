@@ -33,4 +33,15 @@
 (exporter/export-symbols scicloj.metamorph.core
                          pipeline
                          ->pipeline
-                         lift)
+                         lift
+                         do-ctx
+                         ;; def-ctx  ; cannot be exported, is tehreofre copied below
+                         pipe-it
+                         )
+
+(defmacro def-ctx
+  "Convenience macro for defining pipelined operations that
+   bind the current value of the context to a var, for simple
+   debugging purposes."
+  [varname]
+  `(do-ctx (fn [ctx#] (def ~varname ctx#))))
