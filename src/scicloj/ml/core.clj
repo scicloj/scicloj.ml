@@ -38,7 +38,7 @@
                          ;; def-ctx  ; cannot be exported, is tehreofre copied below
                          pipe-it
                          fit
-                         ;; transform
+                          transform
                          )
 
 (defmacro def-ctx

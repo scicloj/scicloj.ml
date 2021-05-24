@@ -38,7 +38,7 @@
 (docu-fn (var mm/count-vectorize))
 
 ["In the following we transform the text given in a dataset into a
- map of token counts applying some default text normalisation." ]
+ map of token counts applying some default text normalization." ]
 (def data (ds/dataset {:text ["Hello Clojure world, hello ML word !"
                               "ML with Clojure is fun"
                               ]}))
@@ -106,7 +106,7 @@ ctx-sparse
 ^kind/dataset
 (:metamorph/data ctx-sparse)
 
-["The SparseArry instances look like this:"]
+["The SparseArray instances look like this:"]
 (zipmap
  (:text bow-ds)
  (map seq
@@ -165,21 +165,84 @@ ctx-sparse
 (docu-fn (var mm/bow->tfidf))
 ["Here we calculate the tf-idf score from the bag of words:"]
 
-(def ctx-tfidf
-  (ml/fit
-   bow-ds
-   (mm/bow->tfidf :bow :tfidf)))
-
-ctx-tfidf
-
 ^kind/dataset
-(:metamorph/data ctx-tfidf)
+(ml/pipe-it
+ bow-ds
+ (mm/bow->tfidf :bow :tfidf))
+
 
 
 (docu-fn (var mm/model))
+["The `model` transformer allows to execute all machine learning models.clj
+which register themself inside the `metamorph.ml` system via the function
+`scicloj.metamorph.ml/define-model!`.
+The build in models are listed here:
+https://scicloj.github.io/scicloj.ml/userguide-models.html
+
+"]
+
+["We use the Iris data for this example:"]
+
+(def iris
+  (->
+   (ds/dataset
+    "https://raw.githubusercontent.com/scicloj/metamorph.ml/main/test/data/iris.csv" {:key-fn keyword})
+   (tech.v3.dataset.print/print-range 5)
+   )
+  )
+
+^kind/dataset
+iris
+
+(def train-test
+  (ds/train-test-split iris))
+
+["The pipeline consists in specifying theinference target,
+ transform target to categorical and the model function"]
+(def pipe-fn
+  (ml/pipeline
+   (mm/set-inference-target :species)
+   (mm/categorical->number [:species])
+   {:metamorph/id :model} (mm/model {:model-type :smile.classification/logistic-regression})))
+
+["First we run the training "]
+(def fitted-ctx
+  (ml/fit
+   (:train-ds train-test)
+   pipe-fn
+   ))
+
+^kind/hidden
+(defn dissoc-in [m ks]
+  (let [parent-path (butlast ks)
+        leaf-key (last ks)]
+    (if (= (count ks) 1)
+      (dissoc m leaf-key)
+      (update-in m parent-path dissoc leaf-key))))
+
+(dissoc-in  fitted-ctx [:model :model-data])
+
+["and then prediction on test"]
+
+(def transformed-ctx
+  (ml/transform pipe-fn fitted-ctx (:test-ds train-test)))
+
+(-> transformed-ctx
+    (dissoc-in [:model :model-data])
+    (update-in [:metamorph/data ] #(tech.v3.dataset.print/print-range % 5))
+    )
+
+["and we get the predictions: "]
+^kind/dataset
+(-> transformed-ctx
+    :metamorph/data
+    (ds/reverse-map-categorical-xforms)
+    (ds/select-columns :species)
+    (ds/head))
+
 
 (docu-fn (var mm/std-scale))
-["We can use teh std-scale transformator to center and scale data."]
+["We can use the std-scale transformer to center and scale data."]
 ["Lets take some example data:"]
 (def data
   (ds/dataset
