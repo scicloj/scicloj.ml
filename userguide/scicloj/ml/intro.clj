@@ -175,8 +175,10 @@ in three simple namespaces.
 
 (require '[scicloj.ml.core :as ml]
          '[scicloj.ml.metamorph :as mm]
-         '[scicloj.ml.dataset :refer [dataset add-column] ]
+         '[scicloj.ml.dataset :refer [dataset add-column] :as ds]
          )
+
+
 ["First we load the data."]
 (def titanic-train
   (->
