@@ -19,13 +19,17 @@
          '[scicloj.ml.dataset :as ds]
          '[scicloj.ml.metamorph :as mm]
          )
-
+^kind/hidden
 (defn docu-fn [v]
   (let [m (meta v)]
     (kind/override
-     [(str  "## " (:name m))
-      (:doc m
-            )]
+     [
+      (str  "## Transformer " "**" (:name m) "**")
+      "----------------------------------------------------------"
+      "__Clojure doc__:\n"
+      (:doc m)
+      "----------------------------------------------------------"
+      ]
      kind/md-nocode
      )))
 
@@ -39,8 +43,10 @@
                               "ML with Clojure is fun"
                               ]}))
 
-^kind/dataset
+^kind/dataset-grid
 data
+
+["_"]
 
 (def fitted-ctx
   (ml/pipe-it
@@ -48,6 +54,8 @@ data
    [
     (mm/count-vectorize :text :bow)
     ]))
+
+
 
 fitted-ctx
 
