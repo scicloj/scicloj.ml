@@ -38,7 +38,7 @@
 (docu-fn (var mm/count-vectorize))
 
 ["In the following we transform the text given in a dataset into a
- map of token counts applying some defaul text normalisation." ]
+ map of token counts applying some default text normalisation." ]
 (def data (ds/dataset {:text ["Hello Clojure world, hello ML word !"
                               "ML with Clojure is fun"
                               ]}))
@@ -49,11 +49,8 @@ data
 ["_"]
 
 (def fitted-ctx
-  (ml/pipe-it
-   data
-   [
-    (mm/count-vectorize :text :bow)
-    ]))
+  (ml/fit data
+          (mm/count-vectorize :text :bow)))
 
 
 
@@ -71,26 +68,24 @@ bow-ds
 
 
 (def fitted-ctx
-  (ml/pipe-it
+  (ml/fit
    data
-   [
-    (mm/count-vectorize :text :bow {:stopwords ["clojure"]
-                                    :stemmer :none
-                                    })]))
+   (mm/count-vectorize :text :bow {:stopwords ["clojure"]
+                                   :stemmer :none
+                                   })))
 
 fitted-ctx
 
 ["or passing in a implementation of a tokenizer function"]
 
 (def fitted-ctx
-  (ml/pipe-it
+  (ml/fit
    data
-   [
-    (mm/count-vectorize
-     :text :bow
-     {:text->bow-fn (fn [text options]
-                      {:a 1 :b 2
-                       })})]))
+   (mm/count-vectorize
+    :text :bow
+    {:text->bow-fn (fn [text options]
+                     {:a 1 :b 2
+                      })})))
 fitted-ctx
 
 
@@ -101,12 +96,9 @@ fitted-ctx
 
 "]
 (def ctx-sparse
-  (ml/pipe-it
+  (ml/fit
    bow-ds
-   [
-    (mm/bow->SparseArray :bow :sparse)
-    ]
-   ))
+   (mm/bow->SparseArray :bow :sparse)))
 
 ctx-sparse
 
@@ -125,12 +117,9 @@ ctx-sparse
  `java primitive int array`
 "]
 (def ctx-sparse
-  (ml/pipe-it
+  (ml/fit
    bow-ds
-   [
-    (mm/bow->sparse-array :bow :sparse)
-    ]
-   ))
+   (mm/bow->sparse-array :bow :sparse)))
 
 ctx-sparse
 
@@ -150,49 +139,36 @@ the option to pass in a different / custom functions which creates
 the vocabulary from the bow maps."]
 
 (def ctx-sparse
-  (ml/pipe-it
+  (ml/fit
    bow-ds
-   [
-    (mm/bow->SparseArray
-     :bow :sparse
-     {:create-vocab-fn
-      (fn [bow] (scicloj.ml.smile.nlp/->vocabulary-top-n bow 1))
-      }
-     )
-    ]
-   ))
+   (mm/bow->SparseArray
+    :bow :sparse
+    {:create-vocab-fn
+     (fn [bow] (scicloj.ml.smile.nlp/->vocabulary-top-n bow 1))
+     })))
 
 ctx-sparse
 
 (def ctx-sparse
-  (ml/pipe-it
+  (ml/fit
    bow-ds
-   [
-    (mm/bow->SparseArray
-     :bow :sparse
-     {:create-vocab-fn
-      (fn [_]
-        ["hello" "fun"]
-        )}
-     )
-    ]
-   ))
+   (mm/bow->SparseArray
+    :bow :sparse
+    {:create-vocab-fn
+     (fn [_]
+       ["hello" "fun"]
+       )})))
 
 ctx-sparse
-
-
 
 
 (docu-fn (var mm/bow->tfidf))
 ["Here we calculate the tf-idf score from the bag of words:"]
 
 (def ctx-tfidf
-  (ml/pipe-it
+  (ml/fit
    bow-ds
-   [
-    (mm/bow->tfidf :bow :tfidf)
-    ]
-   ))
+   (mm/bow->tfidf :bow :tfidf)))
 
 ctx-tfidf
 
@@ -203,8 +179,39 @@ ctx-tfidf
 (docu-fn (var mm/model))
 
 (docu-fn (var mm/std-scale))
+["We can use teh std-scale transformator to center and scale data."]
+["Lets take some example data:"]
+(def data
+  (ds/dataset
+   [
+    [100 0.001]
+    [8   0.05]
+    [50  0.005]
+    [88  0.07]
+    [4   0.1]]
+   {:layout :as-row}))
+
+^kind/dataset
+data
+
+["Now we can center each column arround 0 and scale
+it by the standard deviation  of the column"]
+
+^kind/dataset
+(ml/pipe-it
+ data
+ (mm/std-scale [0 1] {}))
+
 
 (docu-fn (var mm/min-max-scale))
+
+["The min-max scaler scales columns in a specified interval,
+by default from -0.5 to 0.5"]
+
+^kind/dataset
+(ml/pipe-it
+ data
+ (mm/min-max-scale [0 1] {}))
 
 (docu-fn (var mm/reduce-dimensions))
 
@@ -232,13 +239,11 @@ sonar
 plot the result for all numbers of components (up to 60) "
  ]
 (def fitted-ctx
-  (ml/pipe-it
+  (ml/fit
    sonar
-   [
-    (mm/reduce-dimensions :pca-cov 60
-                          col-names
-                          {}
-                          )]))
+   (mm/reduce-dimensions :pca-cov 60
+                         col-names
+                         {})))
 
 
 ["The next function transforms the result from the fitted pipeline
@@ -248,16 +253,14 @@ the cumulative variance for each PCA component."]
 (defn create-plot-data [ctx ]
   (map
    #(hash-map :principal-component %1
-              :cumulative-variance %2
-              )
+              :cumulative-variance %2)
    (range)
    (-> ctx vals (nth 2) :fit-result :model bean :cumulativeVarianceProportion)))
 
-["Next we plot the cummulative variance over the component index:"]
+["Next we plot the cumulative variance over the component index:"]
 ^kind/vega
 {:$schema "https://vega.github.io/schema/vega-lite/v5.json"
-
-
+ :width 850
  :data {:values
         (create-plot-data fitted-ctx)}
  :mark "line" ,
@@ -276,16 +279,14 @@ is enough, which would result in keeping the first 2 dimensions."]
 
 
 (def fitted-ctx
-  (ml/pipe-it
+  (ml/fit
    sonar
-   [
-    (mm/reduce-dimensions :pca-cov 2
-                          col-names
-                          {}
-                          )
-    (mm/select-columns  [:material "pca-cov-0" "pca-cov-1"])
-    (mm/shuffle)
-    ]))
+   (mm/reduce-dimensions :pca-cov 2
+                         col-names
+                         {}
+                         )
+   (mm/select-columns  [:material "pca-cov-0" "pca-cov-1"])
+   (mm/shuffle)))
 
 ^kind/dataset
 (:metamorph/data fitted-ctx)
@@ -296,14 +297,16 @@ is enough, which would result in keeping the first 2 dimensions."]
   (-> fitted-ctx
       :metamorph/data
       (ds/select-columns [:material "pca-cov-0" "pca-cov-1"])
-      (ds/rows :as-maps)
-      ))
+      (ds/rows :as-maps)))
 
 
 ^kind/vega
 {:$schema "https://vega.github.io/schema/vega-lite/v5.json"
  :data {:values scatter-plot-data}
- :mark "point"
+ :width 500
+ :height 500
+
+ :mark :circle
  :encoding
  {:x {:field "pca-cov-0"  :type "quantitative"}
   :y {:field "pca-cov-1"  :type "quantitative"}
