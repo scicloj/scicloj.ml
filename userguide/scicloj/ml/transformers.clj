@@ -35,18 +35,19 @@
 
 ["In the following we transform the text given in a dataset into a
  map of token counts applying some defaul text normalisation." ]
-(def data (ds/dataset {:text ["Hello Clojure world"
-                              "ML with Clojure is fun"]}))
+(def data (ds/dataset {:text ["Hello Clojure world, hello ML word !"
+                              "ML with Clojure is fun"
+                              ]}))
 
 ^kind/dataset
 data
 
 (def fitted-ctx
- (ml/pipe-it
-  data
-  [
-   (mm/count-vectorize :text :bow)
-   ]) )
+  (ml/pipe-it
+   data
+   [
+    (mm/count-vectorize :text :bow)
+    ]))
 
 fitted-ctx
 
@@ -55,6 +56,35 @@ fitted-ctx
 
 ^kind/dataset
 bow-ds
+
+
+["A custom tokenizer can be specified by either passing options to
+`scicloj.ml.smile.nlp/default-tokenize` "]
+
+
+(def fitted-ctx
+  (ml/pipe-it
+   data
+   [
+    (mm/count-vectorize :text :bow {:stopwords ["clojure"]
+                                    :stemmer :none
+                                    })]))
+
+fitted-ctx
+
+["or passing in a implementation of a tokenizer function"]
+
+(def fitted-ctx
+  (ml/pipe-it
+   data
+   [
+    (mm/count-vectorize
+     :text :bow
+     {:text->bow-fn (fn [text options]
+                      {:a 1 :b 2
+                       })})]))
+fitted-ctx
+
 
 
 (docu-fn (var mm/bow->SparseArray))
@@ -76,7 +106,11 @@ ctx-sparse
 ^kind/dataset
 (:metamorph/data ctx-sparse)
 
-
+["The SparseArry instances look like this:"]
+(zipmap
+ (:text bow-ds)
+ (map seq
+      (-> ctx-sparse :metamorph/data :sparse)))
 
 (docu-fn (var mm/bow->sparse-array))
 ["Now we convert the bag-of-words map to a sparse array of class
@@ -92,9 +126,51 @@ ctx-sparse
 
 ctx-sparse
 
+["We see as well the sparse representation as indices against the vocabulary
+of the non-zero counts."]
 
-^kind/dataset
-(:metamorph/data ctx-sparse)
+(zipmap
+ (:text bow-ds)
+ (map seq
+      (-> ctx-sparse :metamorph/data :sparse)))
+
+
+
+
+["In both ->sparse function we can control the vocabulary via
+the option to pass in a different / custom functions which creates
+the vocabulary from the bow maps."]
+
+(def ctx-sparse
+  (ml/pipe-it
+   bow-ds
+   [
+    (mm/bow->SparseArray
+     :bow :sparse
+     {:create-vocab-fn
+      (fn [bow] (scicloj.ml.smile.nlp/->vocabulary-top-n bow 1))
+      }
+     )
+    ]
+   ))
+
+ctx-sparse
+
+(def ctx-sparse
+  (ml/pipe-it
+   bow-ds
+   [
+    (mm/bow->SparseArray
+     :bow :sparse
+     {:create-vocab-fn
+      (fn [_]
+        ["hello" "fun"]
+        )}
+     )
+    ]
+   ))
+
+ctx-sparse
 
 
 
