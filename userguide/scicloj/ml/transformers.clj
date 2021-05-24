@@ -33,11 +33,88 @@
 
 (docu-fn (var mm/count-vectorize))
 
+["In the following we transform the text given in a dataset into a
+ map of token counts applying some defaul text normalisation." ]
+(def data (ds/dataset {:text ["Hello Clojure world"
+                              "ML with Clojure is fun"]}))
+
+^kind/dataset
+data
+
+(def fitted-ctx
+ (ml/pipe-it
+  data
+  [
+   (mm/count-vectorize :text :bow)
+   ]) )
+
+fitted-ctx
+
+(def bow-ds
+(:metamorph/data fitted-ctx))
+
+^kind/dataset
+bow-ds
+
+
 (docu-fn (var mm/bow->SparseArray))
+["Now we convert the bag-of-words map to a sparse array of class
+ `smile.util.SparseArray`
+
+"]
+(def ctx-sparse
+  (ml/pipe-it
+   bow-ds
+   [
+    (mm/bow->SparseArray :bow :sparse)
+    ]
+   ))
+
+ctx-sparse
+
+
+^kind/dataset
+(:metamorph/data ctx-sparse)
+
+
 
 (docu-fn (var mm/bow->sparse-array))
+["Now we convert the bag-of-words map to a sparse array of class
+ `java primitive int array`
+"]
+(def ctx-sparse
+  (ml/pipe-it
+   bow-ds
+   [
+    (mm/bow->sparse-array :bow :sparse)
+    ]
+   ))
+
+ctx-sparse
+
+
+^kind/dataset
+(:metamorph/data ctx-sparse)
+
+
+
 
 (docu-fn (var mm/bow->tfidf))
+["Here we calculate the tf-idf score from the bag of words:"]
+
+(def ctx-tfidf
+  (ml/pipe-it
+   bow-ds
+   [
+    (mm/bow->tfidf :bow :tfidf)
+    ]
+   ))
+
+ctx-tfidf
+
+^kind/dataset
+(:metamorph/data ctx-tfidf)
+
 
 (docu-fn (var mm/model))
 
