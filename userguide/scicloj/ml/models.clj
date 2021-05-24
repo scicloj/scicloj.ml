@@ -22,12 +22,12 @@
 
 ["scicloj.ml uses the plugin `scicloj.ml.smiles` and
 `scicloj.ml.xgboost` by default,
-which gives access to a lot of model from the java librarys [Smile](https://haifengl.github.io/)
+which gives access to a lot of model from the java libraries [Smile](https://haifengl.github.io/)
 and [Xgboost](https://xgboost.readthedocs.io/en/latest/jvm/index.html)"]
 
 ["Below is a list of all such models, and which parameter they take."]
 
-["All models are availanble in the same way:"]
+["All models are available in the same way:"]
 
 (comment
   (require '[scicloj.ml.metamorph :as mm])
@@ -91,8 +91,8 @@ and [Xgboost](https://xgboost.readthedocs.io/en/latest/jvm/index.html)"]
 ^kind/dataset
 iris
 
-["The next function creates a vega specifiation for the random forrest
-decision surfcae for a given pair of colum names"]
+["The next function creates a vega specification for the random forest
+decision surface for a given pair of column names."]
 (defn rf-surface [iris cols]
   (let [pipe-fn ;; pipeline including random forest model
         (ml/pipeline
@@ -113,7 +113,7 @@ decision surfcae for a given pair of colum names"]
         max-y (+  (-> (get iris (second cols)) dtf/reduce-max) 0.2)
 
 
-        ;; make a grid for teh decision surface
+        ;; make a grid for the decision surface
         grid
         (for [x1 (stepped-range min-x max-x 100)
               x2 (stepped-range min-y max-y 100)
@@ -131,9 +131,7 @@ decision surfcae for a given pair of colum names"]
           (merge
            fitted-ctx
            {:metamorph/data grid-ds
-            :metamorph/mode :transform}
-           )
-          )
+            :metamorph/mode :transform}))
          :metamorph/data
          (ds/column-values->categorical :species)
          seq)
@@ -149,14 +147,11 @@ decision surfcae for a given pair of colum names"]
           (merge
            fitted-ctx
            {:metamorph/data iris
-            :metamorph/mode :transform}
-           )
-          )
+            :metamorph/mode :transform}))
          :metamorph/data
 
          (ds/column-values->categorical :species)
-         seq
-         )
+         seq)
 
         ds-prediction
         (ds/add-column iris :species prediction-iris)]

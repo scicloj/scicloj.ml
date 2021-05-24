@@ -60,8 +60,11 @@ The original purpose of the dataset is to learn to detect rock vs metal
 (def sonar
   (toydata/sonar-ds))
 
+^kind/dataset
+sonar
+
 (def col-names (map #(keyword (str "x" %))
-                   (range 60)))
+                    (range 60)))
 
 ["First we create and run  a pipeline which does the PCA."
  "In this pipeline we do not fix the number of columns, as we want to
@@ -74,8 +77,7 @@ plot the result for all numbers of components (up to 60) "
     (mm/reduce-dimensions :pca-cov 60
                           col-names
                           {}
-                          )
-    ]))
+                          )]))
 
 
 ["The next function transforms the result from the fitted pipeline
@@ -100,9 +102,7 @@ the cumulative variance for each PCA component."]
  :mark "line" ,
  :encoding
  {:x {:field :principal-component, :type "nominal"},
-  :y {:field :cumulative-variance, :type "quantitative"}
-  }
- }
+  :y {:field :cumulative-variance, :type "quantitative"}}}
 
 ["From the plot we see, that transforming the data via PCA and reducing
 it from 60 dimensions to about 25 would still preserve the full variance."]
@@ -122,8 +122,7 @@ is enough, which would result in keeping the first 2 dimensions."]
                           col-names
                           {}
                           )
-    (mm/select-columns (concat [:material]
-                               (map #(str "pca-cov-" %) (range 6))))
+    (mm/select-columns  [:material "pca-cov-0" "pca-cov-1"])
     (mm/shuffle)
     ]))
 
