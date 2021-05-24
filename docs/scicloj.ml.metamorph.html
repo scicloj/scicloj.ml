@@ -323,7 +323,33 @@ null [6 3]:
 <p><code>col-seq</code> is a sequence of columns names to work on</p>
 <p><code>options</code> Options for scaler, can take:</p>
 <p><code>min</code> Minimal value to scale to (default -0.5)</p>
-<p><code>max</code> Maximum value to scale to (default 0.5)</p></div></div></div><div class="public anchor" id="var-missing"><h3>missing</h3><div class="usage"><code>(missing)</code></div><div class="doc"><div class="markdown"><p>Given a dataset or a column, return the missing set as a roaring bitmap</p></div></div></div><div class="public anchor" id="var-model"><h3>model</h3><div class="usage"><code>(model options)</code></div><div class="doc"><div class="markdown"><p>Executes a machine learning model in train/predict (depending on :mode) from the <code>metamorph.ml</code> model registry.</p>
+<p><code>max</code> Maximum value to scale to (default 0.5)</p>
+<table>
+  <thead>
+    <tr>
+      <th>metamorph </th>
+      <th>.</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Behaviour in mode :fit </td>
+      <td>Scales the dataset at key <code>:metamorph/data</code> and stores the trained model in ctx under key at <code>:metamorph/id</code></td>
+    </tr>
+    <tr>
+      <td>Behaviour in mode :transform </td>
+      <td>Reads trained min-max-scale model from ctx and applies it to data in <code>:metamorph/data</code></td>
+    </tr>
+    <tr>
+      <td>Reads keys from ctx </td>
+      <td>In mode <code>:transform</code> : Reads trained model to use for from key in <code>:metamorph/id</code>.</td>
+    </tr>
+    <tr>
+      <td>Writes keys to ctx </td>
+      <td>In mode <code>:fit</code> : Stores trained model in key $id</td>
+    </tr>
+  </tbody>
+</table></div></div></div><div class="public anchor" id="var-missing"><h3>missing</h3><div class="usage"><code>(missing)</code></div><div class="doc"><div class="markdown"><p>Given a dataset or a column, return the missing set as a roaring bitmap</p></div></div></div><div class="public anchor" id="var-model"><h3>model</h3><div class="usage"><code>(model options)</code></div><div class="doc"><div class="markdown"><p>Executes a machine learning model in train/predict (depending on :mode) from the <code>metamorph.ml</code> model registry.</p>
 <p>The model is passed between both invocation via the shared context ctx in a key (a step indentifier) which is passed in key <code>:metamorph/id</code> and guarantied to be unique for each pipeline step.</p>
 <p>The function writes and reads into this common context key.</p>
 <p>Options: - <code>:model-type</code> - Keyword for the model to use</p>
@@ -366,7 +392,33 @@ null [6 3]:
 <p><code>algorithm</code> can be any of:  * :pca-cov  * :pca-cor  * :pca-prob  * :kpca  * :gha  * :random</p>
 <p><code>target-dims</code> is number of dimensions to reduce to.</p>
 <p><code>cnames</code> is a sequence of column names on which the reduction get performed</p>
-<p><code>opts</code> are the options of the algorithm</p></div></div></div><div class="public anchor" id="var-remove-column"><h3>remove-column</h3><div class="usage"><code>(remove-column col-name)</code></div><div class="doc"><div class="markdown"><p>Same as:</p>
+<p><code>opts</code> are the options of the algorithm</p>
+<table>
+  <thead>
+    <tr>
+      <th>metamorph </th>
+      <th>.</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Behaviour in mode :fit </td>
+      <td>Reduces dimensions of the dataset at key <code>:metamorph/data</code> and stores the trained model in ctx under key at <code>:metamorph/id</code></td>
+    </tr>
+    <tr>
+      <td>Behaviour in mode :transform </td>
+      <td>Reads trained reduction model from ctx and applies it to data in <code>:metamorph/data</code></td>
+    </tr>
+    <tr>
+      <td>Reads keys from ctx </td>
+      <td>In mode <code>:transform</code> : Reads trained model to use from ctx at key in <code>:metamorph/id</code>.</td>
+    </tr>
+    <tr>
+      <td>Writes keys to ctx </td>
+      <td>In mode <code>:fit</code> : Stores trained model in ctx under key in <code>:metamorph/id</code>.</td>
+    </tr>
+  </tbody>
+</table></div></div></div><div class="public anchor" id="var-remove-column"><h3>remove-column</h3><div class="usage"><code>(remove-column col-name)</code></div><div class="doc"><div class="markdown"><p>Same as:</p>
 <pre><code class="clojure">(dissoc dataset col-name)
 </code></pre></div></div></div><div class="public anchor" id="var-remove-columns"><h3>remove-columns</h3><div class="usage"><code>(remove-columns colname-seq-or-fn)</code></div><div class="doc"><div class="markdown"><p>Remove columns indexed by column name seq or column filter function. For example:</p>
 <pre><code class="clojure">(remove-columns DS [:A :B])
@@ -397,7 +449,33 @@ null [6 3]:
 <p><code>col-seq</code> is a sequence of column names to work on</p>
 <p><code>options</code> are the options for the scaler and can take:</p>
 <p><code>mean?</code> If true (default), the data gets shifted by the column means, so 0 centered</p>
-<p><code>stddev?</code> If true (default), the data gets scaled by the standard deviation of the column</p></div></div></div><div class="public anchor" id="var-tail"><h3>tail</h3><div class="usage"><code>(tail)</code><code>(tail n)</code></div><div class="doc"><div class="markdown"></div></div></div><div class="public anchor" id="var-take-nth"><h3>take-nth</h3><div class="usage"><code>(take-nth n-val)</code></div><div class="doc"><div class="markdown"></div></div></div><div class="public anchor" id="var-ungroup"><h3>ungroup</h3><div class="usage"><code>(ungroup)</code><code>(ungroup options)</code></div><div class="doc"><div class="markdown"><p>Concat groups into dataset.</p>
+<p><code>stddev?</code> If true (default), the data gets scaled by the standard deviation of the column</p>
+<table>
+  <thead>
+    <tr>
+      <th>metamorph </th>
+      <th>.</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Behaviour in mode :fit </td>
+      <td>Centers and scales the dataset at key <code>:metamorph/data</code> and stores the trained model in ctx under key at <code>:metamorph/id</code></td>
+    </tr>
+    <tr>
+      <td>Behaviour in mode :transform </td>
+      <td>Reads trained std-scale model from ctx and applies it to data in <code>:metamorph/data</code></td>
+    </tr>
+    <tr>
+      <td>Reads keys from ctx </td>
+      <td>In mode <code>:transform</code> : Reads trained model to use for from key in <code>:metamorph/id</code>.</td>
+    </tr>
+    <tr>
+      <td>Writes keys to ctx </td>
+      <td>In mode <code>:fit</code> : Stores trained model in key $id</td>
+    </tr>
+  </tbody>
+</table></div></div></div><div class="public anchor" id="var-tail"><h3>tail</h3><div class="usage"><code>(tail)</code><code>(tail n)</code></div><div class="doc"><div class="markdown"></div></div></div><div class="public anchor" id="var-take-nth"><h3>take-nth</h3><div class="usage"><code>(take-nth n-val)</code></div><div class="doc"><div class="markdown"></div></div></div><div class="public anchor" id="var-ungroup"><h3>ungroup</h3><div class="usage"><code>(ungroup)</code><code>(ungroup options)</code></div><div class="doc"><div class="markdown"><p>Concat groups into dataset.</p>
 <p>When <code>add-group-as-column</code> or <code>add-group-id-as-column</code> is set to <code>true</code> or name(s), columns with group name(s) or group id is added to the result.</p>
 <p>Before joining the groups groups can be sorted by group name.</p></div></div></div><div class="public anchor" id="var-union"><h3>union</h3><div class="usage"><code>(union &amp; datasets)</code></div><div class="doc"><div class="markdown"></div></div></div><div class="public anchor" id="var-unique-by"><h3>unique-by</h3><div class="usage"><code>(unique-by)</code><code>(unique-by columns-selector)</code><code>(unique-by columns-selector options)</code></div><div class="doc"><div class="markdown"></div></div></div><div class="public anchor" id="var-unique-by-column"><h3>unique-by-column</h3><div class="usage"><code>(unique-by-column options colname)</code><code>(unique-by-column colname)</code></div><div class="doc"><div class="markdown"><p>Map-fn function gets passed map for each row, rows are grouped by the return value. Keep-fn is used to decide the index to keep.</p>
 <p>:keep-fn - Function from key, idx-seq-&gt;idx. Defaults to #(first %2).</p></div></div></div><div class="public anchor" id="var-unmark-group"><h3>unmark-group</h3><div class="usage"><code>(unmark-group)</code></div><div class="doc"><div class="markdown"><p>Remove grouping tag</p></div></div></div><div class="public anchor" id="var-unordered-select"><h3>unordered-select</h3><div class="usage"><code>(unordered-select colname-seq index-seq)</code></div><div class="doc"><div class="markdown"><p>Perform a selection but use the order of the columns in the existing table; do <em>not</em> reorder the columns based on colname-seq. Useful when doing selection based on sets or persistent hash maps.</p></div></div></div><div class="public anchor" id="var-unroll"><h3>unroll</h3><div class="usage"><code>(unroll columns-selector)</code><code>(unroll columns-selector options)</code></div><div class="doc"><div class="markdown"></div></div></div><div class="public anchor" id="var-unroll-column"><h3>unroll-column</h3><div class="usage"><code>(unroll-column column-name)</code><code>(unroll-column column-name options)</code></div><div class="doc"><div class="markdown"><p>Unroll a column that has some (or all) sequential data as entries.  Returns a new dataset with same columns but with other columns duplicated  where the unroll happened. Column now contains only scalar data.</p>
