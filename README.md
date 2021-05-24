@@ -4,7 +4,7 @@
 
 Proposal for a Clojure machine learning library.
 
-***Everything here is **beta** status. Breaking changes are possible, but unlikely***
+***Everything here is **beta** status. Breaking changes are unlikely but possible***
 
 
 
