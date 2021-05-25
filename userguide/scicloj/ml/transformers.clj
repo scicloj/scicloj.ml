@@ -197,7 +197,7 @@ iris
 (def train-test
   (ds/train-test-split iris))
 
-["The pipeline consists in specifying theinference target,
+["The pipeline consists in specifying the inference target,
  transform target to categorical and the model function"]
 (def pipe-fn
   (ml/pipeline
@@ -225,7 +225,7 @@ iris
 ["and then prediction on test"]
 
 (def transformed-ctx
-  (ml/transform pipe-fn fitted-ctx (:test-ds train-test)))
+  (ml/transform (:test-ds train-test) pipe-fn fitted-ctx ))
 
 (-> transformed-ctx
     (dissoc-in [:model :model-data])

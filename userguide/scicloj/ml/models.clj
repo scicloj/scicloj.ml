@@ -81,11 +81,9 @@ and [Xgboost](https://xgboost.readthedocs.io/en/latest/jvm/index.html)"]
 
 ["Standarise the data: "]
 (def iris
-  (:metamorph/data
-   (ml/pipe-it
-    iris
-    [
-     (mm/std-scale [:sepal_length :sepal_width :petal_length :petal_width] {})])))
+  (ml/pipe-it
+   iris
+   (mm/std-scale [:sepal_length :sepal_width :petal_length :petal_width] {})))
 
 
 ^kind/dataset
