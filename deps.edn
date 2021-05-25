@@ -2,7 +2,7 @@
         scicloj/scicloj.ml.smile   {:mvn/version "5.06"}
         scicloj/scicloj.ml.xgboost {:mvn/version "5.03"}
         scicloj/tablecloth         {:mvn/version "5.17" :exclusions [ch.qos.logback/logback-classic]}
-        generateme/fastmath        {:mvn/version "2.1.6-SNAPSHOT"}
+        generateme/fastmath        {:mvn/version "2.1.5"}
         generateme/fitdistr        {:mvn/version "1.0.3"}
         }
  :aliases {
