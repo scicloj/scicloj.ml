@@ -7,7 +7,6 @@
   )
 
 (comment
-
   (note/init-with-browser)
   (notespace.api/update-config
    #(assoc % :source-base-path "userguide"))
