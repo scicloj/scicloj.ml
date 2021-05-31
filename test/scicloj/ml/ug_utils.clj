@@ -98,12 +98,12 @@
             (docu-doc-string key)]
 
            [:hr]
-           [:div "Example:"]
-           [:div
-            [:p/code {:code (str
-                             (get-in definition [:documentation :code-example]
-                                     "" ))
-                      :bg-class "bg-light"}]]
+           ;; [:div "Example:"]
+           ;; [:div
+           ;;  [:p/code {:code (str
+           ;;                   (get-in definition [:documentation :code-example]
+           ;;                           "" ))
+           ;;            :bg-class "bg-light"}]]
 
            [:hr]
            ]))))
