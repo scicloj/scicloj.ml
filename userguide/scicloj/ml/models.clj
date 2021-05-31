@@ -168,6 +168,69 @@ and observe the linear nature of the model."]
 
          ]}
 
+
+["## Lasso regression"]
+
+["We use the diabetes dataset and will show how Lasso regression
+regulates the different variables dependent of lambda."]
+
+["First we make a function to create pipelines with different lambdas"]
+(defn make-pipe-fn [lambda]
+  (ml/pipeline
+   (mm/update-column :disease-progression (fn [col] (map #(double %) col)))
+   (mm/convert-types :disease-progression :float32)
+   (mm/set-inference-target :disease-progression)
+   {:metamorph/id :model} (mm/model {:model-type :smile.regression/lasso
+                                     :lambda lambda})))
+
+["No we go over a sequence of lambdas and fit a pipeline for all off them
+and store the coefficients for each predictor variable:"]
+
+(def coefs-vs-lambda
+  (flatten
+   (map
+    (fn [lambda]
+      (let [fitted
+            (ml/fit
+             diabetes
+             (make-pipe-fn lambda))
+
+            model-instance
+            (-> fitted
+                :model
+                (ml/thaw-model))
+
+            predictors
+            (map
+             #(first (.variables %))
+             (seq
+              (.. model-instance formula predictors)))
+            ]
+        (map
+         #(hash-map :log-lambda (dtf/log10 lambda)
+                    :coefficient %1
+                    :predictor %2)
+         (-> model-instance .coefficients seq)
+         predictors)))
+    (range 1 100000 100))))
+
+["Then we plot the coefficients over the log of lambda."]
+
+^kind/vega
+{
+ :data {:values coefs-vs-lambda}
+
+ :width 500
+ :height 500
+ :mark {:type "line"}
+ :encoding {:x {:field :log-lambda :type "quantitative"}
+            :y {:field :coefficient :type "quantitative"}
+            :color {:field :predictor}}}
+
+["This shows that an increasing lambda regulates more and more variables
+ to zero. This plot can be used as well to find important variables,
+namely the ones which stay > 0 even with large lambda."]
+
 ["## Random Forrest"]
 
 
