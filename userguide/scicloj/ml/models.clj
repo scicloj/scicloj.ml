@@ -144,7 +144,7 @@ and observe the linear nature of the model."]
 
 ^kind/vega
 {:layer [
-         {:data {:values (map #(hash-map :disease-progression %1 :bmi %2 :type :trueth)
+         {:data {:values (map #(hash-map :disease-progression %1 :bmi %2 :type :truth)
                                  diabetes-test-trueth
                                  (:bmi  diabetes-test))}
 
