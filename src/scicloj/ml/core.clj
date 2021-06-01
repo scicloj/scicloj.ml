@@ -36,9 +36,10 @@
                          lift
                          do-ctx
                          ;; def-ctx  ; cannot be exported, is tehreofre copied below
-                         pipe-it
                          fit
-                          transform
+                         pipe-it
+                         fit-pipe
+                         transform-pipe
                          )
 
 (defmacro def-ctx
