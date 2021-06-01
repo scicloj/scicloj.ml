@@ -10,7 +10,7 @@
                   :extra-deps {clj-djl/clj-djl {:mvn/version "0.1.5" :exclusions [org.slf4j/slf4j-simple]}
                                ch.qos.logback/logback-classic {:mvn/version "1.2.3"}
                                scicloj/notespace {:mvn/version "3-beta5"}
-                               scicloj/sklearn-clj {:mvn/version "0.3.1"}
+                               scicloj/sklearn-clj {:mvn/version "0.3.2-SNAPSHOT"}
                                simongray/datalinguist {:git/url "https://github.com/behrica/datalinguist"
                                                        :sha     "ff7a1521a9d095d6645f97b4cdd777210c64f92f"}
 

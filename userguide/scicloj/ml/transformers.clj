@@ -202,7 +202,8 @@ iris
   (ml/pipeline
    (mm/set-inference-target :species)
    (mm/categorical->number [:species])
-   {:metamorph/id :model} (mm/model {:model-type :smile.classification/logistic-regression})))
+   {:metamorph/id :model}
+   (mm/model {:model-type :smile.classification/logistic-regression})))
 
 ["First we run the training "]
 (def fitted-ctx
@@ -224,7 +225,7 @@ iris
 ["and then prediction on test"]
 
 (def transformed-ctx
-  (ml/transform (:test-ds train-test) pipe-fn fitted-ctx ))
+  (ml/transform-pipe (:test-ds train-test) pipe-fn fitted-ctx ))
 
 (-> transformed-ctx
     (dissoc-in [:model :model-data])
