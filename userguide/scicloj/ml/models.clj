@@ -57,11 +57,20 @@ and [Xgboost](https://xgboost.readthedocs.io/en/latest/jvm/index.html)"]
 ^kind/hiccup-nocode (render-key-info ":smile.classification/discrete-naive-bayes")
 ^kind/hiccup-nocode (render-key-info ":smile.classification/gradient-tree-boost")
 ^kind/hiccup-nocode (render-key-info ":smile.classification/knn")
+
+["In this example we use a knn model to classify some dummy data.
+The training data is this:
+"]
 (def df
   (ds/dataset {:x1 [7 7 3 1]
                :x2 [7 4 4 4]
                :y [ :bad :bad :good :good]}))
 
+^kind/dataset
+df
+
+["Then we construct a pipeline with the knn model,
+using 3 neighbours for decision."]
 
 (def pipe-fn
   (ml/pipeline
@@ -71,10 +80,15 @@ and [Xgboost](https://xgboost.readthedocs.io/en/latest/jvm/index.html)"]
     {:model-type :smile.classification/knn
      :k 3})))
 
+["We run the pipeline in mode fit:"]
+
 (def trained-ctx
   (pipe-fn {:metamorph/data df
             :metamorph/mode :fit}))
 
+
+["Then we run the pipeline in mode :transform with some test data
+and take the prediction and convert it from numeric into categorical:"]
 
 (->
  trained-ctx
@@ -82,12 +96,11 @@ and [Xgboost](https://xgboost.readthedocs.io/en/latest/jvm/index.html)"]
   {:metamorph/data (ds/dataset
                     {:x1 [3 5]
                      :x2 [7 5]
-                     :y [nil]})
+                     :y [nil nil]})
    :metamorph/mode :transform})
  pipe-fn
  :metamorph/data
- (ds/column-values->categorical :y)
- )
+ (ds/column-values->categorical :y))
 
 
 
@@ -121,13 +134,16 @@ iris
 
 ["The next function creates a vega specification for the random forest
 decision surface for a given pair of column names."]
-(defn rf-surface [iris cols]
+
+(defn rf-surface [iris cols model-options]
   (let [pipe-fn ;; pipeline including random forest model
         (ml/pipeline
          (mm/select-columns (concat [:species] cols))
          (mm/set-inference-target :species)
          (mm/categorical->number [:species])
-         (mm/model {:model-type :smile.classification/random-forest}))
+         (mm/model model-options)
+
+         )
 
         fitted-ctx
         (pipe-fn
@@ -165,7 +181,7 @@ decision surface for a given pair of column names."]
          seq)
 
         grid-ds-prediction
-        (ds/add-column grid-ds :species prediction-grid)
+        (ds/add-column grid-ds :predicted-species prediction-grid)
 
 
         ;; predict the iris data points from data set
@@ -182,13 +198,15 @@ decision surface for a given pair of column names."]
          seq)
 
         ds-prediction
-        (ds/add-column iris :species prediction-iris)]
+        (ds/add-column iris :true-species (:species iris)
+                       prediction-iris)]
 
     ;; create a 2 layer Vega lite specification
     {:layer
      [
 
       {:data {:values (ds/rows grid-ds-prediction :as-maps)}
+       :title (str "Decision surfaces for model: " (:model-type model-options))
        :width 500
        :height 500
        :mark {:type "square" :opacity 0.9 :strokeOpacity 0.1 :stroke nil},
@@ -203,7 +221,7 @@ decision surface for a given pair of column names."]
                              :labelOverlap true}
                       :scale {:domain [min-y max-y]}
                       }
-                  :color {:field :species}
+                  :color {:field :predicted-species}
                   }}
 
       {:data {:values (ds/rows ds-prediction :as-maps)}
@@ -223,30 +241,34 @@ decision surface for a given pair of column names."]
                       :scale {:domain [min-y max-y]}
                       }
 
-                  :fill {:field :species :legend nil}
+                  :fill {:field :true-species ;; :legend nil
+                         }
                   :stroke { :value :black }
                   :size {:value 300 }}}]}))
 
 
-^kind/vega
-(rf-surface iris [:sepal_length :sepal_width])
-
+(def rf-model {:model-type :smile.classification/random-forest})
 
 ^kind/vega
-(rf-surface iris [:sepal_length :petal_length])
+(rf-surface iris [:sepal_length :sepal_width] rf-model)
 
 
 ^kind/vega
-(rf-surface iris [:sepal_length :petal_width])
+(rf-surface iris [:sepal_length :petal_length] rf-model)
+
 
 ^kind/vega
-(rf-surface iris [:sepal_width :petal_length])
+(rf-surface iris [:sepal_length :petal_width] rf-model)
 
 ^kind/vega
-(rf-surface iris [:sepal_width :petal_width])
+(rf-surface iris [:sepal_width :petal_length] rf-model)
 
 ^kind/vega
-(rf-surface iris [:petal_length :petal_width])
+(rf-surface iris [:sepal_width :petal_width] rf-model)
+
+^kind/vega
+(rf-surface iris [:petal_length :petal_width] rf-model)
+
 
 
 ^kind/hiccup-nocode (render-key-info ":smile.classification/sparse-logistic-regression")
@@ -431,7 +453,39 @@ and observe the linear nature of the model."]
 ^kind/hiccup-nocode
 (render-key-info ":xgboost")
 
-["# Example code for models"]
+["# Compare decision surfaces of models"]
+
+["In the following we see the decision surfaces of some models on the
+same data from the Iris dataset using 2 columns :sepal_width and sepal_length:"]
+
+^kind/vega
+(rf-surface iris [:sepal_length :sepal_width]  {:model-type :smile.classification/ada-boost})
+
+^kind/vega
+(rf-surface iris [:sepal_length :sepal_width]  {:model-type :smile.classification/decision-tree})
+
+
+^kind/vega
+(rf-surface iris [:sepal_length :sepal_width]  {:model-type :smile.classification/gradient-tree-boost})
+
+
+^kind/vega
+(rf-surface iris [:sepal_length :sepal_width]  {:model-type :smile.classification/knn})
+
+
+^kind/vega
+(rf-surface iris [:sepal_length :sepal_width]  {:model-type :smile.classification/logistic-regression})
+
+^kind/vega
+(rf-surface iris [:sepal_length :sepal_width]  {:model-type :smile.classification/random-forest})
+
+
+
+
+
+
+
+
 
 
 
