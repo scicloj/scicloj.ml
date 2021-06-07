@@ -138,9 +138,9 @@ be used by `scicloj.ml`"]
   (-> trained-pipe vals (nth 2) ml/thaw-model))
 
 
-("The model has a .dot function, which returns a GraphViz textual
+["The model has a .dot function, which returns a GraphViz textual
  representation of the decision tree, which we render to svg using the
-[kroki](https://kroki.io/) service.")
+[kroki](https://kroki.io/) service."]
 
 (with-open [out (io/output-stream
                  (notespace.api/file-target-path "tree.svg")
