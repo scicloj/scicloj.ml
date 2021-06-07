@@ -8,7 +8,6 @@
    [scicloj.sklearn-clj.ml]
    [clojure.string :as str]
    [scicloj.ml.ug-utils :refer :all]
-   [scicloj.kroki :as kroki]
    [clojure.java.io :as io]))
 
 ^kind/hidden
@@ -55,7 +54,7 @@ and [Xgboost](https://xgboost.readthedocs.io/en/latest/jvm/index.html)"]
 ["## Smile classification models"]
 ^kind/hiccup-nocode (render-key-info ":smile.classification/ada-boost")
 
-["In this example we will use the capapility of the Ada boost classifier
+["In this example we will use the capability of the Ada boost classifier
 to give us the importance of variables."]
 
 ["As data we take the Wiscon Breast Cancer dataset, which has 30 variables."]
@@ -88,50 +87,6 @@ not train.test split is needed."]
 (def model
   (-> trained-ctx vals (nth 2) ml/thaw-model))
 
-(spit
- "/tmp/test.dot"
- (.dot  (first  (.trees model)))
-
- )
-
-
-(with-open [out (io/output-stream
-                 (notespace.api/file-target-path "tree1.svg")
-                 )]
-  (clojure.java.io/copy
-   (:body
-    (kroki/kroki (.dot  (first  (.trees model))) :graphviz :svg ))
-   out
-   ))
-
-(with-open [out (io/output-stream
-                 (notespace.api/file-target-path "tree2.svg")
-                 )]
-  (clojure.java.io/copy
-   (:body
-    (kroki/kroki (.dot (second (.trees model))) :graphviz :svg))
-   out))
-
-(defn copy [uri file]
-  (with-open [in  (io/input-stream uri)
-              out (io/output-stream file)]
-    (io/copy in out)))
-
-;(copy                                   ;
-;"https://clojure.org/images/clojure-logo-120b.png"
-; "https://kroki.io/plantuml/svg/eNplj0FvwjAMhe_5FVZP40CgaNMuUGkcdttp3Kc0NSVq4lRxGNKm_fe1HULuuD37-bOfuXPUm2QChEjRnlIMCDmdUfHNSYY6xh42a9Fsegflk-yYlOLlcHK2I2SGtX4WZm9sZ1o8uOzxxbuWAlIGj8cshs6M1jDuY2owyU2P8jAezdnn10j53X0hlBsZFW021Pq7HaVSNw-KN-OogG8F8BAGqT8dXhZjxW4cyJEW6kcC-yHWFagHqW0MfaThhYmaVyE26P_x27qaDmXeruqqAMMw1h-ZlRI4aF3dX7hOwm5XzfIKDctlNcshPT1tFa8JPYAj-Zf5F065sqM="
-;      (notespace.api/file-target-path "clojure.png")
-;      )
-
-(notespace.api/img-file-tag "tree1.svg" {})
-
-(notespace.api/img-file-tag "tree2.svg" {})
-
-
-
-
-
-
 ["The variable importance can be obtained from the trained model,"]
 (def var-importances
   (mapv
@@ -158,6 +113,45 @@ not train.test split is needed."]
 
 ^kind/hiccup-nocode (render-key-info ":smile.classification/decision-tree")
 
+["A decision tree learns a set of rules from the data in the form
+of a tree, which we will plot in this example.
+We use the iris dataset:
+"]
+
+(def iris  (datasets/iris-ds))
+
+^kind/dataset
+iris
+
+["We make a pipe only containing the model, as the dataset is ready to
+be used by `scicloj.ml`"]
+(def trained-pipe
+  (ml/fit-pipe
+   iris
+   (ml/pipeline
+    (mm/model
+     {:model-type :smile.classification/decision-tree}))))
+
+["We extract the Java object of the trained model."]
+
+(def model
+  (-> trained-pipe vals (nth 2) ml/thaw-model))
+
+
+("The model has a .dot function, which returns a GraphViz textual
+ representation of the decision tree, which we render to svg using the
+[kroki](https://kroki.io/) service.")
+
+(with-open [out (io/output-stream
+                 (notespace.api/file-target-path "tree.svg")
+                 )]
+  (clojure.java.io/copy
+   (:body
+    (kroki (.dot model) :graphviz :svg))
+   out))
+
+
+(notespace.api/img-file-tag "tree.svg" {})
 
 
 ^kind/hiccup-nocode (render-key-info ":smile.classification/discrete-naive-bayes")
@@ -176,7 +170,7 @@ The training data is this:
 df
 
 ["Then we construct a pipeline with the knn model,
-using 3 neighbours for decision."]
+using 3 neighbors for decision."]
 
 (def pipe-fn
   (ml/pipeline

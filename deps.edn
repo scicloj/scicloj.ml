@@ -4,8 +4,10 @@
         scicloj/tablecloth         {:mvn/version "6.00-beta-16" :exclusions [ch.qos.logback/logback-classic]}
         generateme/fastmath        {:mvn/version "2.1.5"}
         generateme/fitdistr        {:mvn/version "1.0.3"}
-        net.clojars.scicloj/kroki  {:mvn/version "0.1.0-SNAPSHOT"}
+        ;; net.clojars.scicloj/kroki  {:mvn/version "0.1.0-SNAPSHOT"}
         }
+ :paths ["src" "resources"]
+
  :aliases {
            :test {:extra-paths ["test"]
                   :extra-deps {clj-djl/clj-djl {:mvn/version "0.1.5" :exclusions [org.slf4j/slf4j-simple]}
