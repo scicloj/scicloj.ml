@@ -1,13 +1,15 @@
 (ns scicloj.ml.models
-(:require
- [notespace.api :as note]
- [notespace.kinds :as kind ]
- [notespace.view :as view]
- [tablecloth.api :as tc]
- [scicloj.ml.core]
- [scicloj.sklearn-clj.ml]
- [clojure.string :as str]
- [scicloj.ml.ug-utils :refer :all]))
+  (:require
+   [notespace.api :as note]
+   [notespace.kinds :as kind]
+   [notespace.view :as view]
+   [tablecloth.api :as tc]
+   [scicloj.ml.core]
+   [scicloj.sklearn-clj.ml]
+   [clojure.string :as str]
+   [scicloj.ml.ug-utils :refer :all]
+   [scicloj.kroki :as kroki]
+   [clojure.java.io :as io]))
 
 ^kind/hidden
 (comment
@@ -15,8 +17,7 @@
   (notespace.api/update-config
    #(assoc % :source-base-path "userguide"))
   (note/eval-this-notespace)
-  (note/render-static-html "docs/userguide-models.html")
-  )
+  (note/render-static-html "docs/userguide-models.html"))
 
 ["# Models"]
 
@@ -51,9 +52,114 @@ and [Xgboost](https://xgboost.readthedocs.io/en/latest/jvm/index.html)"]
 
 
 
-["## Smile classification"]
+["## Smile classification models"]
 ^kind/hiccup-nocode (render-key-info ":smile.classification/ada-boost")
+
+["In this example we will use the capapility of the Ada boost classifier
+to give us the importance of variables."]
+
+["As data we take the Wiscon Breast Cancer dataset, which has 30 variables."]
+(def df
+  (datasets/breast-cancer-ds))
+
+["To get an overview of the dataset, we print its summary:"]
+
+^kind/dataset
+(ds/info df)
+
+["Then we create a metamorph  pipeline with the ada boost model:"]
+
+(def pipe-fn
+  (ml/pipeline
+   (mm/set-inference-target :class)
+   (mm/categorical->number [:class])
+   (mm/model
+    {:model-type :smile.classification/ada-boost
+     })))
+
+["We run the pipeline in :fit. As we just explore the data,
+not train.test split is needed."]
+
+(def trained-ctx
+  (ml/fit-pipe df
+   pipe-fn))
+
+["Next we take the model out of the pipeline:"]
+(def model
+  (-> trained-ctx vals (nth 2) ml/thaw-model))
+
+(spit
+ "/tmp/test.dot"
+ (.dot  (first  (.trees model)))
+
+ )
+
+
+(with-open [out (io/output-stream
+                 (notespace.api/file-target-path "tree1.svg")
+                 )]
+  (clojure.java.io/copy
+   (:body
+    (kroki/kroki (.dot  (first  (.trees model))) :graphviz :svg ))
+   out
+   ))
+
+(with-open [out (io/output-stream
+                 (notespace.api/file-target-path "tree2.svg")
+                 )]
+  (clojure.java.io/copy
+   (:body
+    (kroki/kroki (.dot (second (.trees model))) :graphviz :svg))
+   out))
+
+(defn copy [uri file]
+  (with-open [in  (io/input-stream uri)
+              out (io/output-stream file)]
+    (io/copy in out)))
+
+;(copy                                   ;
+;"https://clojure.org/images/clojure-logo-120b.png"
+; "https://kroki.io/plantuml/svg/eNplj0FvwjAMhe_5FVZP40CgaNMuUGkcdttp3Kc0NSVq4lRxGNKm_fe1HULuuD37-bOfuXPUm2QChEjRnlIMCDmdUfHNSYY6xh42a9Fsegflk-yYlOLlcHK2I2SGtX4WZm9sZ1o8uOzxxbuWAlIGj8cshs6M1jDuY2owyU2P8jAezdnn10j53X0hlBsZFW021Pq7HaVSNw-KN-OogG8F8BAGqT8dXhZjxW4cyJEW6kcC-yHWFagHqW0MfaThhYmaVyE26P_x27qaDmXeruqqAMMw1h-ZlRI4aF3dX7hOwm5XzfIKDctlNcshPT1tFa8JPYAj-Zf5F065sqM="
+;      (notespace.api/file-target-path "clojure.png")
+;      )
+
+(notespace.api/img-file-tag "tree1.svg" {})
+
+(notespace.api/img-file-tag "tree2.svg" {})
+
+
+
+
+
+
+["The variable importance can be obtained from the trained model,"]
+(def var-importances
+  (mapv
+   #(hash-map :variable %1
+              :importance %2)
+   (map
+    #(first (.variables %))
+    (.. model formula predictors))
+   (.importance model)
+   ))
+
+["and we plot the variables:"]
+
+ ^kind/vega
+ {
+ :data {:values
+         var-importances}
+  :width  800
+  :height 500
+  :mark {:type "bar"}
+  :encoding {:x {:field :variable :type "nominal" :sort "-y"}
+             :y {:field :importance :type "quantitative"}}}
+
+
 ^kind/hiccup-nocode (render-key-info ":smile.classification/decision-tree")
+
+
+
 ^kind/hiccup-nocode (render-key-info ":smile.classification/discrete-naive-bayes")
 ^kind/hiccup-nocode (render-key-info ":smile.classification/gradient-tree-boost")
 ^kind/hiccup-nocode (render-key-info ":smile.classification/knn")
