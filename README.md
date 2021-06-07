@@ -50,13 +50,13 @@ Code:
    (mm/set-inference-target :Survived)
    (mm/model {:model-type :smile.classification/logistic-regression})))
    
-;;  execute pipeline with train data including model fit
+;;  execute pipeline with train data including model in mode :fit
 (def trained-ctx
   (pipe-fn {:metamorph/data titanic-train
             :metamorph/mode :fit}))
 
 
-;; execute pipeline with test data including prediction 
+;; execute pipeline in mode :transform with test data which will do a prediction 
 (def test-ctx
   (pipe-fn
    (assoc trained-ctx
@@ -79,7 +79,7 @@ Code:
 ## Documentation
 
 
-Docu is here:
+Full documentation is here:
 * https://scicloj.github.io/scicloj.ml/userguide-intro.html
 * https://scicloj.github.io/scicloj.ml/userguide-advanced.html
 * https://scicloj.github.io/scicloj.ml/userguide-models.html
@@ -99,9 +99,16 @@ https://scicloj.github.io/scicloj.ml
 
 ## Reference to projects scicloj.ml is using/based on:
 
+This library itself is a shim, not containing any functions.
+The code is present in the following repositories, and the functions get re-exported in `scicloj.ml` in a 
+small number of namespaces for user convenience.
+
+
 * https://github.com/techascent/tech.ml
 * https://github.com/scicloj/tablecloth
 * https://github.com/scicloj/metamorph
 * https://github.com/scicloj/metamorph.ml 
 * https://github.com/techascent/tech.ml.dataset
+* https://github.com/scicloj/scicloj.ml.smile
+* https://github.com/scicloj/scicloj.ml.xgboost
 * https://github.com/haifengl/smile
