@@ -9,7 +9,16 @@
             [tablecloth.api :as tc]
             [libpython-clj2.python :as py]
             [tech.v3.datatype.functional :as dtf]
+            [clj-http.client :as client]
             ))
+
+(defn kroki [s type format]
+  (client/post "https://kroki.io/" {:content-type :json
+                                    :as :byte-array
+                                    :form-params
+                                    {:diagram_source s
+                                     :diagram_type (name type)
+                                     :output_format (name format)}}))
 
 (def doc->markdown (py/import-module "docstring_to_markdown"))
 
