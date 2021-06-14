@@ -581,6 +581,7 @@ best-logistic-regression-model
 
 
 ["### Handling of categorical data"]
+["Todo"]
 
 ^kind/hidden
 ["## More advanced use case, as we need to pass the vocab size between steps"]

@@ -8,7 +8,10 @@
    [scicloj.sklearn-clj.ml]
    [clojure.string :as str]
    [scicloj.ml.ug-utils :refer :all]
-   [clojure.java.io :as io]))
+   [clojure.java.io :as io])
+  ;; (:import [smile.data Movie])
+
+  )
 
 ^kind/hidden
 (comment
