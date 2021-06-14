@@ -14,6 +14,8 @@
   (note/render-static-html "docs/userguide-intro.html")
   (note/init) )
 
+
+
 ["# Clojure and machine learning "]
 
 ["In order to practice machine learning and create an ecosystem of models around it,
@@ -192,7 +194,7 @@ in three simple namespaces.
    (ds/dataset "https://github.com/scicloj/metamorph-examples/raw/main/data/titanic/test.csv"
                {:key-fn keyword
                 :parser-fn :string})
-   (ds/add-column :Survived [""])))
+   (ds/add-column :Survived [""] :cycle)))
 
 ["Then we define the pipeline and it steps. Inside the pipeline we only use functions
 from namespace scicloj.ml.metamorph"]
@@ -266,6 +268,8 @@ which we can easily transform into the original categories.
 (-> test-ctx :metamorph/data
     (ds/column-values->categorical :Survived)
     )
+
+
 
 
 ["This shows the predicted survival. "]
