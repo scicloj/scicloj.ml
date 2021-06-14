@@ -19,7 +19,7 @@
   (notespace.api/update-config
    #(assoc % :source-base-path "userguide"))
   (note/eval-this-notespace)
-  (note/render-static-html "docs/userguide-models.html"))
+  (note/render-static-html "docs/userguide-models.html")) 
 
 ["# Models"]
 
@@ -30,7 +30,7 @@ and [Xgboost](https://xgboost.readthedocs.io/en/latest/jvm/index.html)"]
 
 ["Below is a list of all such models, and which parameter they take."]
 
-["All models are available in the same way:"]
+["All models are available in the same way: "]
 
 (comment
   (require '[scicloj.ml.metamorph :as mm])
@@ -60,7 +60,7 @@ and [Xgboost](https://xgboost.readthedocs.io/en/latest/jvm/index.html)"]
 ["In this example we will use the capability of the Ada boost classifier
 to give us the importance of variables."]
 
-["As data we take the Wiscon Breast Cancer dataset, which has 30 variables."]
+["As data we take here the Wiscon Breast Cancer dataset, which has 30 variables."]
 (def df
   (datasets/breast-cancer-ds))
 
