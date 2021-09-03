@@ -38,7 +38,7 @@ Code:
    (ds/dataset "https://github.com/scicloj/metamorph-examples/raw/main/data/titanic/test.csv"
                {:key-fn keyword
                 :parser-fn :string})
-   (ds/add-column :Survived [""])))
+   (ds/add-column :Survived [""] :cycle)))
    
    
 ;; construct pipeline function including Logistic Regression model
