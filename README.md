@@ -114,26 +114,26 @@ small number of namespaces for user convenience.
 * https://github.com/haifengl/smile
 
 
-Scicloj.ml organises the existing code in 3 namespaces, as folllowing:
+Scicloj.ml organises the existing code in 3 namespaces, as following:
 
 ### namespace scicloj.ml.core
 Functions are re-exported from:
 
-scicloj.metamorph.ml.*
-scicloj.metamorph.core
+* scicloj.metamorph.ml.*
+* scicloj.metamorph.core
 
 ### namespace scicloj.ml.dataset
 Functions are re-exported from:
 
-tabecloth.api
-tech.v3.dataset.modelling
-tech.v3.dataset.column-filters
+* tabecloth.api
+* tech.v3.dataset.modelling
+* tech.v3.dataset.column-filters
 
 ### namespace scicloj.ml.metamorph
 Functions are re-exported from:
 
-tablecloth.pipeline
-tech.v3.libs.smile.metamorph
-scicloj.metamorph.ml
-tech.v3.dataset.metamorph
+* tablecloth.pipeline
+* tech.v3.libs.smile.metamorph
+* scicloj.metamorph.ml
+* tech.v3.dataset.metamorph
 
