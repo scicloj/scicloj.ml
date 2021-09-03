@@ -127,7 +127,7 @@ Functions are re-exported from:
 
 * tabecloth.api
 * tech.v3.dataset.modelling
-* tech.v3.dataset.column-filters
+* tech.vhttp://scicloj.ml/3.dataset.column-filters
 
 ### namespace scicloj.ml.metamorph
 Functions are re-exported from:
@@ -137,3 +137,10 @@ Functions are re-exported from:
 * scicloj.metamorph.ml
 * tech.v3.dataset.metamorph
 
+
+In case you are already familar with any of the original namespaces, they can of course be used directly as well:
+
+```clojure
+(require '[tablecloth.api :as tc])
+(tc/add-column ...)
+```
