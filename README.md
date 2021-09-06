@@ -1,5 +1,5 @@
 [![Clojars Project](https://img.shields.io/clojars/v/scicloj/scicloj.ml.svg)](https://clojars.org/scicloj/scicloj.ml)
-
+[![Gitpod ready-to-code](https://img.shields.io/badge/Gitpod-ready--to--code-908a85?logo=gitpod)](https://gitpod.io/#https://github.com/scicloj/scicloj.ml)
 # scicloj.ml
 
 Proposal for a Clojure machine learning library.
