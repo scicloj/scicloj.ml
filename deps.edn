@@ -1,11 +1,10 @@
-{:deps {scicloj/metamorph.ml       {:mvn/version "0.3.0-beta5" }
-        scicloj/scicloj.ml.smile   {:mvn/version "5.06"}
+{:deps {scicloj/metamorph.ml       {:mvn/version "0.3.0-beta5"}
+        scicloj/scicloj.ml.smile   {:mvn/version "5.07-SNAPSHOT"}
         scicloj/scicloj.ml.xgboost {:mvn/version "5.03"}
         scicloj/tablecloth         {:mvn/version "6.00-beta-16" :exclusions [ch.qos.logback/logback-classic]}
-        generateme/fastmath        {:mvn/version "2.1.6-SNAPSHOT"}
-        generateme/fitdistr        {:mvn/version "1.0.3"}
-        ;; net.clojars.scicloj/kroki  {:mvn/version "0.1.0-SNAPSHOT"}
-        }
+        generateme/fastmath        {:mvn/version "2.1.6"}
+        generateme/fitdistr        {:mvn/version "1.0.3"}}
+
  :paths ["src" "resources"]
 
  :aliases {
@@ -14,8 +13,8 @@
                                  {:git/url "https://github.com/cognitect-labs/test-runner"
                                   :sha "3cb0a9daf1cb746259dc8309b218f9211ad3b33b"}}
                     :main-opts ["-m" "cognitect.test-runner"
-                                "-d" "test"
-                                ]}
+                                "-d" "test"]}
+                                
            :deploy {:replace-deps {slipset/deps-deploy {:mvn/version "0.1.5"}}
                     :exec-fn deps-deploy.deps-deploy/deploy
                     :exec-args {:installer :remote :artifact "scicloj.ml.jar"}}
@@ -36,8 +35,8 @@
                      :exec-fn deps-deploy.deps-deploy/deploy
                      :exec-args {:installer :local
 
-                                 :artifact "scicloj.ml.jar"}
-                     }
+                                 :artifact "scicloj.ml.jar"}}
+                     
            :codox {:extra-deps {codox/codox {:mvn/version "0.10.7" :exclusions [org.ow2.asm/asm-all]}
                                 codox-theme-rdash/codox-theme-rdash {:mvn/version "0.1.2"}
                                 hiccup/hiccup {:mvn/version "1.0.5"}
@@ -48,10 +47,10 @@
                    :exec-args {:language :clojure
                                :metadata {:doc/format :markdown}
                                :themes [:rdash]
-                               :output-path "docs"
-                               }
+                               :output-path "docs"}}}}
+                               
 
-                   }
+                   
 
-           }
- }
+           
+ 

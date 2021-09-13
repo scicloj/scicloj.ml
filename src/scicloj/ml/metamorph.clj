@@ -44,35 +44,36 @@
             [scicloj.ml.smile.nlp]
             [scicloj.metamorph.ml]
             [scicloj.ml.smile.projections]
-
-            [scicloj.metamorph.ml.preprocessing]
-            )
-  )
+            [scicloj.metamorph.ml.preprocessing]))
+            
+  
 
 (exporter/export-symbols scicloj.ml.smile.metamorph
                          count-vectorize
                          bow->sparse-array
                          bow->SparseArray
                          bow->something-sparse
-                         bow->tfidf
-                         )
+                         bow->tfidf)
+                         
 
 (exporter/export-symbols scicloj.metamorph.ml
-                         model
-                         )
+                         model)
+                         
 
 (exporter/export-symbols scicloj.metamorph.ml.preprocessing
                          std-scale
-                         min-max-scale
-                         )
+                         min-max-scale)
+                         
 (exporter/export-symbols scicloj.ml.smile.projections
-                         reduce-dimensions
-                         )
+                         reduce-dimensions)
+                         
+(exporter/export-symbols scicloj.ml.smile.clustering
+                         cluster)
 
 (export-all [tech.v3.dataset.metamorph
-             tablecloth.pipeline
+             tablecloth.pipeline]
 
-             ]
+             
             [build-pipelined-function
              k-fold-datasets
              train-test-split
@@ -80,7 +81,4 @@
              ->pipeline
              pipeline
              split
-             split->seq
-             ])
-
-;; (ns-publics  'scicloj.ml.mm)
+             split->seq])
