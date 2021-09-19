@@ -4,7 +4,7 @@
   <packaging>jar</packaging>
   <groupId>scicloj</groupId>
   <artifactId>scicloj.ml</artifactId>
-  <version>0.1.0-beta5-SNAPSHOT</version>
+  <version>0.1.0-beta6</version>
   <name>scicloj.ml</name>
   <scm>
     <connection>scm:git:git@github.com:scicloj/scicloj.ml.git</connection>
