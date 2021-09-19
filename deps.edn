@@ -1,7 +1,7 @@
-{:deps {scicloj/metamorph.ml       {:mvn/version "0.3.0-beta5"}
-        scicloj/scicloj.ml.smile   {:mvn/version "5.07-SNAPSHOT"}
+{:deps {scicloj/metamorph.ml       {:mvn/version "0.3.0-beta6"}
+        scicloj/scicloj.ml.smile   {:mvn/version "5.07"}
         scicloj/scicloj.ml.xgboost {:mvn/version "5.03"}
-        scicloj/tablecloth         {:mvn/version "6.00-beta-16" :exclusions [ch.qos.logback/logback-classic]}
+        scicloj/tablecloth         {:mvn/version "6.012" :exclusions [ch.qos.logback/logback-classic]}
         generateme/fastmath        {:mvn/version "2.1.6"}
         generateme/fitdistr        {:mvn/version "1.0.3"}}
 

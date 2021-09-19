@@ -4,7 +4,7 @@
   <packaging>jar</packaging>
   <groupId>scicloj</groupId>
   <artifactId>scicloj.ml</artifactId>
-  <version>0.1.0-beta4</version>
+  <version>0.1.0-beta5-SNAPSHOT</version>
   <name>scicloj.ml</name>
   <scm>
     <connection>scm:git:git@github.com:scicloj/scicloj.ml.git</connection>
@@ -26,12 +26,12 @@
     <dependency>
       <groupId>generateme</groupId>
       <artifactId>fastmath</artifactId>
-      <version>2.1.5</version>
+      <version>2.1.6</version>
     </dependency>
     <dependency>
       <groupId>scicloj</groupId>
       <artifactId>tablecloth</artifactId>
-      <version>5.17</version>
+      <version>6.012</version>
       <exclusions>
         <exclusion>
           <groupId>ch.qos.logback</groupId>
@@ -42,7 +42,7 @@
     <dependency>
       <groupId>scicloj</groupId>
       <artifactId>scicloj.ml.smile</artifactId>
-      <version>5.06</version>
+      <version>5.07</version>
     </dependency>
     <dependency>
       <groupId>generateme</groupId>
@@ -52,7 +52,7 @@
     <dependency>
       <groupId>scicloj</groupId>
       <artifactId>metamorph.ml</artifactId>
-      <version>0.3.0-beta3</version>
+      <version>0.3.0-beta6</version>
     </dependency>
   </dependencies>
   <build>
