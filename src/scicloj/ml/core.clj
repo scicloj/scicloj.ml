@@ -27,7 +27,7 @@
              scicloj.metamorph.ml.classification
              scicloj.metamorph.ml.gridsearch
              ]
-            [model predict train safe-inc])
+            [model safe-inc])
 
 
 (exporter/export-symbols scicloj.metamorph.core
