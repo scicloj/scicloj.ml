@@ -5,9 +5,8 @@
 
 # scicloj.ml
 
-Proposal for a Clojure machine learning library.
+A Clojure machine learning library.
 
-***Everything here is **beta** status. Breaking changes are unlikely but possible***
 
 
 
@@ -18,7 +17,7 @@ Dependencies:
 
 ``` clojure
 {:deps
- {scicloj/scicloj.ml {:mvn/version "0.1.0-beta4"}}}
+ {scicloj/scicloj.ml {:mvn/version "0.1.0"}}}
 ```
 
 
