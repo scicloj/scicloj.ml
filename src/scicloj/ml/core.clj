@@ -1,7 +1,16 @@
 (ns scicloj.ml.core
   "Core functions for machine learninig and pipeline execution.
 
+  Requiring this namesspace registers as well the model in:
+
+  * scicloj.ml.smile.classification
+  * scicloj.ml.smile.regression
+  * scicloj.ml.xgboost
+
+
   Functions are re-exported from:
+
+
 
   * scicloj.metamorph.ml.*
   * scicloj.metamorph.core
@@ -18,15 +27,15 @@
             ;; register models
             [scicloj.ml.smile.classification]
             [scicloj.ml.smile.regression]
-            [scicloj.ml.xgboost]
-            ))
+            [scicloj.ml.xgboost]))
+            
 
 
 (export-all [scicloj.metamorph.ml
              scicloj.metamorph.ml.loss
              scicloj.metamorph.ml.classification
-             scicloj.metamorph.ml.gridsearch
-             ]
+             scicloj.metamorph.ml.gridsearch]
+             
             [model safe-inc])
 
 
@@ -39,8 +48,8 @@
                          fit
                          pipe-it
                          fit-pipe
-                         transform-pipe
-                         )
+                         transform-pipe)
+                         
 
 (defmacro def-ctx
   "Convenience macro for defining pipelined operations that
