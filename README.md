@@ -7,6 +7,17 @@
 
 A Clojure machine learning library.
 
+Main feature:
+- Harmonized and *idiomatic* use of various classification and regression models 
+- Includes most important data transformation for data preprossesing
+- Supports creation of machine learnining pipelines *as-data*
+- Easy, but sofisticated *cross-validations* of pipelines
+- Open to pluggable ML experiment tracking
+- *Open architecture* to allow to plugin any potential ML model, even in non-JVM languages, including deep learninig
+- Based on wel established Clojure/Java Data Science libraries
+    - [*tech.ml.dataset*](https://github.com/techascent/tech.ml.dataset) for *very efficient* underlying data storage
+    - [*Smile*](https://haifengl.github.io/) for ML *models*
+    - [*tech.ml*](https://github.com/techascent/tech.ml) as foundation of *higher level ML* functions
 
 
 
