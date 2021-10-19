@@ -7,7 +7,7 @@
 
 A Clojure machine learning library.
 
-Main feature:
+Main features:
 - Harmonized and *idiomatic* use of various classification and regression models 
 - Includes most important data transformation for data preprossesing
 - Supports creation of machine learnining pipelines *as-data*
