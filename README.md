@@ -1,16 +1,23 @@
 - [![Clojars Project](https://img.shields.io/clojars/v/scicloj/scicloj.ml.svg)](https://clojars.org/scicloj/scicloj.ml/)
-- v0.1.0-beta4: [![Gitpod ready-to-code v0.1.0-beta4](https://img.shields.io/badge/Gitpod-ready--to--code-908a85?logo=gitpod)](https://gitpod.io/#https://github.com/scicloj/scicloj.ml/tree/v0.1.0-beta4)
+- v0.1.0: [![Gitpod ready-to-code v0.1.0-beta4](https://img.shields.io/badge/Gitpod-ready--to--code-908a85?logo=gitpod)](https://gitpod.io/#https://github.com/scicloj/scicloj.ml/tree/v0.1.0)
 - latest snapshot: [![Gitpod ready-to-code latest-snapshot](https://img.shields.io/badge/Gitpod-ready--to--code-908a85?logo=gitpod)](https://gitpod.io/#https://github.com/scicloj/scicloj.ml)
 - latest snapshot: [![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/scicloj/scicloj.ml/HEAD?filepath=docs%2Fquickstart.ipynb)
 
 # scicloj.ml
 
-Proposal for a Clojure machine learning library.
+A Clojure machine learning library.
 
-***Everything here is **beta** status. Breaking changes are unlikely but possible***
-
-
-
+Main features:
+- Harmonized and *idiomatic* use of various classification and regression models 
+- Supports creation of machine learning pipelines *as-data*
+- Includes easy-to-use, sophisticated *cross-validations* of pipelines
+- Includes most important data transformation for data preprocessing
+- Open to pluggable ML experiment tracking
+- *Open architecture* to allow to plugin any potential ML model, even in non-JVM languages, including deep learning
+- Based on well established Clojure/Java Data Science libraries
+    - [*tech.ml.dataset*](https://github.com/techascent/tech.ml.dataset) for *very efficient* underlying data storage
+    - [*Smile*](https://haifengl.github.io/) for ML *models*
+    - [*tech.ml*](https://github.com/techascent/tech.ml) as foundation of *higher level ML* functions
 
 ## Quickstart
 
@@ -18,7 +25,7 @@ Dependencies:
 
 ``` clojure
 {:deps
- {scicloj/scicloj.ml {:mvn/version "0.1.0-beta4"}}}
+ {scicloj/scicloj.ml {:mvn/version "0.1.0"}}}
 ```
 
 
