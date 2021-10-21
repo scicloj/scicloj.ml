@@ -1,2 +1,10 @@
 .cpcache/
 
+/.calva/
+/.classpath
+/.clj-kondo/
+/.lsp/
+/.project
+/.settings/
+/__pycache__/
+/target/

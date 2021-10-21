@@ -1,4 +1,4 @@
-{:deps {scicloj/metamorph.ml       {:mvn/version "0.4.0"}
+{:deps {scicloj/metamorph.ml       {:mvn/version "0.4.1-SNAPSHOT"}
         scicloj/scicloj.ml.smile   {:mvn/version "6.0.0"}
         scicloj/scicloj.ml.xgboost {:mvn/version "5.03"}
         scicloj/tablecloth         {:mvn/version "6.023" :exclusions [ch.qos.logback/logback-classic]}
