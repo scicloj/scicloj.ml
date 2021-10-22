@@ -4,18 +4,18 @@
              [scicloj.ml.dataset :as ds]
              [scicloj.ml.smile.nlp :as nlp]
              [scicloj.ml.smile.maxent]
-             [clojure.test :refer [is deftest]]
-             )
-  (:import [ smile.classification Maxent$Multinomial])
-  )
+             [clojure.test :refer [is deftest]])
+             
+  (:import [ smile.classification Maxent$Multinomial]))
+  
 
 
 (def reviews-split
   (->
    (ds/dataset "https://github.com/scicloj/metamorph-examples/raw/main/data/reviews.csv.gz"
                {:key-fn keyword
-                :parser-fn :string
-                })
+                :parser-fn :string})
+                
    (ds/split->seq :holdout {:shuffle? false})
    first))
 (-> reviews-split :train :Score distinct)
@@ -25,17 +25,16 @@
    (mm/select-columns [:Text :Score])
    (mm/count-vectorize :Text :bow {:text->bow-fn nlp/default-text->bow})
    (mm/bow->sparse-array :bow :bow-sparse {:create-vocab-fn #(nlp/->vocabulary-top-n % 1000)})
-   (mm/categorical->number [:Score] [ "1" "2"  "3"  "4" "5" ]
-                           ;; [ ["1" 1] ["2" 2]  ["3" 3]  ["4" 4] ["5" 5] ]
-                           )
+   (mm/categorical->number [:Score] [ "1" "2"  "3"  "4" "5"])
+
    (mm/set-inference-target :Score)
    (mm/select-columns [:bow-sparse :Score])
    {:metamorph/id :model}
    (mm/model {:p 1000
               :model-type :smile.classification/maxent-multinomial
-              :sparse-column :bow-sparse})
+              :sparse-column :bow-sparse})))
 
-   ))
+   
 
 (deftest test-pipeline
 
@@ -43,30 +42,23 @@
          (pipe-fn {:metamorph/data (:train reviews-split)
                    :metamorph/mode :fit})
 
-         _ (def trained-ctx trained-ctx)
 
          predicted-ctx
          (pipe-fn
           (merge trained-ctx
                  {:metamorph/data (:test reviews-split)
-                  :metamorph/mode :transform}))
+                  :metamorph/mode :transform}))]
 
-         _ (def predicted-ctx predicted-ctx)
-
-         ]
 
     (is  (= Maxent$Multinomial
             (-> trained-ctx :model :model-data class)))
 
-    (-> trained-ctx :metamorph/data ds/reverse-map-categorical-xforms :Score frequencies)
 
-    (is (= {"5" 262, "1" 26, "4" 29, "3" 10, "2" 7}
-           (-> predicted-ctx :metamorph/data ds/reverse-map-categorical-xforms :Score frequencies)))
+   (is (= {"5" 262, "1" 26, "4" 29, "3" 10, "2" 7}
+          (-> predicted-ctx :metamorph/data ds/reverse-map-categorical-xforms :Score frequencies)))
 
-    (is (= {"5" 212, "1" 24, "4" 44, "3" 31, "2" 23}
-           (-> predicted-ctx :scicloj.metamorph.ml/target-ds ds/reverse-map-categorical-xforms :Score frequencies)))
+   (is (= {"5" 212, "1" 24, "4" 44, "3" 31, "2" 23}
+          (-> predicted-ctx :model :scicloj.metamorph.ml/target-ds ds/reverse-map-categorical-xforms :Score frequencies)))
 
-    (is (= [:bow-sparse]
-           (-> predicted-ctx :scicloj.metamorph.ml/feature-ds ds/column-names)))
-    )
-  )
+   (is (= [:bow-sparse]
+          (-> predicted-ctx :model :scicloj.metamorph.ml/feature-ds ds/column-names)))))
