@@ -58,6 +58,7 @@ Code:
    (mm/add-column :Survived (fn [ds] (map #(case % "1" "yes" "0" "no" nil "") (:Survived ds))))
    (mm/categorical->number [:Survived :Pclass])
    (mm/set-inference-target :Survived)
+   {:metamorph/id :model}
    (mm/model {:model-type :smile.classification/logistic-regression})))
    
 ;;  execute pipeline with train data including model in mode :fit
