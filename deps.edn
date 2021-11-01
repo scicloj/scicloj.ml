@@ -1,6 +1,6 @@
 {:deps {scicloj/metamorph.ml       {:git/url "https://github.com/scicloj/metamorph.ml.git"
-                                    :git/sha "c516596e4faafaf0ae3cf2e7980e31d474914fe1"}
-        scicloj/scicloj.ml.smile   {:mvn/version "6.0.0"}
+                                    :git/sha "f9bbde21a0fee0b54fc764cdcaf0109abc0a3d6b"}
+        scicloj/scicloj.ml.smile   {:mvn/version "6.1.569"}
         scicloj/scicloj.ml.xgboost {:mvn/version "5.03"}
         scicloj/tablecloth         {:mvn/version "6.023" :exclusions [ch.qos.logback/logback-classic]}
         generateme/fastmath        {:mvn/version "2.1.6"}
