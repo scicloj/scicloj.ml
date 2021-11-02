@@ -5,10 +5,10 @@
 
 # scicloj.ml
 
-A Clojure machine learning library.
+A idiomatic Clojure machine learning library.
 
 Main features:
-- Harmonized and *idiomatic* use of various classification and regression models 
+- Harmonized and *idiomatic* use of various classification, regression and unsupervised models 
 - Supports creation of machine learning pipelines *as-data*
 - Includes easy-to-use, sophisticated *cross-validations* of pipelines
 - Includes most important data transformation for data preprocessing
