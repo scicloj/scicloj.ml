@@ -27,7 +27,10 @@
             ;; register models
             [scicloj.ml.smile.classification]
             [scicloj.ml.smile.regression]
-            [scicloj.ml.xgboost]))
+            [scicloj.ml.smile.clustering]
+            [scicloj.ml.smile.projections]
+            [scicloj.ml.xgboost]
+            [scicloj.ml.smile.manifold]))
             
 
 

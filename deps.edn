@@ -1,16 +1,13 @@
-{:deps {scicloj/metamorph.ml       {:git/url "https://github.com/scicloj/metamorph.ml.git"
-                                    :git/sha "f9bbde21a0fee0b54fc764cdcaf0109abc0a3d6b"}
-        scicloj/scicloj.ml.smile   {:mvn/version "6.1.569"}
+{:deps {
+        scicloj/scicloj.ml.smile   {:mvn/version "6.1.572"}
         scicloj/scicloj.ml.xgboost {:mvn/version "5.03"}
-        scicloj/tablecloth         {:mvn/version "6.023" :exclusions [ch.qos.logback/logback-classic]}
-        generateme/fastmath        {:mvn/version "2.1.6"}
-        generateme/fitdistr        {:mvn/version "1.0.3"}}
+        scicloj/tablecloth         {:mvn/version "6.025" :exclusions [ch.qos.logback/logback-classic]}}
 
  :paths ["src" "resources"]
 
  :aliases {
-           :build {:deps {io.github.seancorfield/build-clj
-                          {:git/tag "v0.5.2" :git/sha "8f75b81"}}
+           :build {:extra-deps {io.github.seancorfield/build-clj
+                                {:git/tag "v0.5.2" :git/sha "8f75b81"}}
                           
                    :ns-default build}
 
