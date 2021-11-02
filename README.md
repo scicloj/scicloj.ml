@@ -152,3 +152,12 @@ In case you are already familar with any of the original namespaces, they can of
 (require '[tablecloth.api :as tc])
 (tc/add-column ...)
 ```
+# Plugins
+
+scicloj.ml can be easely extended by plugins, which contribute models.
+By now the following plugins exist:
+
+* Builtin: [scicloj.ml.smile](https://github.com/scicloj/scicloj.ml.smile)
+* Builtin: [scicloj.ml.xgboost](https://github.com/scicloj/scicloj.ml.xgboost)
+* All [sklearn](https://scikit-learn.org/stable/index.html) models: [sklearn.clj](https://github.com/scicloj/sklearn-clj)
+* [top2vec](https://github.com/ddangelov/Top2Vec) model: [scicloj.ml.top2vec](https://github.com/scicloj/scicloj.ml.top2vec)
