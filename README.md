@@ -84,7 +84,14 @@ Code:
                 
 ```
 
+## Community
+For support use Clojurians on Zulip:
 
+[Scicloj.ml on Zulip](https://clojurians.zulipchat.com/#narrow/stream/283491-scicloj.2Eml-dev)
+
+or on Clojurians Slack:
+
+[Scicloj.ml on Slack](https://app.slack.com/client/T03RZGPFR/C02KKT03HV5/thread/CQT1NFF4L-1635769673.041400)
 
 
 ## Documentation
