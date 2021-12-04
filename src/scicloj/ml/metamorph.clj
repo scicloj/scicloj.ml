@@ -44,7 +44,9 @@
             [scicloj.ml.smile.nlp]
             [scicloj.metamorph.ml]
             [scicloj.ml.smile.projections]
-            [scicloj.metamorph.ml.preprocessing]))
+            [scicloj.metamorph.ml.preprocessing]
+            [scicloj.metamorph.ml.categorical]))
+
             
   
 
@@ -69,6 +71,9 @@
                          
 (exporter/export-symbols scicloj.ml.smile.clustering
                          cluster)
+
+(exporter/export-symbols scicloj.metamorph.ml.categorical
+                         transform-one-hot)
 
 (export-all [tech.v3.dataset.metamorph
              tablecloth.pipeline]
