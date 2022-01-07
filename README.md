@@ -25,7 +25,7 @@ Dependencies:
 
 ``` clojure
 {:deps
- {scicloj/scicloj.ml {:mvn/version "0.1.1"}}}
+ {scicloj/scicloj.ml {:mvn/version "0.1.2"}}}
 ```
 
 
