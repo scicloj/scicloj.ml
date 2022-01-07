@@ -1,5 +1,5 @@
 {:deps {
-        scicloj/scicloj.ml.smile   {:mvn/version "6.2.585"}
+        scicloj/scicloj.ml.smile   {:mvn/version "6.1.578"}
         scicloj/scicloj.ml.xgboost {:mvn/version "5.03"}
         scicloj/tablecloth         {:mvn/version "6.025" :exclusions [ch.qos.logback/logback-classic]}}
 
