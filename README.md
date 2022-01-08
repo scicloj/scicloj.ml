@@ -38,19 +38,14 @@ Code:
 
 ;; read train and test datasets
 (def titanic-train
-  (->
-   (ds/dataset "https://github.com/scicloj/metamorph-examples/raw/main/data/titanic/train.csv"
-               {:key-fn keyword
-                :parser-fn :string})))
-                
+  (-> "https://github.com/scicloj/metamorph-examples/raw/main/data/titanic/train.csv"
+      (ds/dataset {:key-fn keyword :parser-fn :string})))
+
 (def titanic-test
-  (->
-   (ds/dataset "https://github.com/scicloj/metamorph-examples/raw/main/data/titanic/test.csv"
-               {:key-fn keyword
-                :parser-fn :string})
-   (ds/add-column :Survived [""] :cycle)))
-   
-   
+  (-> "https://github.com/scicloj/metamorph-examples/raw/main/data/titanic/test.csv"
+      (ds/dataset {:key-fn keyword :parser-fn :string})
+      (ds/add-column :Survived [""] :cycle)))
+
 ;; construct pipeline function including Logistic Regression model
 (def pipe-fn
   (ml/pipeline
@@ -60,12 +55,11 @@ Code:
    (mm/set-inference-target :Survived)
    {:metamorph/id :model}
    (mm/model {:model-type :smile.classification/logistic-regression})))
-   
+
 ;;  execute pipeline with train data including model in mode :fit
 (def trained-ctx
   (pipe-fn {:metamorph/data titanic-train
             :metamorph/mode :fit}))
-
 
 ;; execute pipeline in mode :transform with test data which will do a prediction 
 (def test-ctx
