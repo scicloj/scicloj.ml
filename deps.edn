@@ -1,6 +1,7 @@
 {:deps {
+        scicloj/metamorph.ml       {:mvn/version "0.4.1"}
         scicloj/scicloj.ml.smile   {:mvn/version "6.1.578"}
-        scicloj/scicloj.ml.xgboost {:mvn/version "5.03"}
+        scicloj/scicloj.ml.xgboost {:mvn/version "5.04"}
         scicloj/tablecloth         {:mvn/version "6.025" :exclusions [ch.qos.logback/logback-classic]}}
 
  :paths ["src" "resources"]
