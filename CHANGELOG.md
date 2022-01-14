@@ -1,4 +1,9 @@
 # Changelog
+
+0.1.4
+ - updated undelying libraries:
+   - breaking change: unified dissoc-fn and handler-fn options in `evaluate models`
+
 0.1.0
 - updated underlying libraries 
 - main entry point functions are now checked with malli schemas for correctness
