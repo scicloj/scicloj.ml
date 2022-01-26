@@ -38,8 +38,7 @@ Code:
 
 ;; read train and test datasets
 (def titanic-train
-  (-> "https://github.com/scicloj/metamorph-examples/raw/main/data/titanic/train.csv"
-      (ds/dataset {:key-fn keyword :parser-fn :string})))
+  (ds/dataset "https://github.com/scicloj/metamorph-examples/raw/main/data/titanic/train.csv" {:key-fn keyword :parser-fn :string}))
 
 (def titanic-test
   (-> "https://github.com/scicloj/metamorph-examples/raw/main/data/titanic/test.csv"
