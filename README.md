@@ -161,3 +161,4 @@ By now the following plugins exist:
 * Builtin: [scicloj.ml.xgboost](https://github.com/scicloj/scicloj.ml.xgboost)
 * All [sklearn](https://scikit-learn.org/stable/index.html) models: [sklearn.clj](https://github.com/scicloj/sklearn-clj)
 * [top2vec](https://github.com/ddangelov/Top2Vec) model: [scicloj.ml.top2vec](https://github.com/scicloj/scicloj.ml.top2vec)
+* [crf](https://github.com/scicloj/scicloj.ml.crf) A NER model from `standfortNLP`
