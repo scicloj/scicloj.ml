@@ -1,5 +1,5 @@
 [![Clojars Project](https://img.shields.io/clojars/v/scicloj/scicloj.ml.svg)](https://clojars.org/scicloj/scicloj.ml/)[![cljdoc badge](https://cljdoc.org/badge/scicloj/scicloj.ml)](https://cljdoc.org/d/scicloj/scicloj.ml)
-- v0.1.2: [![Gitpod ready-to-code v0.1.2](https://img.shields.io/badge/Gitpod-ready--to--code-908a85?logo=gitpod)](https://gitpod.io/#https://github.com/scicloj/scicloj.ml/tree/v0.1.2)
+- v0.1.2: [![Gitpod ready-to-code v0.1.4](https://img.shields.io/badge/Gitpod-ready--to--code-908a85?logo=gitpod)](https://gitpod.io/#https://github.com/scicloj/scicloj.ml/tree/v0.1.4)
 - latest snapshot: [![Gitpod ready-to-code latest-snapshot](https://img.shields.io/badge/Gitpod-ready--to--code-908a85?logo=gitpod)](https://gitpod.io/#https://github.com/scicloj/scicloj.ml)
 - latest snapshot: [![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/scicloj/scicloj.ml/HEAD?filepath=docs%2Fquickstart.ipynb)
 
@@ -25,7 +25,7 @@ Dependencies:
 
 ``` clojure
 {:deps
- {scicloj/scicloj.ml {:mvn/version "0.1.2"}}}
+ {scicloj/scicloj.ml {:mvn/version "0.1.4"}}}
 ```
 
 
@@ -38,19 +38,13 @@ Code:
 
 ;; read train and test datasets
 (def titanic-train
-  (->
-   (ds/dataset "https://github.com/scicloj/metamorph-examples/raw/main/data/titanic/train.csv"
-               {:key-fn keyword
-                :parser-fn :string})))
-                
+  (ds/dataset "https://github.com/scicloj/metamorph-examples/raw/main/data/titanic/train.csv" {:key-fn keyword :parser-fn :string}))
+
 (def titanic-test
-  (->
-   (ds/dataset "https://github.com/scicloj/metamorph-examples/raw/main/data/titanic/test.csv"
-               {:key-fn keyword
-                :parser-fn :string})
-   (ds/add-column :Survived [""] :cycle)))
-   
-   
+  (-> "https://github.com/scicloj/metamorph-examples/raw/main/data/titanic/test.csv"
+      (ds/dataset {:key-fn keyword :parser-fn :string})
+      (ds/add-column :Survived [""] :cycle)))
+
 ;; construct pipeline function including Logistic Regression model
 (def pipe-fn
   (ml/pipeline
@@ -60,12 +54,11 @@ Code:
    (mm/set-inference-target :Survived)
    {:metamorph/id :model}
    (mm/model {:model-type :smile.classification/logistic-regression})))
-   
+
 ;;  execute pipeline with train data including model in mode :fit
 (def trained-ctx
   (pipe-fn {:metamorph/data titanic-train
             :metamorph/mode :fit}))
-
 
 ;; execute pipeline in mode :transform with test data which will do a prediction 
 (def test-ctx
@@ -168,3 +161,4 @@ By now the following plugins exist:
 * Builtin: [scicloj.ml.xgboost](https://github.com/scicloj/scicloj.ml.xgboost)
 * All [sklearn](https://scikit-learn.org/stable/index.html) models: [sklearn.clj](https://github.com/scicloj/sklearn-clj)
 * [top2vec](https://github.com/ddangelov/Top2Vec) model: [scicloj.ml.top2vec](https://github.com/scicloj/scicloj.ml.top2vec)
+* [crf](https://github.com/scicloj/scicloj.ml.crf) A NER model from `standfortNLP`
