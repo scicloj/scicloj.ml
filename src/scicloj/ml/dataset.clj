@@ -9,7 +9,7 @@
 
   The functions in tis namespace are re-exported from:
 
-  * tabecloth.api
+  * tabecloth.api - docs at https://scicloj.github.io/tablecloth/
   * tech.v3.dataset.modelling
   * tech.v3.dataset.column-filters
 "
