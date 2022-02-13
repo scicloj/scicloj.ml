@@ -18,7 +18,9 @@
            {:extra-deps {lambdaisland/kaocha {:mvn/version "1.0.887"}}
             :main-opts ["-m" "kaocha.runner"]}
 
-
+           :snowball
+           {:exec-fn com.phronemophobic.snowball/-main
+            :replace-deps {com.phronemophobic/snowball {:mvn/version "1.0"}}}
 
            :codox {:extra-deps {codox/codox {:mvn/version "0.10.7" :exclusions [org.ow2.asm/asm-all]}
                                 codox-theme-rdash/codox-theme-rdash {:mvn/version "0.1.2"}
