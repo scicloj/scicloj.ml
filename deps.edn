@@ -1,6 +1,6 @@
 {:deps {
-        scicloj/metamorph.ml       {:mvn/version "0.4.1"}
-        scicloj/scicloj.ml.smile   {:mvn/version "6.2.585"}
+        scicloj/metamorph.ml       {:mvn/version "0.6.0"}
+        scicloj/scicloj.ml.smile   {:mvn/version "7.0.596"}
         scicloj/scicloj.ml.xgboost {:mvn/version "5.05"}
         scicloj/tablecloth         {:mvn/version "6.025" :exclusions [ch.qos.logback/logback-classic]}}
 

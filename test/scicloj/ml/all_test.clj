@@ -18,7 +18,8 @@
                 
    (ds/split->seq :holdout {:shuffle? false})
    first))
-(-> reviews-split :train :Score distinct)
+
+;; (-> reviews-split :train :Score distinct)
 
 (def pipe-fn
   (ml/pipeline
