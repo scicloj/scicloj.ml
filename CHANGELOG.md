@@ -1,5 +1,8 @@
 # Changelog
 
+unreleased:
+ - added dvc/queue-exp to queue experiments
+
 0.1.4
  - updated undelying libraries:
    - breaking change: unified dissoc-fn and handler-fn options in `evaluate models`
