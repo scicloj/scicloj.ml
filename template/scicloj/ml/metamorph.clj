@@ -87,3 +87,12 @@
              pipeline
              split
              split->seq])
+
+(comment
+  (exporter/write-api! 'scicloj.ml.metamorph
+                       'scicloj.ml.core.api.metamorph
+                       "/tmp/metamorph.clj"
+                       []))
+
+
+(meta 'tablecloth.pipeline/append)

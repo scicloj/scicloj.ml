@@ -20,9 +20,9 @@
             [tech.v3.dataset.column-filters]
             [tech.v3.dataset.categorical]
 
-            [tablecloth.api]
-            )
-  )
+            [tablecloth.api]))
+            
+  
 
 (export-all [tech.v3.dataset.modelling
              tech.v3.dataset.column-filters
@@ -33,5 +33,10 @@
 
 (exporter/export-symbols tech.v3.dataset
                          categorical->number
-                         categorical->one-hot
-                         )
+                         categorical->one-hot)
+
+(comment
+  (exporter/write-api! 'scicloj.ml.dataset
+                       'scicloj.ml.core.api.dataset
+                       "src/scicloj/ml/core/api/dataset.clj"
+                       []))

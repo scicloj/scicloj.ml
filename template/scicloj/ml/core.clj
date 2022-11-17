@@ -31,6 +31,7 @@
             [scicloj.ml.smile.projections]
             [scicloj.ml.xgboost]
             [scicloj.ml.smile.manifold]))
+
             
 
 
@@ -60,3 +61,10 @@
    debugging purposes."
   [varname]
   `(do-ctx (fn [ctx#] (def ~varname ctx#))))
+
+
+(comment
+  (exporter/write-api! 'scicloj.ml.core
+                       'scicloj.ml.core.api.core
+                       "src/scicloj/ml/core/api/core.clj"
+                       []))
