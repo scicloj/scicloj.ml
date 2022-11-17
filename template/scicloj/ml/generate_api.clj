@@ -4,17 +4,17 @@
             scicloj.ml.dataset
             [tech.v3.datatype.export-symbols :as exporter]))
 
-(def generate-api!
+(defn generate-api! []
 
   (exporter/write-api! 'scicloj.ml.metamorph
-                       'scicloj.ml.core.api.metamorph
+                       'scicloj.ml.metamorph
                        "src/scicloj/ml/metamorph.clj"
                        [])
   (exporter/write-api! 'scicloj.ml.dataset
-                       'scicloj.ml.core.api.dataset
-                       "src/scicloj/ml/core/dataset.clj"
+                       'scicloj.ml.dataset
+                       "src/scicloj/ml/dataset.clj"
                        [])
   (exporter/write-api! 'scicloj.ml.core
-                       'scicloj.ml.core.api.core
-                       "src/scicloj/ml/core/api/core.clj"
+                       'scicloj.ml.core
+                       "src/scicloj/ml/core.clj"
                        []))

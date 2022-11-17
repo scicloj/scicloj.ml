@@ -3,7 +3,8 @@
 
 (require '[scicloj.ml.core :as ml]
          '[scicloj.ml.metamorph :as mm]
-         '[scicloj.ml.dataset :as ds])
+         '[scicloj.ml.dataset :as ds]
+         '[scicloj.ml.smile.classification])
 
 ;; read train and test datasets
 (def titanic-train
