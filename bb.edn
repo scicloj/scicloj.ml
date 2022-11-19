@@ -1,0 +1,2 @@
+{:deps {com.lambdaisland/launchpad {:mvn/version "0.9.49-alpha"}}}
+

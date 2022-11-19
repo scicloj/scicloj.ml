@@ -1,0 +1,8 @@
+#!/usr/bin/env bb
+
+(require '[lambdaisland.launchpad :as launchpad])
+
+(launchpad/main {})
+
+;; (launchpad/main {:steps (into [(partial launchpad/ensure-java-version 17)]
+;;                               launchpad/default-steps)})

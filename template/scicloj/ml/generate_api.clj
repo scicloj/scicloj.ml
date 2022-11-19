@@ -4,7 +4,7 @@
             scicloj.ml.dataset
             [tech.v3.datatype.export-symbols :as exporter]))
 
-(defn generate-api! []
+(defn generate-api! [_]
 
   (exporter/write-api! 'scicloj.ml.metamorph
                        'scicloj.ml.metamorph
