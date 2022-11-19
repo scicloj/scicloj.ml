@@ -1,7 +1,9 @@
 # Changelog
 
 unreleased:
- - added dvc/queue-exp to queue experiments
+ - generate namespaces
+ - added dvc/queue-exp to queue experiments with DVC
+ - latest scicloj.ml.smile 7.0.632
 
 0.1.4
  - updated undelying libraries:
