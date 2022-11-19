@@ -55,7 +55,7 @@
             (-> trained-ctx :model :model-data class)))
 
 
-   (is (= {"5" 263, "1" 25, "4" 29, "3" 10, "2" 7}
+   (is (= {"5" 262, "1" 26, "4" 29, "3" 10, "2" 7}
           (-> predicted-ctx :metamorph/data ds/reverse-map-categorical-xforms :Score frequencies)))
 
    (is (= {"5" 212, "1" 24, "4" 44, "3" 31, "2" 23}
