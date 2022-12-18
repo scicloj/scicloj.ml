@@ -1,10 +1,9 @@
 (ns scicloj.ml.smoke-test
-  (:require  [clojure.test :as t]))
-
-(require '[scicloj.ml.core :as ml]
-         '[scicloj.ml.metamorph :as mm]
-         '[scicloj.ml.dataset :as ds]
-         '[scicloj.ml.smile.classification])
+  (:require  [clojure.test :as t]
+             [scicloj.ml.core :as ml]
+             [scicloj.ml.metamorph :as mm]
+             [scicloj.ml.dataset :as ds]
+             [scicloj.ml.smile.classification]))
 
 ;; read train and test datasets
 (def titanic-train
@@ -12,6 +11,7 @@
    (ds/dataset "https://github.com/scicloj/metamorph-examples/raw/main/data/titanic/train.csv"
                {:key-fn keyword
                 :parser-fn :string})))
+
 
 (def titanic-test
   (->

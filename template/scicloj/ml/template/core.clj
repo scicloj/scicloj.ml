@@ -1,4 +1,4 @@
-(ns scicloj.ml.core
+(ns scicloj.ml.template.core
   "Core functions for machine learninig and pipeline execution.
 
   Requiring this namesspace registers as well the model in:

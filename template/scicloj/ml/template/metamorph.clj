@@ -1,4 +1,4 @@
-(ns scicloj.ml.metamorph
+(ns scicloj.ml.template.metamorph
   "This namespace contains functions, which operate on a metamorph context.
   They all return the context as well.
 
@@ -93,6 +93,3 @@
                        'scicloj.ml.core.api.metamorph
                        "/tmp/metamorph.clj"
                        []))
-
-
-(meta 'tablecloth.pipeline/append)

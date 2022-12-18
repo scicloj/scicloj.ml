@@ -1,9 +1,11 @@
 # Changelog
 
-unreleased:
- - generate namespaces
+0.2.2
+ - generate all scicloj.ml namespaces statically
  - added dvc/queue-exp to queue experiments with DVC
  - latest scicloj.ml.smile 7.0.632
+ - latest metamorph.ml 0.6.4
+ 
 
 0.1.4
  - updated undelying libraries:

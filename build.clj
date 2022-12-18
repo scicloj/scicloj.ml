@@ -13,22 +13,24 @@
 
 (defn ci "Run the CI pipeline of tests (and build the JAR)." [opts]
   (-> opts
-      (assoc :lib lib :version version :aliases [:test-runner])
+      (assoc :lib lib :version version :aliases [:test-runner]
+             :src-dirs ["src" "template"])
       (bb/run-tests)
       (bb/clean)
       (bb/jar)))
 
 (defn ci-no-test "Run the CI pipeline of tests (and build the JAR)." [opts]
   (-> opts
-      (assoc :lib lib :version version)
+      (assoc :lib lib :version version :src-dirs ["src" "template"])
       (bb/clean)
       (bb/jar)))
 (defn install "Install the JAR locally." [opts]
   (-> opts
-      (assoc :lib lib :version version)
+      (assoc :lib lib :version version
+             :src-dirs ["src" "template"])
       (bb/install)))
 
 (defn deploy "Deploy the JAR to Clojars." [opts]
   (-> opts
-      (assoc :lib lib :version version)
+      (assoc :lib lib :version version :src-dirs ["src" "template"])
       (bb/deploy)))

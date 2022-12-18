@@ -1,4 +1,4 @@
-(ns scicloj.ml.dataset
+(ns scicloj.ml.template.dataset
   "
   This namespace contains functions which operate on a dataset
   and mostly return a dataset.

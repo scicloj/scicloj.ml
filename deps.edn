@@ -14,7 +14,7 @@
                                     :git/sha "41e9056188d4a1ac5a19f6fe7ebf7380b42fc2d5"}}
         
 
- :paths ["src" "resources"]
+ :paths ["src" "template" "resources"]
 
  :aliases {
            :generate-api {:paths ["template"]
