@@ -768,14 +768,14 @@ options
 
 (defn map->CategoricalMap
   "Factory function for class tech.v3.dataset.categorical.CategoricalMap, taking a map of keywords to field values."
-  ([m__7910__auto__]
-  (tech.v3.dataset.categorical/map->CategoricalMap m__7910__auto__)))
+  ([m__7972__auto__]
+  (tech.v3.dataset.categorical/map->CategoricalMap m__7972__auto__)))
 
 
 (defn map->OneHotMap
   "Factory function for class tech.v3.dataset.categorical.OneHotMap, taking a map of keywords to field values."
-  ([m__7910__auto__]
-  (tech.v3.dataset.categorical/map->OneHotMap m__7910__auto__)))
+  ([m__7972__auto__]
+  (tech.v3.dataset.categorical/map->OneHotMap m__7972__auto__)))
 
 
 (defn map-columns

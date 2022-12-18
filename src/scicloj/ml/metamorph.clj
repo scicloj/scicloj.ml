@@ -1472,6 +1472,12 @@ test/data/stocks.csv [10 3]:
   (tech.v3.dataset.metamorph/pmap-ds ds-map-fn)))
 
 
+(defn print-all
+  "Helper function equivalent to `(tech.v3.dataset.print/print-range ... :all)`"
+  ([]
+  (tech.v3.dataset.metamorph/print-all )))
+
+
 (defn print-dataset
   "Prints dataset into console. For options see
   tech.v3.dataset.print/dataset-data->str

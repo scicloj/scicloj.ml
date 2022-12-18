@@ -1,23 +1,26 @@
 {:deps {
-        scicloj/metamorph.ml       {:mvn/version "0.6.2"}
+        org.clojure/clojure {:mvn/version "1.11.1"}
+
+        scicloj/metamorph.ml {:mvn/version "0.6.3"}
+
         scicloj/scicloj.ml.smile   {:mvn/version "7.0.632"}
         scicloj/scicloj.ml.xgboost {:mvn/version "5.1.3"}
-        scicloj/tablecloth         {:git/url "https://github.com/scicloj/tablecloth.git"
-                                    :git/sha "4ed04c51af8a896270122fb56d33e03e4943ff02"}
-                                    ;; :mvn/version "6.103" :exclusions [ch.qos.logback/logback-classic]
+        scicloj/tablecloth         {:mvn/version "6.103.1"}
 
-        techascent/tech.ml.dataset {:local/root "/home/carsten/Dropbox/sources/tech.ml.dataset/target/tech.ml.dataset-6.104-SNAPSHOT.jar"}
-                                    ;; :git/url "https://github.com/techascent/tech.ml.dataset.git"
-                                    ;; :git/sha "a7bc95543e1564dc1ebfa09f530cc20d19b3d729"
+        techascent/tech.ml.dataset {:mvn/version "6.104"}
 
-
-
-        clj-commons/clj-yaml       {:mvn/version "1.0.26"}}
+        clj-commons/clj-yaml       {:mvn/version "1.0.26"}
+        dk.cst/tf-idf              {:git/url "https://github.com/behrica/tf-idf.git"
+                                    :git/sha "41e9056188d4a1ac5a19f6fe7ebf7380b42fc2d5"}}
         
 
  :paths ["src" "resources"]
 
  :aliases {
+           :generate-api {:paths ["template"]
+                          :exec-fn scicloj.ml.generate-api/generate-api!}
+                          
+
            :build {:extra-deps {io.github.seancorfield/build-clj
                                 {:git/tag "v0.5.2" :git/sha "8f75b81"}}
                           
