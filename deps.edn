@@ -42,6 +42,7 @@
                                 enlive/enlive {:mvn/version "1.1.6"}
                                 org.pegdown/pegdown {:mvn/version "1.6.0"}
                                 org.ow2.asm/asm-all {:mvn/version "5.2"}}
+                   :jvm-opts ["--add-opens" "java.base/java.lang=ALL-UNNAMED"]
                    :exec-fn codox.main/generate-docs
                    :exec-args {:language :clojure
                                :metadata {:doc/format :markdown}
