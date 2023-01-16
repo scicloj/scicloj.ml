@@ -12,7 +12,7 @@ Main features:
 - Supports creation of machine learning pipelines *as-data*
 - Includes easy-to-use, sophisticated *cross-validations* of pipelines
 - Includes most important data transformation for data preprocessing
-- Open to pluggable ML experiment tracking
+- Experiment tracking can be added by the user via a callback mechanism
 - *Open architecture* to allow to plugin any potential ML model, even in non-JVM languages, including deep learning
 - Based on well established Clojure/Java Data Science libraries
     - [*tech.ml.dataset*](https://github.com/techascent/tech.ml.dataset) for *very efficient* underlying data storage
