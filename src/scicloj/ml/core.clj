@@ -32,6 +32,26 @@
   (scicloj.metamorph.core/->pipeline config ops)))
 
 
+(defn auc
+  "area under the ROC curve"
+  ^double [predicted-labels labels]
+  [predicted-labels labels]
+  (assert (= (count predicted-labels) (count labels)))
+  (assert (= (set labels) #{0 1}))
+  (let [eval-data (ds/dataset {:predicted-labels predicted-labels
+                               :labels labels})
+        ranked-data (ds/order-by eval-data :predicted-labels :desc)
+        n (count labels)
+        n-pos (reduce + (:labels eval-data))
+        n-neg (- n n-pos)
+        rank (range 1 (inc n))]
+    (as-> (+ n-pos 1) result
+          (/ result 2)
+          (* n-pos result)
+          (- (reduce + (map * rank labels)) result)
+          (/ result (* n-pos n-neg)))))
+
+
 (defn categorical
   "Given a vector a categorical values create a gridsearch definition."
   ([value-vec]
