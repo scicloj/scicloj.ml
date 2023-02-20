@@ -122,14 +122,17 @@ Functions are re-exported from:
 * scicloj.metamorph.core
 
 ### namespace scicloj.ml.dataset
-Functions are re-exported from:
+All functions in this ns take a dataset as first argument.
+The functions are re-exported from:
 
 * tabecloth.api
 * tech.v3.dataset.modelling
-* tech.vhttp://scicloj.ml/3.dataset.column-filters
+* tech.v3.dataset.column-filters
 
 ### namespace scicloj.ml.metamorph
-Functions are re-exported from:
+All functions in this ns take a metamorph context as first argument,
+so can directly be used in [metamorph](https://github.com/scicloj/metamorph) pipelines.
+The functions are re-exported from:
 
 * tablecloth.pipeline
 * tech.v3.libs.smile.metamorph
@@ -145,7 +148,7 @@ In case you are already familar with any of the original namespaces, they can of
 ```
 # Plugins
 
-scicloj.ml can be easely extended by plugins, which contribute models.
+scicloj.ml can be easely extended by plugins, which contribute models or other algorithms.
 By now the following plugins exist:
 
 * Builtin: [scicloj.ml.smile](https://github.com/scicloj/scicloj.ml.smile)
