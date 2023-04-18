@@ -17,7 +17,8 @@ Main features:
 - Based on well established Clojure/Java Data Science libraries
     - [*tech.ml.dataset*](https://github.com/techascent/tech.ml.dataset) for *very efficient* underlying data storage
     - [*Smile*](https://haifengl.github.io/) for ML *models*
-    - [*tech.ml*](https://github.com/techascent/tech.ml) as foundation of *higher level ML* functions
+    - [*metamorph.ml*](https://github.com/scicloj/metamorph.ml) as foundation of *higher level ML* functions
+       (former: [*tech.ml*](https://github.com/techascent/tech.ml) )
 
 ## Quickstart
 
