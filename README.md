@@ -1,5 +1,5 @@
 [![Clojars Project](https://img.shields.io/clojars/v/scicloj/scicloj.ml.svg)](https://clojars.org/scicloj/scicloj.ml/)[![cljdoc badge](https://cljdoc.org/badge/scicloj/scicloj.ml)](https://cljdoc.org/d/scicloj/scicloj.ml)
-- v0.2.1: [![Gitpod ready-to-code v0.2.1](https://img.shields.io/badge/Gitpod-ready--to--code-908a85?logo=gitpod)](https://gitpod.io/#https://github.com/scicloj/scicloj.ml/tree/v0.2.1)
+- v0.2.2: [![Gitpod ready-to-code v0.2.2](https://img.shields.io/badge/Gitpod-ready--to--code-908a85?logo=gitpod)](https://gitpod.io/#https://github.com/scicloj/scicloj.ml/tree/v0.2.2)
 - latest snapshot: [![Gitpod ready-to-code latest-snapshot](https://img.shields.io/badge/Gitpod-ready--to--code-908a85?logo=gitpod)](https://gitpod.io/#https://github.com/scicloj/scicloj.ml)
 - latest snapshot: [![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/scicloj/scicloj.ml/HEAD?filepath=docs%2Fquickstart.ipynb)
 
@@ -12,12 +12,13 @@ Main features:
 - Supports creation of machine learning pipelines *as-data*
 - Includes easy-to-use, sophisticated *cross-validations* of pipelines
 - Includes most important data transformation for data preprocessing
-- Open to pluggable ML experiment tracking
+- Experiment tracking can be added by the user via a callback mechanism
 - *Open architecture* to allow to plugin any potential ML model, even in non-JVM languages, including deep learning
 - Based on well established Clojure/Java Data Science libraries
     - [*tech.ml.dataset*](https://github.com/techascent/tech.ml.dataset) for *very efficient* underlying data storage
     - [*Smile*](https://haifengl.github.io/) for ML *models*
-    - [*tech.ml*](https://github.com/techascent/tech.ml) as foundation of *higher level ML* functions
+    - [*metamorph.ml*](https://github.com/scicloj/metamorph.ml) as foundation of *higher level ML* functions
+       (former: [*tech.ml*](https://github.com/techascent/tech.ml) )
 
 ## Quickstart
 
@@ -122,14 +123,17 @@ Functions are re-exported from:
 * scicloj.metamorph.core
 
 ### namespace scicloj.ml.dataset
-Functions are re-exported from:
+All functions in this ns take a dataset as first argument.
+The functions are re-exported from:
 
 * tabecloth.api
 * tech.v3.dataset.modelling
-* tech.vhttp://scicloj.ml/3.dataset.column-filters
+* tech.v3.dataset.column-filters
 
 ### namespace scicloj.ml.metamorph
-Functions are re-exported from:
+All functions in this ns take a metamorph context as first argument,
+so can directly be used in [metamorph](https://github.com/scicloj/metamorph) pipelines.
+The functions are re-exported from:
 
 * tablecloth.pipeline
 * tech.v3.libs.smile.metamorph
@@ -145,7 +149,7 @@ In case you are already familar with any of the original namespaces, they can of
 ```
 # Plugins
 
-scicloj.ml can be easely extended by plugins, which contribute models.
+scicloj.ml can be easely extended by plugins, which contribute models or other algorithms.
 By now the following plugins exist:
 
 * Builtin: [scicloj.ml.smile](https://github.com/scicloj/scicloj.ml.smile)
