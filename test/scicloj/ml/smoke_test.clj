@@ -3,7 +3,10 @@
              [scicloj.ml.core :as ml]
              [scicloj.ml.metamorph :as mm]
              [scicloj.ml.dataset :as ds]
-             [scicloj.ml.smile.classification]))
+             [scicloj.ml.smile.classification]
+             [tablecloth.api :as tc]))
+             
+
 
 ;; read train and test datasets
 (def titanic-train
@@ -18,14 +21,15 @@
    (ds/dataset "https://github.com/scicloj/metamorph-examples/raw/main/data/titanic/test.csv"
                {:key-fn keyword
                 :parser-fn :string})
-   (ds/add-column :Survived [""] :cycle)))
+   (tc/add-column :Survived [ "0"] :cycle)))
+
 
 
 ;; construct pipeline function including Logistic Regression model
 (def pipe-fn
   (ml/pipeline
    (mm/select-columns [:Survived :Pclass])
-   (mm/add-column :Survived (fn [ds] (map #(case % "1" "yes" "0" "no" nil "") (:Survived ds))))
+   (mm/add-column :Survived (fn [ds] (map #(case % "1" "yes" "0" "no" ) (:Survived ds))))
    (mm/categorical->number [:Survived :Pclass])
    (mm/set-inference-target :Survived)
    {:metamorph/id :model}
@@ -52,7 +56,4 @@
 
 
 (t/deftest smoke-test
-  (t/is (= {"yes" 93 "no" 325} yes-no-freqs)))
-;; => #tech.v3.dataset.column<string>[418]
-;;    :Survived
-;;    [no, no, yes, no, no, no, no, yes, no, no, no, no, no, yes, no, yes, yes, no, no, no...]
+  (t/is (= {"yes" 107 "no" 311} yes-no-freqs)))

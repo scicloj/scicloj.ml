@@ -18,7 +18,7 @@
   "
   (:refer-clojure :exclude [boolean concat drop first group-by last rand-nth shuffle])
   (:require [tech.v3.datatype.export-symbols :as exporter]
-            [scicloj.ml.utils :refer :all]
+            [scicloj.ml.utils :refer [ns-symbols export-all]]
             [scicloj.metamorph.core]
             [scicloj.metamorph.ml]
             [scicloj.metamorph.ml.loss]

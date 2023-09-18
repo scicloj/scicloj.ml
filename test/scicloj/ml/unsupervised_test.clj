@@ -9,8 +9,12 @@
 
 
 
-(ml/define-model! :test-unsupervised (fn [feature-ds label-ds options] {})  nil {:unsupervised? true})
-(ml/define-model! :test-supervised (fn [feature-ds label-ds options] {})  nil {})
+(ml/define-model! :test-unsupervised (fn [feature-ds label-ds options] {})
+  (fn [_] (throw (Exception. "no supported")))
+  {:unsupervised? true})
+(ml/define-model! :test-supervised (fn [feature-ds label-ds options] {})
+  (fn [_] (throw (Exception. "no supported")))
+  {})
 
 (deftest non-unsupervised
   (is (thrown-with-msg? Exception #"No target columns.*"

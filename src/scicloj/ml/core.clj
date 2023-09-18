@@ -32,6 +32,14 @@
   (scicloj.metamorph.core/->pipeline config ops)))
 
 
+(defn auc
+  "Calculates area under the ROC curve. Uses AUC formula from R's 'mlr' package.
+  (sum(r[i]) - n.pos * (n.pos + 1) / 2) / (n.pos * n.neg)
+  See https://github.com/mlr-org/mlr/blob/main/R/measures.R"
+  (^{:tag double} [predictions labels]
+  (scicloj.metamorph.ml.loss/auc predictions labels)))
+
+
 (defn categorical
   "Given a vector a categorical values create a gridsearch definition."
   ([value-vec]
@@ -108,6 +116,9 @@ that label."
 
 
 (defn ensemble-pipe
+  "Creates an ensemble pipeline function out of various pipelines. The different predictions
+   get combined via majority voting.
+   Can be used in the same way as any other pipeline."
   ([pipes]
   (scicloj.metamorph.ml/ensemble-pipe pipes)))
 
@@ -202,16 +213,6 @@ that label."
   (scicloj.metamorph.core/fit-pipe data pipe-fn)))
 
 
-(defn format-fn-sources
-  ([fn-sources]
-  (scicloj.metamorph.ml/format-fn-sources fn-sources)))
-
-
-(defn get-nice-source-info
-  ([pipeline-decl pipe-fns-ns pipe-fns-source-file]
-  (scicloj.metamorph.ml/get-nice-source-info pipeline-decl pipe-fns-ns pipe-fns-source-file)))
-
-
 (defn hyperparameters
   "Get the hyperparameters for this model definition"
   ([model-kwd]
@@ -237,11 +238,6 @@ that label."
   (scicloj.metamorph.ml.gridsearch/linear start end n-steps))
   ([start end]
   (scicloj.metamorph.ml.gridsearch/linear start end)))
-
-
-(defn lookup-tables-consistent?
-  ([train-lookup-table prediction-lookup-table]
-  (scicloj.metamorph.ml/lookup-tables-consistent? train-lookup-table prediction-lookup-table)))
 
 
 (defn mae
@@ -297,16 +293,6 @@ that label."
     value and values that describe the probability distribution."
   ([dataset model]
   (scicloj.metamorph.ml/predict dataset model)))
-
-
-(defn probability-distributions->labels
-  ([prob-dists]
-  (scicloj.metamorph.ml.classification/probability-distributions->labels prob-dists)))
-
-
-(defn reduce-result
-  ([r result-dissoc-in-seq]
-  (scicloj.metamorph.ml/reduce-result r result-dissoc-in-seq)))
 
 
 (def result-dissoc-in-seq--all scicloj.metamorph.ml/result-dissoc-in-seq--all)
@@ -391,10 +377,5 @@ user> (ml-gs/sobol-gridsearch opt-map)
   It merges the data into the provided `ctx` while doing so."
   ([data pipe-fn ctx]
   (scicloj.metamorph.core/transform-pipe data pipe-fn ctx)))
-
-
-(defn validate-lookup-tables
-  ([model predict-ds-classification target-col]
-  (scicloj.metamorph.ml/validate-lookup-tables model predict-ds-classification target-col)))
 
 

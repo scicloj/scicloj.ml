@@ -1,5 +1,8 @@
 # Changelog
-
+0.3.0
+ - updated all dependencies to use TMD 7.0.0
+ 
+ 
 0.2.2
  - generate all scicloj.ml namespaces statically
  - added dvc/queue-exp to queue experiments with DVC

@@ -14,12 +14,6 @@
              [scicloj.ml.smile.classification])
   (:import (java.util UUID)))
 
-
-
-
-
-
-;;
 (def iris (tc/dataset "https://raw.githubusercontent.com/techascent/tech.ml/master/test/data/iris.csv" {:key-fn keyword}))
 
 (deftest grid-search
@@ -115,7 +109,7 @@
         predicted-species (ds-mod/column-values->categorical (:metamorph/data prediction)
                                                              :species)]
 
-   (is (= [1.0 0.0 0.0 1.0 2.0]
+   (is (= [0.0 2.0 2.0 0.0 1.0]
           (take 5 (-> prediction (get "1") :scicloj.metamorph.ml/target-ds (get :species) seq))))
    (is (= ["setosa" "versicolor" "versicolor"]
           (take 3 predicted-species)))))
@@ -146,7 +140,7 @@
 (defn do-xxx [col] col)
 
 (deftest round-trip-aliased-names
-  (is (= {1.0 50, 0.0 50, 2.0 50}
+  (is (= {1 50, 0 50, 2 50}
 
          (let [
 

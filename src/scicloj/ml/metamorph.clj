@@ -50,9 +50,9 @@
 (defn ->array
   "Convert numerical column(s) to java array"
   ([colname]
-   (tablecloth.pipeline/->array colname))
+  (tablecloth.pipeline/->array colname))
   ([colname datatype]
-   (tablecloth.pipeline/->array colname datatype)))
+  (tablecloth.pipeline/->array colname datatype)))
 
 
 (defn add-column
@@ -68,39 +68,39 @@
     - `:na` - append missing values
     - `:strict` - (default) throws an exception when sizes mismatch"
   ([column-name column]
-   (tablecloth.pipeline/add-column column-name column))
+  (tablecloth.pipeline/add-column column-name column))
   ([column-name column size-strategy]
-   (tablecloth.pipeline/add-column column-name column size-strategy)))
+  (tablecloth.pipeline/add-column column-name column size-strategy)))
 
 
 (defn add-columns
   "Add or updade (modify) columns defined in `columns-map` (mapping: name -> column) "
   ([columns-map]
-   (tablecloth.pipeline/add-columns columns-map))
+  (tablecloth.pipeline/add-columns columns-map))
   ([columns-map size-strategy]
-   (tablecloth.pipeline/add-columns columns-map size-strategy)))
+  (tablecloth.pipeline/add-columns columns-map size-strategy)))
 
 
 (defn add-or-replace-column
   ([column-name column]
-   (tablecloth.pipeline/add-or-replace-column column-name column))
+  (tablecloth.pipeline/add-or-replace-column column-name column))
   ([column-name column size-strategy]
-   (tablecloth.pipeline/add-or-replace-column column-name column size-strategy)))
+  (tablecloth.pipeline/add-or-replace-column column-name column size-strategy)))
 
 
 (defn add-or-replace-columns
   ([columns-map]
-   (tablecloth.pipeline/add-or-replace-columns columns-map))
+  (tablecloth.pipeline/add-or-replace-columns columns-map))
   ([columns-map size-strategy]
-   (tablecloth.pipeline/add-or-replace-columns columns-map size-strategy)))
+  (tablecloth.pipeline/add-or-replace-columns columns-map size-strategy)))
 
 
 (defn add-or-update-column
   "If column exists, replace.  Else append new column."
   ([colname column]
-   (tech.v3.dataset.metamorph/add-or-update-column colname column))
+  (tech.v3.dataset.metamorph/add-or-update-column colname column))
   ([column]
-   (tech.v3.dataset.metamorph/add-or-update-column column)))
+  (tech.v3.dataset.metamorph/add-or-update-column column)))
 
 
 (defn aggregate
@@ -115,37 +115,37 @@
   - seq of values
   - map of values with column names"
   ([aggregator]
-   (tablecloth.pipeline/aggregate aggregator))
+  (tablecloth.pipeline/aggregate aggregator))
   ([aggregator options]
-   (tablecloth.pipeline/aggregate aggregator options)))
+  (tablecloth.pipeline/aggregate aggregator options)))
 
 
 (defn aggregate-columns
   "Aggregates each column separately"
   ([columns-aggregators]
-   (tablecloth.pipeline/aggregate-columns columns-aggregators))
+  (tablecloth.pipeline/aggregate-columns columns-aggregators))
   ([columns-selector column-aggregators]
-   (tablecloth.pipeline/aggregate-columns columns-selector column-aggregators))
+  (tablecloth.pipeline/aggregate-columns columns-selector column-aggregators))
   ([columns-selector column-aggregators options]
-   (tablecloth.pipeline/aggregate-columns columns-selector column-aggregators options)))
+  (tablecloth.pipeline/aggregate-columns columns-selector column-aggregators options)))
 
 
 (defn anti-join
   ([ds-right columns-selector]
-   (tablecloth.pipeline/anti-join ds-right columns-selector))
+  (tablecloth.pipeline/anti-join ds-right columns-selector))
   ([ds-right columns-selector options]
-   (tablecloth.pipeline/anti-join ds-right columns-selector options)))
+  (tablecloth.pipeline/anti-join ds-right columns-selector options)))
 
 
 (defn append
   "Concats columns of several datasets"
   ([& args]
-   (apply tablecloth.pipeline/append args)))
+  (apply tablecloth.pipeline/append args)))
 
 
 (defn append-columns
   ([column-seq]
-   (tech.v3.dataset.metamorph/append-columns column-seq)))
+  (tech.v3.dataset.metamorph/append-columns column-seq)))
 
 
 (defn array-column->columns
@@ -159,40 +159,40 @@
     `prefix` newly created column will get prefix before column number
   "
   ([src-column opts]
-   (tablecloth.pipeline/array-column->columns src-column opts))
+  (tablecloth.pipeline/array-column->columns src-column opts))
   ([src-column]
-   (tablecloth.pipeline/array-column->columns src-column)))
+  (tablecloth.pipeline/array-column->columns src-column)))
 
 
 (defn as-regular-dataset
   "Remove grouping tag"
   ([]
-   (tablecloth.pipeline/as-regular-dataset)))
+  (tablecloth.pipeline/as-regular-dataset )))
 
 
 (defn asof-join
   ([ds-right columns-selector]
-   (tablecloth.pipeline/asof-join ds-right columns-selector))
+  (tablecloth.pipeline/asof-join ds-right columns-selector))
   ([ds-right columns-selector options]
-   (tablecloth.pipeline/asof-join ds-right columns-selector options)))
+  (tablecloth.pipeline/asof-join ds-right columns-selector options)))
 
 
 (defn assoc-ds
   "If dataset is not nil, calls `clojure.core/assoc`. Else creates a new empty dataset and
   then calls `clojure.core/assoc`.  Guaranteed to return a dataset (unlike assoc)."
   ([cname cdata & args]
-   (apply tech.v3.dataset.metamorph/assoc-ds cname cdata args)))
+  (apply tech.v3.dataset.metamorph/assoc-ds cname cdata args)))
 
 
 (defn assoc-metadata
   "Set metadata across a set of columns."
   ([filter-fn-or-ds k v & args]
-   (apply tech.v3.dataset.metamorph/assoc-metadata filter-fn-or-ds k v args)))
+  (apply tech.v3.dataset.metamorph/assoc-metadata filter-fn-or-ds k v args)))
 
 
 (defn bind
   ([& args]
-   (apply tablecloth.pipeline/bind args)))
+  (apply tablecloth.pipeline/bind args)))
 
 
 (defn bow->SparseArray
@@ -215,9 +215,9 @@
 
   "
   ([bow-col indices-col options]
-   (scicloj.ml.smile.metamorph/bow->SparseArray bow-col indices-col options))
+  (scicloj.ml.smile.metamorph/bow->SparseArray bow-col indices-col options))
   ([bow-col indices-col]
-   (scicloj.ml.smile.metamorph/bow->SparseArray bow-col indices-col)))
+  (scicloj.ml.smile.metamorph/bow->SparseArray bow-col indices-col)))
 
 
 (defn bow->something-sparse
@@ -233,7 +233,7 @@
 
   "
   ([bow-col indices-col bow->sparse-fn options]
-   (scicloj.ml.smile.metamorph/bow->something-sparse bow-col indices-col bow->sparse-fn options)))
+  (scicloj.ml.smile.metamorph/bow->something-sparse bow-col indices-col bow->sparse-fn options)))
 
 
 (defn bow->sparse-array
@@ -258,9 +258,9 @@
 
   "
   ([bow-col indices-col options]
-   (scicloj.ml.smile.metamorph/bow->sparse-array bow-col indices-col options))
+  (scicloj.ml.smile.metamorph/bow->sparse-array bow-col indices-col options))
   ([bow-col indices-col]
-   (scicloj.ml.smile.metamorph/bow->sparse-array bow-col indices-col)))
+  (scicloj.ml.smile.metamorph/bow->sparse-array bow-col indices-col)))
 
 
 (defn bow->tfidf
@@ -278,16 +278,16 @@
   Writes keys to ctx                   |none
   "
   ([bow-column tfidf-column options]
-   (scicloj.ml.smile.metamorph/bow->tfidf bow-column tfidf-column options)))
+  (scicloj.ml.smile.metamorph/bow->tfidf bow-column tfidf-column options)))
 
 
 (defn brief
   "Get a brief description, in mapseq form of a dataset.  A brief description is
   the mapseq form of descriptive stats."
   ([options]
-   (tech.v3.dataset.metamorph/brief options))
+  (tech.v3.dataset.metamorph/brief options))
   ([]
-   (tech.v3.dataset.metamorph/brief)))
+  (tech.v3.dataset.metamorph/brief )))
 
 
 (defn by-rank
@@ -301,37 +301,37 @@
 
   `:desc?` set to true (default) order descending before calculating rank"
   ([columns-selector rank-predicate]
-   (tablecloth.pipeline/by-rank columns-selector rank-predicate))
+  (tablecloth.pipeline/by-rank columns-selector rank-predicate))
   ([columns-selector rank-predicate options]
-   (tablecloth.pipeline/by-rank columns-selector rank-predicate options)))
+  (tablecloth.pipeline/by-rank columns-selector rank-predicate options)))
 
 
 (defn categorical->number
   "Convert columns into a discrete , numeric representation
   See tech.v3.dataset.categorical/fit-categorical-map."
   ([filter-fn-or-ds]
-   (tech.v3.dataset.metamorph/categorical->number filter-fn-or-ds))
+  (tech.v3.dataset.metamorph/categorical->number filter-fn-or-ds))
   ([filter-fn-or-ds table-args]
-   (tech.v3.dataset.metamorph/categorical->number filter-fn-or-ds table-args))
+  (tech.v3.dataset.metamorph/categorical->number filter-fn-or-ds table-args))
   ([filter-fn-or-ds table-args result-datatype]
-   (tech.v3.dataset.metamorph/categorical->number filter-fn-or-ds table-args result-datatype)))
+  (tech.v3.dataset.metamorph/categorical->number filter-fn-or-ds table-args result-datatype)))
 
 
 (defn categorical->one-hot
   "Convert string columns to numeric columns.
   See tech.v3.dataset.categorical/fit-one-hot"
   ([filter-fn-or-ds]
-   (tech.v3.dataset.metamorph/categorical->one-hot filter-fn-or-ds))
+  (tech.v3.dataset.metamorph/categorical->one-hot filter-fn-or-ds))
   ([filter-fn-or-ds table-args]
-   (tech.v3.dataset.metamorph/categorical->one-hot filter-fn-or-ds table-args))
+  (tech.v3.dataset.metamorph/categorical->one-hot filter-fn-or-ds table-args))
   ([filter-fn-or-ds table-args result-datatype]
-   (tech.v3.dataset.metamorph/categorical->one-hot filter-fn-or-ds table-args result-datatype)))
+  (tech.v3.dataset.metamorph/categorical->one-hot filter-fn-or-ds table-args result-datatype)))
 
 
 (defn clone
   "Clone an object.  Can clone anything convertible to a reader."
   ([]
-   (tablecloth.pipeline/clone)))
+  (tablecloth.pipeline/clone )))
 
 
 (defn cluster
@@ -366,21 +366,21 @@ The cluster id of each row gets written to the column in `target-column`
 
   "
   ([clustering-method clustering-method-args target-column]
-   (scicloj.ml.smile.clustering/cluster clustering-method clustering-method-args target-column)))
+  (scicloj.ml.smile.clustering/cluster clustering-method clustering-method-args target-column)))
 
 
 (defn column
   ([colname]
-   (tablecloth.pipeline/column colname)))
+  (tablecloth.pipeline/column colname)))
 
 
 (defn column->dataset
   "Transform a column into a sequence of maps using transform-fn.
   Return dataset created out of the sequence of maps."
   ([colname transform-fn options]
-   (tech.v3.dataset.metamorph/column->dataset colname transform-fn options))
+  (tech.v3.dataset.metamorph/column->dataset colname transform-fn options))
   ([colname transform-fn]
-   (tech.v3.dataset.metamorph/column->dataset colname transform-fn)))
+  (tech.v3.dataset.metamorph/column->dataset colname transform-fn)))
 
 
 (defn column-cast
@@ -406,12 +406,12 @@ The cluster id of each row gets written to the column in `target-column`
   Casts to string need no cast-fn but one may be provided.
   Casts from string to anything will call tech.v3.dataset.column/parse-column."
   ([colname datatype]
-   (tech.v3.dataset.metamorph/column-cast colname datatype)))
+  (tech.v3.dataset.metamorph/column-cast colname datatype)))
 
 
 (defn column-count
   ([]
-   (tablecloth.pipeline/column-count)))
+  (tablecloth.pipeline/column-count )))
 
 
 (defn column-labeled-mapseq
@@ -429,7 +429,7 @@ The cluster id of each row gets written to the column in `target-column`
   }
 ```"
   ([value-colname-seq]
-   (tech.v3.dataset.metamorph/column-labeled-mapseq value-colname-seq)))
+  (tech.v3.dataset.metamorph/column-labeled-mapseq value-colname-seq)))
 
 
 (defn column-map
@@ -537,11 +537,11 @@ user> (ds/missing (*1 :c))
 {0,1}
 ```"
   ([result-colname map-fn res-dtype-or-opts filter-fn-or-ds]
-   (tech.v3.dataset.metamorph/column-map result-colname map-fn res-dtype-or-opts filter-fn-or-ds))
+  (tech.v3.dataset.metamorph/column-map result-colname map-fn res-dtype-or-opts filter-fn-or-ds))
   ([result-colname map-fn filter-fn-or-ds]
-   (tech.v3.dataset.metamorph/column-map result-colname map-fn filter-fn-or-ds))
+  (tech.v3.dataset.metamorph/column-map result-colname map-fn filter-fn-or-ds))
   ([result-colname map-fn]
-   (tech.v3.dataset.metamorph/column-map result-colname map-fn)))
+  (tech.v3.dataset.metamorph/column-map result-colname map-fn)))
 
 
 (defn column-names
@@ -576,11 +576,11 @@ column-names function returns names according to columns-selector
 
   "
   ([]
-   (tablecloth.pipeline/column-names))
+  (tablecloth.pipeline/column-names ))
   ([columns-selector]
-   (tablecloth.pipeline/column-names columns-selector))
+  (tablecloth.pipeline/column-names columns-selector))
   ([columns-selector meta-field]
-   (tablecloth.pipeline/column-names columns-selector meta-field)))
+  (tablecloth.pipeline/column-names columns-selector meta-field)))
 
 
 (defn column-values->categorical
@@ -589,7 +589,7 @@ column-names function returns names according to columns-selector
   In the case of one-hot mappings, src-column must be the original
   column name before the one-hot map"
   ([src-column]
-   (tech.v3.dataset.metamorph/column-values->categorical src-column)))
+  (tech.v3.dataset.metamorph/column-values->categorical src-column)))
 
 
 (defn columns
@@ -599,9 +599,9 @@ column-names function returns names according to columns-selector
   * `:as-seqs`
   "
   ([]
-   (tablecloth.pipeline/columns))
+  (tablecloth.pipeline/columns ))
   ([result-type]
-   (tablecloth.pipeline/columns result-type)))
+  (tablecloth.pipeline/columns result-type)))
 
 
 (defn columns->array-column
@@ -613,7 +613,7 @@ column-names function returns names according to columns-selector
   `new-column` new column to create
   "
   ([column-selector new-column]
-   (tablecloth.pipeline/columns->array-column column-selector new-column)))
+  (tablecloth.pipeline/columns->array-column column-selector new-column)))
 
 
 (defn columns-with-missing-seq
@@ -625,7 +625,7 @@ column-names function returns names according to columns-selector
 ```
   or nil of no columns are missing data."
   ([]
-   (tech.v3.dataset.metamorph/columns-with-missing-seq)))
+  (tech.v3.dataset.metamorph/columns-with-missing-seq )))
 
 
 (defn columnwise-concat
@@ -657,9 +657,9 @@ null [6 3]:
   colname-column-name - defaults to :column
   "
   ([colnames options]
-   (tech.v3.dataset.metamorph/columnwise-concat colnames options))
+  (tech.v3.dataset.metamorph/columnwise-concat colnames options))
   ([colnames]
-   (tech.v3.dataset.metamorph/columnwise-concat colnames)))
+  (tech.v3.dataset.metamorph/columnwise-concat colnames)))
 
 
 (defn complete
@@ -667,36 +667,36 @@ null [6 3]:
 
   Fills a dataset with all possible combinations of selected columns. When a given combination doesn't exist, missing values are created."
   ([columns-selector & args]
-   (apply tablecloth.pipeline/complete columns-selector args)))
+  (apply tablecloth.pipeline/complete columns-selector args)))
 
 
 (defn concat
   "Joins rows from other datasets"
   ([& args]
-   (apply tablecloth.pipeline/concat args)))
+  (apply tablecloth.pipeline/concat args)))
 
 
 (defn concat-copying
   "Joins rows from other datasets via a copy of data"
   ([& args]
-   (apply tablecloth.pipeline/concat-copying args)))
+  (apply tablecloth.pipeline/concat-copying args)))
 
 
 (defn concat-inplace
   "Concatenate datasets in place.  Respects missing values.  Datasets must all have the
   same columns.  Result column datatypes will be a widening cast of the datatypes."
   ([& args]
-   (apply tech.v3.dataset.metamorph/concat-inplace args))
+  (apply tech.v3.dataset.metamorph/concat-inplace args))
   ([]
-   (tech.v3.dataset.metamorph/concat-inplace)))
+  (tech.v3.dataset.metamorph/concat-inplace )))
 
 
 (defn convert-types
   "Convert type of the column to the other type."
   ([coltype-map-or-columns-selector]
-   (tablecloth.pipeline/convert-types coltype-map-or-columns-selector))
+  (tablecloth.pipeline/convert-types coltype-map-or-columns-selector))
   ([columns-selector new-types]
-   (tablecloth.pipeline/convert-types columns-selector new-types)))
+  (tablecloth.pipeline/convert-types columns-selector new-types)))
 
 
 (defn count-vectorize
@@ -716,19 +716,19 @@ null [6 3]:
   Writes keys to ctx                   |none
   "
   ([text-col bow-col options]
-   (scicloj.ml.smile.metamorph/count-vectorize text-col bow-col options))
+  (scicloj.ml.smile.metamorph/count-vectorize text-col bow-col options))
   ([text-col bow-col]
-   (scicloj.ml.smile.metamorph/count-vectorize text-col bow-col)))
+  (scicloj.ml.smile.metamorph/count-vectorize text-col bow-col)))
 
 
 (defn cross-join
   "Cross product from selected columns"
   ([ds-right]
-   (tablecloth.pipeline/cross-join ds-right))
+  (tablecloth.pipeline/cross-join ds-right))
   ([ds-right columns-selector]
-   (tablecloth.pipeline/cross-join ds-right columns-selector))
+  (tablecloth.pipeline/cross-join ds-right columns-selector))
   ([ds-right columns-selector options]
-   (tablecloth.pipeline/cross-join ds-right columns-selector options)))
+  (tablecloth.pipeline/cross-join ds-right columns-selector options)))
 
 
 (defn crosstab
@@ -744,22 +744,22 @@ null [6 3]:
   * aggregator - aggregating function (default: row-count)
   * marginal-rows, marginal-cols - adds row and/or cols, it's a sum if true. Can be a custom fn."
   ([row-selector col-selector]
-   (tablecloth.pipeline/crosstab row-selector col-selector))
+  (tablecloth.pipeline/crosstab row-selector col-selector))
   ([row-selector col-selector options]
-   (tablecloth.pipeline/crosstab row-selector col-selector options)))
+  (tablecloth.pipeline/crosstab row-selector col-selector options)))
 
 
 (defn data->dataset
   "Convert a data-ized dataset created via dataset->data back into a
   full dataset"
   ([]
-   (tech.v3.dataset.metamorph/data->dataset)))
+  (tech.v3.dataset.metamorph/data->dataset )))
 
 
 (defn dataset->categorical-xforms
   "Given a dataset, return a map of column-name->xform information."
   ([]
-   (tech.v3.dataset.metamorph/dataset->categorical-xforms)))
+  (tech.v3.dataset.metamorph/dataset->categorical-xforms )))
 
 
 (defn dataset->data
@@ -769,7 +769,7 @@ null [6 3]:
   into new-dataset.
   A column definition in this case is a map of {:name :missing :data :metadata}."
   ([]
-   (tech.v3.dataset.metamorph/dataset->data)))
+  (tech.v3.dataset.metamorph/dataset->data )))
 
 
 (defn dataset->str
@@ -778,20 +778,20 @@ null [6 3]:
 
   For options documentation see dataset-data->str."
   ([options]
-   (tablecloth.pipeline/dataset->str options))
+  (tablecloth.pipeline/dataset->str options))
   ([]
-   (tablecloth.pipeline/dataset->str)))
+  (tablecloth.pipeline/dataset->str )))
 
 
 (defn dataset-name
   ([]
-   (tablecloth.pipeline/dataset-name)))
+  (tablecloth.pipeline/dataset-name )))
 
 
 (defn dataset?
   "Is `ds` a `dataset` type?"
   ([]
-   (tablecloth.pipeline/dataset?)))
+  (tablecloth.pipeline/dataset? )))
 
 
 (defn descriptive-stats
@@ -803,22 +803,22 @@ null [6 3]:
   :n-categorical-values - Number of categorical values to report in the 'values'
      field. Defaults to 21."
   ([]
-   (tech.v3.dataset.metamorph/descriptive-stats))
+  (tech.v3.dataset.metamorph/descriptive-stats ))
   ([options]
-   (tech.v3.dataset.metamorph/descriptive-stats options)))
+  (tech.v3.dataset.metamorph/descriptive-stats options)))
 
 
 (defn difference
   ([ds-right]
-   (tablecloth.pipeline/difference ds-right))
+  (tablecloth.pipeline/difference ds-right))
   ([ds-right options]
-   (tablecloth.pipeline/difference ds-right options)))
+  (tablecloth.pipeline/difference ds-right options)))
 
 
 (defn drop
   "Drop columns and rows."
   ([columns-selector rows-selector]
-   (tablecloth.pipeline/drop columns-selector rows-selector)))
+  (tablecloth.pipeline/drop columns-selector rows-selector)))
 
 
 (defn drop-columns
@@ -829,11 +829,11 @@ null [6 3]:
   - map of names with new names (rename)
   - function which filter names (via column metadata)"
   ([]
-   (tablecloth.pipeline/drop-columns))
+  (tablecloth.pipeline/drop-columns ))
   ([columns-selector]
-   (tablecloth.pipeline/drop-columns columns-selector))
+  (tablecloth.pipeline/drop-columns columns-selector))
   ([columns-selector meta-field]
-   (tablecloth.pipeline/drop-columns columns-selector meta-field)))
+  (tablecloth.pipeline/drop-columns columns-selector meta-field)))
 
 
 (defn drop-missing
@@ -841,9 +841,9 @@ null [6 3]:
 
  `columns-selector` selects columns to look at missing values"
   ([]
-   (tablecloth.pipeline/drop-missing))
+  (tablecloth.pipeline/drop-missing ))
   ([columns-selector]
-   (tablecloth.pipeline/drop-missing columns-selector)))
+  (tablecloth.pipeline/drop-missing columns-selector)))
 
 
 (defn drop-rows
@@ -854,21 +854,21 @@ null [6 3]:
   - seq of true/false
   - fn with predicate"
   ([]
-   (tablecloth.pipeline/drop-rows))
+  (tablecloth.pipeline/drop-rows ))
   ([rows-selector]
-   (tablecloth.pipeline/drop-rows rows-selector))
+  (tablecloth.pipeline/drop-rows rows-selector))
   ([rows-selector options]
-   (tablecloth.pipeline/drop-rows rows-selector options)))
+  (tablecloth.pipeline/drop-rows rows-selector options)))
 
 
 (defn empty-dataset
   ([]
-   (tech.v3.dataset.metamorph/empty-dataset)))
+  (tech.v3.dataset.metamorph/empty-dataset )))
 
 
 (defn empty-ds?
   ([]
-   (tablecloth.pipeline/empty-ds?)))
+  (tablecloth.pipeline/empty-ds? )))
 
 
 (defn ensure-array-backed
@@ -887,9 +887,9 @@ null [6 3]:
 
   * `:unpack?` - unpack packed datetime types.  Defaults to true"
   ([options]
-   (tech.v3.dataset.metamorph/ensure-array-backed options))
+  (tech.v3.dataset.metamorph/ensure-array-backed options))
   ([]
-   (tech.v3.dataset.metamorph/ensure-array-backed)))
+  (tech.v3.dataset.metamorph/ensure-array-backed )))
 
 
 (defn expand
@@ -897,14 +897,14 @@ null [6 3]:
 
   Creates all possible combinations of selected columns."
   ([columns-selector & args]
-   (apply tablecloth.pipeline/expand columns-selector args)))
+  (apply tablecloth.pipeline/expand columns-selector args)))
 
 
 (defn feature-ecount
   "Number of feature columns.  Feature columns are columns that are not
   inference targets."
   ([]
-   (tech.v3.dataset.metamorph/feature-ecount)))
+  (tech.v3.dataset.metamorph/feature-ecount )))
 
 
 (defn fill-range-replace
@@ -916,18 +916,18 @@ null [6 3]:
   * (optional) missing-value - optional value for replace missing
 "
   ([colname max-span]
-   (tablecloth.pipeline/fill-range-replace colname max-span))
+  (tablecloth.pipeline/fill-range-replace colname max-span))
   ([colname max-span missing-strategy]
-   (tablecloth.pipeline/fill-range-replace colname max-span missing-strategy))
+  (tablecloth.pipeline/fill-range-replace colname max-span missing-strategy))
   ([colname max-span missing-strategy missing-value]
-   (tablecloth.pipeline/fill-range-replace colname max-span missing-strategy missing-value)))
+  (tablecloth.pipeline/fill-range-replace colname max-span missing-strategy missing-value)))
 
 
 (defn filter
   "dataset->dataset transformation.  Predicate is passed a map of
   colname->column-value."
   ([predicate]
-   (tech.v3.dataset.metamorph/filter predicate)))
+  (tech.v3.dataset.metamorph/filter predicate)))
 
 
 (defn filter-column
@@ -941,9 +941,9 @@ null [6 3]:
 
   Returns a dataset."
   ([colname predicate]
-   (tech.v3.dataset.metamorph/filter-column colname predicate))
+  (tech.v3.dataset.metamorph/filter-column colname predicate))
   ([colname]
-   (tech.v3.dataset.metamorph/filter-column colname)))
+  (tech.v3.dataset.metamorph/filter-column colname)))
 
 
 (defn filter-dataset
@@ -955,13 +955,13 @@ null [6 3]:
   * If filter-fn-or-ds is :all, all columns are returned
   * If filter-fn-or-ds is an instance of IFn, the dataset is passed into it."
   ([filter-fn-or-ds]
-   (tech.v3.dataset.metamorph/filter-dataset filter-fn-or-ds)))
+  (tech.v3.dataset.metamorph/filter-dataset filter-fn-or-ds)))
 
 
 (defn first
   "First row"
   ([]
-   (tablecloth.pipeline/first)))
+  (tablecloth.pipeline/first )))
 
 
 (defn fold-by
@@ -970,23 +970,23 @@ null [6 3]:
   to how clojure.core/group-by works.
   See https://scicloj.github.io/tablecloth/index.html#Fold-by"
   ([columns-selector]
-   (tablecloth.pipeline/fold-by columns-selector))
+  (tablecloth.pipeline/fold-by columns-selector))
   ([columns-selector folding-function]
-   (tablecloth.pipeline/fold-by columns-selector folding-function)))
+  (tablecloth.pipeline/fold-by columns-selector folding-function)))
 
 
 (defn full-join
   "Join keeping all rows"
   ([ds-right columns-selector]
-   (tablecloth.pipeline/full-join ds-right columns-selector))
+  (tablecloth.pipeline/full-join ds-right columns-selector))
   ([ds-right columns-selector options]
-   (tablecloth.pipeline/full-join ds-right columns-selector options)))
+  (tablecloth.pipeline/full-join ds-right columns-selector options)))
 
 
 (defn get-entry
   "Returns a single value from given column and row"
   ([column row]
-   (tablecloth.pipeline/get-entry column row)))
+  (tablecloth.pipeline/get-entry column row)))
 
 
 (defn group-by
@@ -1009,60 +1009,77 @@ null [6 3]:
   - group-id - id of the group (int)
   - data - group as dataset"
   ([grouping-selector]
-   (tablecloth.pipeline/group-by grouping-selector))
+  (tablecloth.pipeline/group-by grouping-selector))
   ([grouping-selector options]
-   (tablecloth.pipeline/group-by grouping-selector options)))
+  (tablecloth.pipeline/group-by grouping-selector options)))
 
 
 (defn group-by->indexes
   "(Non-lazy) - Group a dataset and return a map of key-fn-value->indexes where indexes
   is an in-order contiguous group of indexes."
+  ([key-fn options]
+  (tech.v3.dataset.metamorph/group-by->indexes key-fn options))
   ([key-fn]
-   (tech.v3.dataset.metamorph/group-by->indexes key-fn)))
+  (tech.v3.dataset.metamorph/group-by->indexes key-fn)))
 
 
 (defn group-by-column
-  "Return a map of column-value->dataset."
+  "Return a map of column-value->dataset.
+
+  * `:group-by-finalizer` - when provided this is run on each dataset immediately after the
+     rows are selected.  This can be used to immediately perform a reduction on each new
+     dataset which is faster than doing it in a separate run."
+  ([colname options]
+  (tech.v3.dataset.metamorph/group-by-column colname options))
   ([colname]
-   (tech.v3.dataset.metamorph/group-by-column colname)))
+  (tech.v3.dataset.metamorph/group-by-column colname)))
 
 
 (defn group-by-column->indexes
   "(Non-lazy) - Group a dataset by a column return a map of column-val->indexes
-  where indexes is an in-order contiguous group of indexes."
+  where indexes is an in-order contiguous group of indexes.
+
+  Options are passed into dtype's arggroup method."
+  ([colname options]
+  (tech.v3.dataset.metamorph/group-by-column->indexes colname options))
   ([colname]
-   (tech.v3.dataset.metamorph/group-by-column->indexes colname)))
+  (tech.v3.dataset.metamorph/group-by-column->indexes colname)))
+
+
+(defn group-by-column-consumer
+  ([cname]
+  (tech.v3.dataset.metamorph/group-by-column-consumer cname)))
 
 
 (defn grouped?
   "Is `dataset` represents grouped dataset (result of `group-by`)?"
   ([]
-   (tablecloth.pipeline/grouped?)))
+  (tablecloth.pipeline/grouped? )))
 
 
 (defn groups->map
   "Convert grouped dataset to the map of groups"
   ([]
-   (tablecloth.pipeline/groups->map)))
+  (tablecloth.pipeline/groups->map )))
 
 
 (defn groups->seq
   "Convert grouped dataset to seq of the groups"
   ([]
-   (tablecloth.pipeline/groups->seq)))
+  (tablecloth.pipeline/groups->seq )))
 
 
 (defn has-column?
   ([column-name]
-   (tablecloth.pipeline/has-column? column-name)))
+  (tablecloth.pipeline/has-column? column-name)))
 
 
 (defn head
   "First n rows (default 5)"
   ([]
-   (tablecloth.pipeline/head))
+  (tablecloth.pipeline/head ))
   ([n]
-   (tablecloth.pipeline/head n)))
+  (tablecloth.pipeline/head n)))
 
 
 (defn induction
@@ -1102,25 +1119,25 @@ _unnamed [4 5]:
 |  3 |  4 |    6.0 |    3.0 |                 14.0 |
 ```"
   ([induct-fn & args]
-   (apply tech.v3.dataset.metamorph/induction induct-fn args)))
+  (apply tech.v3.dataset.metamorph/induction induct-fn args)))
 
 
 (defn inference-column?
   ([]
-   (tech.v3.dataset.metamorph/inference-column?)))
+  (tech.v3.dataset.metamorph/inference-column? )))
 
 
 (defn inference-target-column-names
   "Return the names of the columns that are inference targets."
   ([]
-   (tech.v3.dataset.metamorph/inference-target-column-names)))
+  (tech.v3.dataset.metamorph/inference-target-column-names )))
 
 
 (defn inference-target-ds
   "Given a dataset return reverse-mapped inference target columns or nil
   in the case where there are no inference targets."
   ([]
-   (tech.v3.dataset.metamorph/inference-target-ds)))
+  (tech.v3.dataset.metamorph/inference-target-ds )))
 
 
 (defn inference-target-label-inverse-map
@@ -1128,43 +1145,42 @@ _unnamed [4 5]:
   sequence container 1 label column, generate a reverse map that maps from a dataset
   value back to the label that generated that value."
   ([& args]
-   (apply tech.v3.dataset.metamorph/inference-target-label-inverse-map args)))
+  (apply tech.v3.dataset.metamorph/inference-target-label-inverse-map args)))
 
 
 (defn inference-target-label-map
   ([& args]
-   (apply tech.v3.dataset.metamorph/inference-target-label-map args)))
+  (apply tech.v3.dataset.metamorph/inference-target-label-map args)))
 
 
 (defn info
   "Returns a statistcial information about the columns of a dataset.
-  `result-type ` can be :descriptive or :columns
-  "
+  `result-type ` can be :descriptive or :columns"
   ([]
-   (tablecloth.pipeline/info))
+  (tablecloth.pipeline/info ))
   ([result-type]
-   (tablecloth.pipeline/info result-type)))
+  (tablecloth.pipeline/info result-type)))
 
 
 (defn inner-join
   ([ds-right columns-selector]
-   (tablecloth.pipeline/inner-join ds-right columns-selector))
+  (tablecloth.pipeline/inner-join ds-right columns-selector))
   ([ds-right columns-selector options]
-   (tablecloth.pipeline/inner-join ds-right columns-selector options)))
+  (tablecloth.pipeline/inner-join ds-right columns-selector options)))
 
 
 (defn intersect
   ([ds-right]
-   (tablecloth.pipeline/intersect ds-right))
+  (tablecloth.pipeline/intersect ds-right))
   ([ds-right options]
-   (tablecloth.pipeline/intersect ds-right options)))
+  (tablecloth.pipeline/intersect ds-right options)))
 
 
 (defn join-columns
   "Join clumns of dataset. Accepts:
-dataset
-column selector (as in select-columns)
-options
+  dataset
+  column selector (as in select-columns)
+  options
   `:separator` (default -)
   `:drop-columns?` - whether to drop source columns or not (default true)
   `:result-type`
@@ -1175,54 +1191,62 @@ options
   `:missing-subst` - substitution for missing value
   "
   ([target-column columns-selector]
-   (tablecloth.pipeline/join-columns target-column columns-selector))
+  (tablecloth.pipeline/join-columns target-column columns-selector))
   ([target-column columns-selector conf]
-   (tablecloth.pipeline/join-columns target-column columns-selector conf)))
+  (tablecloth.pipeline/join-columns target-column columns-selector conf)))
 
 
 (defn labels
   "Return the labels.  The labels sequence is the reverse mapped inference
   column.  This returns a single column of data or errors out."
   ([]
-   (tech.v3.dataset.metamorph/labels)))
+  (tech.v3.dataset.metamorph/labels )))
 
 
 (defn last
   "Last row"
   ([]
-   (tablecloth.pipeline/last)))
+  (tablecloth.pipeline/last )))
 
 
 (defn left-join
   ([ds-right columns-selector]
-   (tablecloth.pipeline/left-join ds-right columns-selector))
+  (tablecloth.pipeline/left-join ds-right columns-selector))
   ([ds-right columns-selector options]
-   (tablecloth.pipeline/left-join ds-right columns-selector options)))
+  (tablecloth.pipeline/left-join ds-right columns-selector options)))
 
 
 (defn map-columns
   "Map over rows using a map function. The arity should match the columns selected."
   ([column-name map-fn]
-   (tablecloth.pipeline/map-columns column-name map-fn))
+  (tablecloth.pipeline/map-columns column-name map-fn))
   ([column-name columns-selector map-fn]
-   (tablecloth.pipeline/map-columns column-name columns-selector map-fn))
+  (tablecloth.pipeline/map-columns column-name columns-selector map-fn))
   ([column-name new-type columns-selector map-fn]
-   (tablecloth.pipeline/map-columns column-name new-type columns-selector map-fn)))
+  (tablecloth.pipeline/map-columns column-name new-type columns-selector map-fn)))
+
+
+(defn map-rows
+  "Map a function across the rows of the dataset producing a new dataset that is merged back into the original potentially replacing existing columns."
+  ([map-fn]
+  (tablecloth.pipeline/map-rows map-fn))
+  ([map-fn options]
+  (tablecloth.pipeline/map-rows map-fn options)))
 
 
 (defn mapseq-reader
   "Return a reader that produces a map of column-name->column-value
   upon read."
   ([options]
-   (tech.v3.dataset.metamorph/mapseq-reader options))
+  (tech.v3.dataset.metamorph/mapseq-reader options))
   ([]
-   (tech.v3.dataset.metamorph/mapseq-reader)))
+  (tech.v3.dataset.metamorph/mapseq-reader )))
 
 
 (defn mark-as-group
   "Add grouping tag"
   ([]
-   (tablecloth.pipeline/mark-as-group)))
+  (tablecloth.pipeline/mark-as-group )))
 
 
 (defn min-max-scale
@@ -1232,10 +1256,8 @@ options
   `meta-field` tablecloth meta-field working with `columns-selector`
 
   `options` Options for scaler, can take:
-
-  `min` Minimal value to scale to (default -0.5)
-
-  `max` Maximum value to scale to (default 0.5)
+      `min` Minimal value to scale to (default -0.5)
+      `max` Maximum value to scale to (default 0.5)
 
   metamorph                            | .
   -------------------------------------|----------------------------------------------------------------------------
@@ -1246,7 +1268,7 @@ options
 
   "
   ([columns-selector options]
-   (scicloj.metamorph.ml.preprocessing/min-max-scale columns-selector options)))
+  (scicloj.metamorph.ml.preprocessing/min-max-scale columns-selector options)))
 
 
 (defn min-n-by-column
@@ -1290,17 +1312,17 @@ test/data/stocks.csv [10 3]:
 |   GOOG | 2010-03-01 | 560.19 |
 ```"
   ([cname N comparator options]
-   (tech.v3.dataset.metamorph/min-n-by-column cname N comparator options))
+  (tech.v3.dataset.metamorph/min-n-by-column cname N comparator options))
   ([cname N comparator]
-   (tech.v3.dataset.metamorph/min-n-by-column cname N comparator))
+  (tech.v3.dataset.metamorph/min-n-by-column cname N comparator))
   ([cname N]
-   (tech.v3.dataset.metamorph/min-n-by-column cname N)))
+  (tech.v3.dataset.metamorph/min-n-by-column cname N)))
 
 
 (defn missing
   "Given a dataset or a column, return the missing set as a roaring bitmap"
   ([]
-   (tech.v3.dataset.metamorph/missing)))
+  (tech.v3.dataset.metamorph/missing )))
 
 
 (defn model
@@ -1344,7 +1366,7 @@ test/data/stocks.csv [10 3]:
 
   "
   ([options]
-   (scicloj.metamorph.ml/model options)))
+  (scicloj.metamorph.ml/model options)))
 
 
 (defn model-type
@@ -1353,20 +1375,20 @@ test/data/stocks.csv [10 3]:
   :regression
   :classification"
   ([& args]
-   (apply tech.v3.dataset.metamorph/model-type args)))
+  (apply tech.v3.dataset.metamorph/model-type args)))
 
 
 (defn new-column
   "Create a new column.  Data will scanned for missing values
   unless the full 4-argument pathway is used."
   ([data]
-   (tech.v3.dataset.metamorph/new-column data))
+  (tech.v3.dataset.metamorph/new-column data))
   ([data metadata]
-   (tech.v3.dataset.metamorph/new-column data metadata))
+  (tech.v3.dataset.metamorph/new-column data metadata))
   ([data metadata missing]
-   (tech.v3.dataset.metamorph/new-column data metadata missing))
+  (tech.v3.dataset.metamorph/new-column data metadata missing))
   ([]
-   (tech.v3.dataset.metamorph/new-column)))
+  (tech.v3.dataset.metamorph/new-column )))
 
 
 (defn new-dataset
@@ -1379,11 +1401,11 @@ test/data/stocks.csv [10 3]:
 
   The return value fulfills the dataset protocols."
   ([ds-metadata column-seq]
-   (tech.v3.dataset.metamorph/new-dataset ds-metadata column-seq))
+  (tech.v3.dataset.metamorph/new-dataset ds-metadata column-seq))
   ([column-seq]
-   (tech.v3.dataset.metamorph/new-dataset column-seq))
+  (tech.v3.dataset.metamorph/new-dataset column-seq))
   ([]
-   (tech.v3.dataset.metamorph/new-dataset)))
+  (tech.v3.dataset.metamorph/new-dataset )))
 
 
 (defn num-inference-classes
@@ -1391,7 +1413,7 @@ test/data/stocks.csv [10 3]:
   return the number of classes used for the label.  Error if not classification
   dataset."
   ([]
-   (tech.v3.dataset.metamorph/num-inference-classes)))
+  (tech.v3.dataset.metamorph/num-inference-classes )))
 
 
 (defn order-by
@@ -1405,28 +1427,28 @@ test/data/stocks.csv [10 3]:
   - :desc
   - custom comparator function"
   ([columns-or-fn]
-   (tablecloth.pipeline/order-by columns-or-fn))
+  (tablecloth.pipeline/order-by columns-or-fn))
   ([columns-or-fn comparators]
-   (tablecloth.pipeline/order-by columns-or-fn comparators))
+  (tablecloth.pipeline/order-by columns-or-fn comparators))
   ([columns-or-fn comparators options]
-   (tablecloth.pipeline/order-by columns-or-fn comparators options)))
+  (tablecloth.pipeline/order-by columns-or-fn comparators options)))
 
 
 (defn order-column-names
   "Order a sequence of columns names so they match the order in the
   original dataset.  Missing columns are placed last."
   ([colname-seq]
-   (tech.v3.dataset.metamorph/order-column-names colname-seq)))
+  (tech.v3.dataset.metamorph/order-column-names colname-seq)))
 
 
 (defn pivot->longer
   "`tidyr` pivot_longer api"
   ([]
-   (tablecloth.pipeline/pivot->longer))
+  (tablecloth.pipeline/pivot->longer ))
   ([columns-selector]
-   (tablecloth.pipeline/pivot->longer columns-selector))
+  (tablecloth.pipeline/pivot->longer columns-selector))
   ([columns-selector options]
-   (tablecloth.pipeline/pivot->longer columns-selector options)))
+  (tablecloth.pipeline/pivot->longer columns-selector options)))
 
 
 (defn pivot->wider
@@ -1448,9 +1470,9 @@ test/data/stocks.csv [10 3]:
     * pattern - is a sequence of names, where some of the names are nil. nil is replaced by a name taken from splitter and such column is used for values.
   "
   ([columns-selector value-columns]
-   (tablecloth.pipeline/pivot->wider columns-selector value-columns))
+  (tablecloth.pipeline/pivot->wider columns-selector value-columns))
   ([columns-selector value-columns options]
-   (tablecloth.pipeline/pivot->wider columns-selector value-columns options)))
+  (tablecloth.pipeline/pivot->wider columns-selector value-columns options)))
 
 
 (defn pmap-ds
@@ -1469,25 +1491,25 @@ test/data/stocks.csv [10 3]:
      - `:as-seq` - Return a sequence of datasets, one for each batch.
      - `:as-ds` - Return a single datasets with all results in memory (default option)."
   ([ds-map-fn options]
-   (tech.v3.dataset.metamorph/pmap-ds ds-map-fn options))
+  (tech.v3.dataset.metamorph/pmap-ds ds-map-fn options))
   ([ds-map-fn]
-   (tech.v3.dataset.metamorph/pmap-ds ds-map-fn)))
+  (tech.v3.dataset.metamorph/pmap-ds ds-map-fn)))
 
 
 (defn print-all
   "Helper function equivalent to `(tech.v3.dataset.print/print-range ... :all)`"
   ([]
-   (tech.v3.dataset.metamorph/print-all)))
+  (tech.v3.dataset.metamorph/print-all )))
 
 
 (defn print-dataset
   "Prints dataset into console. For options see
   tech.v3.dataset.print/dataset-data->str
-"
+  "
   ([]
-   (tablecloth.pipeline/print-dataset))
+  (tablecloth.pipeline/print-dataset ))
   ([options]
-   (tablecloth.pipeline/print-dataset options)))
+  (tablecloth.pipeline/print-dataset options)))
 
 
 (defn probability-distributions->label-column
@@ -1495,38 +1517,38 @@ test/data/stocks.csv [10 3]:
   rows describe a probability distribution, create a label column by taking the max
   value in each row and assign column that row value."
   ([dst-colname]
-   (tech.v3.dataset.metamorph/probability-distributions->label-column dst-colname)))
+  (tech.v3.dataset.metamorph/probability-distributions->label-column dst-colname)))
 
 
 (defn process-group-data
   "Internal: The passed-in function is applied on all groups"
   ([f]
-   (tablecloth.pipeline/process-group-data f))
+  (tablecloth.pipeline/process-group-data f))
   ([f parallel?]
-   (tablecloth.pipeline/process-group-data f parallel?)))
+  (tablecloth.pipeline/process-group-data f parallel?)))
 
 
 (defn rand-nth
   "Returns single random row"
   ([]
-   (tablecloth.pipeline/rand-nth))
+  (tablecloth.pipeline/rand-nth ))
   ([options]
-   (tablecloth.pipeline/rand-nth options)))
+  (tablecloth.pipeline/rand-nth options)))
 
 
 (defn random
   "Returns (n) random rows with repetition"
   ([]
-   (tablecloth.pipeline/random))
+  (tablecloth.pipeline/random ))
   ([n]
-   (tablecloth.pipeline/random n))
+  (tablecloth.pipeline/random n))
   ([n options]
-   (tablecloth.pipeline/random n options)))
+  (tablecloth.pipeline/random n options)))
 
 
 (defn read-nippy
   ([]
-   (tablecloth.pipeline/read-nippy)))
+  (tablecloth.pipeline/read-nippy )))
 
 
 (defn reduce-dimensions
@@ -1555,7 +1577,7 @@ test/data/stocks.csv [10 3]:
 
   "
   ([algorithm target-dims cnames opts]
-   (scicloj.ml.smile.projections/reduce-dimensions algorithm target-dims cnames opts)))
+  (scicloj.ml.smile.projections/reduce-dimensions algorithm target-dims cnames opts)))
 
 
 (defn remove-column
@@ -1563,10 +1585,9 @@ test/data/stocks.csv [10 3]:
 
 ```clojure
 (dissoc dataset col-name)
-```
-  "
+```"
   ([col-name]
-   (tech.v3.dataset.metamorph/remove-column col-name)))
+  (tech.v3.dataset.metamorph/remove-column col-name)))
 
 
 (defn remove-columns
@@ -1578,27 +1599,27 @@ test/data/stocks.csv [10 3]:
   (remove-columns DS cf/categorical)
 ```"
   ([colname-seq-or-fn]
-   (tech.v3.dataset.metamorph/remove-columns colname-seq-or-fn)))
+  (tech.v3.dataset.metamorph/remove-columns colname-seq-or-fn)))
 
 
 (defn remove-rows
   "Same as drop-rows."
   ([row-indexes]
-   (tech.v3.dataset.metamorph/remove-rows row-indexes)))
+  (tech.v3.dataset.metamorph/remove-rows row-indexes)))
 
 
 (defn rename-columns
   "Rename columns with provided old -> new name map"
   ([columns-selector columns-map-fn]
-   (tablecloth.pipeline/rename-columns columns-selector columns-map-fn))
+  (tablecloth.pipeline/rename-columns columns-selector columns-map-fn))
   ([columns-mapping]
-   (tablecloth.pipeline/rename-columns columns-mapping)))
+  (tablecloth.pipeline/rename-columns columns-mapping)))
 
 
 (defn reorder-columns
   "Reorder columns using column selector(s). When column names are incomplete, the missing will be attached at the end."
   ([columns-selector & args]
-   (apply tablecloth.pipeline/reorder-columns columns-selector args)))
+  (apply tablecloth.pipeline/reorder-columns columns-selector args)))
 
 
 (defn replace-missing
@@ -1624,33 +1645,33 @@ test/data/stocks.csv [10 3]:
   `:lerp` - trying to lineary approximate values, works for numbers and datetime, otherwise applies :nearest. For numbers always results in float datatype.
   "
   ([]
-   (tablecloth.pipeline/replace-missing))
+  (tablecloth.pipeline/replace-missing ))
   ([strategy]
-   (tablecloth.pipeline/replace-missing strategy))
+  (tablecloth.pipeline/replace-missing strategy))
   ([columns-selector strategy]
-   (tablecloth.pipeline/replace-missing columns-selector strategy))
+  (tablecloth.pipeline/replace-missing columns-selector strategy))
   ([columns-selector strategy value]
-   (tablecloth.pipeline/replace-missing columns-selector strategy value)))
+  (tablecloth.pipeline/replace-missing columns-selector strategy value)))
 
 
 (defn replace-missing-value
   ([filter-fn-or-ds scalar-value]
-   (tech.v3.dataset.metamorph/replace-missing-value filter-fn-or-ds scalar-value))
+  (tech.v3.dataset.metamorph/replace-missing-value filter-fn-or-ds scalar-value))
   ([scalar-value]
-   (tech.v3.dataset.metamorph/replace-missing-value scalar-value)))
+  (tech.v3.dataset.metamorph/replace-missing-value scalar-value)))
 
 
 (defn reverse-rows
   "Reverse the rows in the dataset or column."
   ([]
-   (tech.v3.dataset.metamorph/reverse-rows)))
+  (tech.v3.dataset.metamorph/reverse-rows )))
 
 
 (defn right-join
   ([ds-right columns-selector]
-   (tablecloth.pipeline/right-join ds-right columns-selector))
+  (tablecloth.pipeline/right-join ds-right columns-selector))
   ([ds-right columns-selector options]
-   (tablecloth.pipeline/right-join ds-right columns-selector options)))
+  (tablecloth.pipeline/right-join ds-right columns-selector options)))
 
 
 (defn row-at
@@ -1668,12 +1689,12 @@ user> (ds/row-at stocks -1)
  \"price\" 223.02}
 ```"
   ([idx]
-   (tech.v3.dataset.metamorph/row-at idx)))
+  (tech.v3.dataset.metamorph/row-at idx)))
 
 
 (defn row-count
   ([]
-   (tablecloth.pipeline/row-count)))
+  (tablecloth.pipeline/row-count )))
 
 
 (defn row-map
@@ -1686,6 +1707,12 @@ user> (ds/row-at stocks -1)
 
   See options for [[pmap-ds]].  In particular, note that you can
   produce a sequence of datasets as opposed to a single large dataset.
+
+
+  Speed demons should attempt both `{:copying? false}` and `{:copying? true}` in the options
+  map as that changes rather drastically how data is read from the datasets.  If you are
+  going to read all the data in the dataset, `{:copying? true}` will most likely be
+  the faster of the two.
 
   Examples:
 
@@ -1716,9 +1743,9 @@ test/data/stocks.csv [5 4]:
 |  :MSFT | 2000-05-01 | 25.45 |  647.7025 |
 ```"
   ([map-fn options]
-   (tech.v3.dataset.metamorph/row-map map-fn options))
+  (tech.v3.dataset.metamorph/row-map map-fn options))
   ([map-fn]
-   (tech.v3.dataset.metamorph/row-map map-fn)))
+  (tech.v3.dataset.metamorph/row-map map-fn)))
 
 
 (defn row-mapcat
@@ -1779,21 +1806,26 @@ _unnamed [9 3]:
 user>
 ```"
   ([mapcat-fn options]
-   (tech.v3.dataset.metamorph/row-mapcat mapcat-fn options))
+  (tech.v3.dataset.metamorph/row-mapcat mapcat-fn options))
   ([mapcat-fn]
-   (tech.v3.dataset.metamorph/row-mapcat mapcat-fn)))
+  (tech.v3.dataset.metamorph/row-mapcat mapcat-fn)))
 
 
 (defn rows
   "Returns rows of dataset. Result type can be any of:
-  * `:as-maps`
-  * `:as-double-arrays`
-  * `:as-seqs`
-  "
+  * `:as-maps` - maps
+  * `:as-double-arrays` - double arrays
+  * `:as-seqs` - reader (sequence, default)
+  * `:as-vecs` - vectors
+
+  If you want to elide nils in maps set `:nil-missing?` option to false (default: `true`).
+  Another option - `:copying?` - when true row values are copied on read (default: `false`)."
   ([]
-   (tablecloth.pipeline/rows))
+  (tablecloth.pipeline/rows ))
   ([result-type]
-   (tablecloth.pipeline/rows result-type)))
+  (tablecloth.pipeline/rows result-type))
+  ([result-type options]
+  (tablecloth.pipeline/rows result-type options)))
 
 
 (defn rowvec-at
@@ -1807,7 +1839,7 @@ user> (ds/rowvec-at stocks -1)
 [\"AAPL\" #object[java.time.LocalDate 0x4b70b0d5 \"2010-03-01\"] 223.02]
 ```"
   ([idx]
-   (tech.v3.dataset.metamorph/rowvec-at idx)))
+  (tech.v3.dataset.metamorph/rowvec-at idx)))
 
 
 (defn rowvecs
@@ -1829,9 +1861,9 @@ user> (take 5 (ds/rowvecs stocks))
  [\"MSFT\" #object[java.time.LocalDate 0x3a62c34a \"2000-05-01\"] 25.45])
 ```"
   ([options]
-   (tech.v3.dataset.metamorph/rowvecs options))
+  (tech.v3.dataset.metamorph/rowvecs options))
   ([]
-   (tech.v3.dataset.metamorph/rowvecs)))
+  (tech.v3.dataset.metamorph/rowvecs )))
 
 
 (defn sample
@@ -1847,17 +1879,17 @@ user> (take 5 (ds/rowvecs stocks))
   * `:replacement?` - Do sampling with replacement.  Defaults to false.
   * `:seed` - Provide a seed as a number or provide a Random implementation."
   ([n options]
-   (tech.v3.dataset.metamorph/sample n options))
+  (tech.v3.dataset.metamorph/sample n options))
   ([n]
-   (tech.v3.dataset.metamorph/sample n))
+  (tech.v3.dataset.metamorph/sample n))
   ([]
-   (tech.v3.dataset.metamorph/sample)))
+  (tech.v3.dataset.metamorph/sample )))
 
 
 (defn select
   "Select columns and rows."
   ([columns-selector rows-selector]
-   (tablecloth.pipeline/select columns-selector rows-selector)))
+  (tablecloth.pipeline/select columns-selector rows-selector)))
 
 
 (defn select-by-index
@@ -1869,7 +1901,7 @@ user> (take 5 (ds/rowvecs stocks))
     - list of indexes. May contain duplicates.  Negative values will be counted from
       the end of the sequence."
   ([col-index row-index]
-   (tech.v3.dataset.metamorph/select-by-index col-index row-index)))
+  (tech.v3.dataset.metamorph/select-by-index col-index row-index)))
 
 
 (defn select-columns
@@ -1880,11 +1912,11 @@ user> (take 5 (ds/rowvecs stocks))
   - map of names with new names (rename)
   - function which filter names (via column metadata)"
   ([]
-   (tablecloth.pipeline/select-columns))
+  (tablecloth.pipeline/select-columns ))
   ([columns-selector]
-   (tablecloth.pipeline/select-columns columns-selector))
+  (tablecloth.pipeline/select-columns columns-selector))
   ([columns-selector meta-field]
-   (tablecloth.pipeline/select-columns columns-selector meta-field)))
+  (tablecloth.pipeline/select-columns columns-selector meta-field)))
 
 
 (defn select-columns-by-index
@@ -1892,7 +1924,7 @@ user> (take 5 (ds/rowvecs stocks))
 
   See documentation for `select-by-index`."
   ([col-index]
-   (tech.v3.dataset.metamorph/select-columns-by-index col-index)))
+  (tech.v3.dataset.metamorph/select-columns-by-index col-index)))
 
 
 (defn select-missing
@@ -1900,9 +1932,9 @@ user> (take 5 (ds/rowvecs stocks))
 
  `columns-selector` selects columns to look at missing values"
   ([]
-   (tablecloth.pipeline/select-missing))
+  (tablecloth.pipeline/select-missing ))
   ([columns-selector]
-   (tablecloth.pipeline/select-missing columns-selector)))
+  (tablecloth.pipeline/select-missing columns-selector)))
 
 
 (defn select-rows
@@ -1913,63 +1945,55 @@ user> (take 5 (ds/rowvecs stocks))
   - seq of true/false
   - fn with predicate"
   ([]
-   (tablecloth.pipeline/select-rows))
+  (tablecloth.pipeline/select-rows ))
   ([rows-selector]
-   (tablecloth.pipeline/select-rows rows-selector))
+  (tablecloth.pipeline/select-rows rows-selector))
   ([rows-selector options]
-   (tablecloth.pipeline/select-rows rows-selector options)))
-
-
-(defn select-rows-by-index
-  "Select rows from the dataset or column by seq of index(includes negative) or :all.
-
-   See documentation for `select-by-index`."
-  ([row-index]
-   (tech.v3.dataset.metamorph/select-rows-by-index row-index)))
+  (tablecloth.pipeline/select-rows rows-selector options)))
 
 
 (defn semi-join
   ([ds-right columns-selector]
-   (tablecloth.pipeline/semi-join ds-right columns-selector))
+  (tablecloth.pipeline/semi-join ds-right columns-selector))
   ([ds-right columns-selector options]
-   (tablecloth.pipeline/semi-join ds-right columns-selector options)))
+  (tablecloth.pipeline/semi-join ds-right columns-selector options)))
 
 
 (defn separate-column
   ([column]
-   (tablecloth.pipeline/separate-column column))
+  (tablecloth.pipeline/separate-column column))
   ([column separator]
-   (tablecloth.pipeline/separate-column column separator))
+  (tablecloth.pipeline/separate-column column separator))
   ([column target-columns separator]
-   (tablecloth.pipeline/separate-column column target-columns separator))
+  (tablecloth.pipeline/separate-column column target-columns separator))
   ([column target-columns separator conf]
-   (tablecloth.pipeline/separate-column column target-columns separator conf)))
+  (tablecloth.pipeline/separate-column column target-columns separator conf)))
 
 
 (defn set-dataset-name
   ([ds-name]
-   (tablecloth.pipeline/set-dataset-name ds-name)))
+  (tablecloth.pipeline/set-dataset-name ds-name)))
 
 
 (defn set-inference-target
   "Set the inference target on the column.  This sets the :column-type member
   of the column metadata to :inference-target?."
   ([target-name-or-target-name-seq]
-   (tech.v3.dataset.metamorph/set-inference-target target-name-or-target-name-seq)))
+  (tech.v3.dataset.metamorph/set-inference-target target-name-or-target-name-seq)))
 
 
 (defn shape
   "Returns shape of the dataset [rows, cols]"
   ([]
-   (tablecloth.pipeline/shape)))
+  (tablecloth.pipeline/shape )))
 
 
 (defn shuffle
   "Shuffle dataset (with seed)"
   ([]
-   (tablecloth.pipeline/shuffle))
+  (tablecloth.pipeline/shuffle ))
   ([options]
-   (tablecloth.pipeline/shuffle options)))
+  (tablecloth.pipeline/shuffle options)))
 
 
 (defn sort-by
@@ -1989,9 +2013,9 @@ user> (take 5 (ds/rowvecs stocks))
     `:exception`.
   * `:parallel?` - Uses parallel quicksort when true and regular quicksort when false."
   ([key-fn compare-fn & args]
-   (apply tech.v3.dataset.metamorph/sort-by key-fn compare-fn args))
+  (apply tech.v3.dataset.metamorph/sort-by key-fn compare-fn args))
   ([key-fn]
-   (tech.v3.dataset.metamorph/sort-by key-fn)))
+  (tech.v3.dataset.metamorph/sort-by key-fn)))
 
 
 (defn sort-by-column
@@ -2010,9 +2034,9 @@ user> (take 5 (ds/rowvecs stocks))
     `:exception`.
   * `:parallel?` - Uses parallel quicksort when true and regular quicksort when false."
   ([colname compare-fn & args]
-   (apply tech.v3.dataset.metamorph/sort-by-column colname compare-fn args))
+  (apply tech.v3.dataset.metamorph/sort-by-column colname compare-fn args))
   ([colname]
-   (tech.v3.dataset.metamorph/sort-by-column colname)))
+  (tech.v3.dataset.metamorph/sort-by-column colname)))
 
 
 (defn std-scale
@@ -2023,10 +2047,8 @@ user> (take 5 (ds/rowvecs stocks))
 
 
   `options` are the options for the scaler and can take:
-
-  `mean?` If true (default), the data gets shifted by the column means, so 0 centered
-
-  `stddev?` If true (default), the data gets scaled by the standard deviation of the column
+     `mean?` If true (default), the data gets shifted by the column means, so 0 centered
+     `stddev?` If true (default), the data gets scaled by the standard deviation of the column
 
   metamorph                            | .
   -------------------------------------|----------------------------------------------------------------------------
@@ -2037,22 +2059,22 @@ user> (take 5 (ds/rowvecs stocks))
 
   "
   ([columns-selector meta-field options]
-   (scicloj.metamorph.ml.preprocessing/std-scale columns-selector meta-field options))
+  (scicloj.metamorph.ml.preprocessing/std-scale columns-selector meta-field options))
   ([columns-selector options]
-   (scicloj.metamorph.ml.preprocessing/std-scale columns-selector options)))
+  (scicloj.metamorph.ml.preprocessing/std-scale columns-selector options)))
 
 
 (defn tail
   "Last n rows (default 5)"
   ([]
-   (tablecloth.pipeline/tail))
+  (tablecloth.pipeline/tail ))
   ([n]
-   (tablecloth.pipeline/tail n)))
+  (tablecloth.pipeline/tail n)))
 
 
 (defn take-nth
   ([n-val]
-   (tech.v3.dataset.metamorph/take-nth n-val)))
+  (tech.v3.dataset.metamorph/take-nth n-val)))
 
 
 (defn transform-one-hot
@@ -2065,11 +2087,16 @@ user> (take 5 (ds/rowvecs stocks))
   * `:full`  The levels are retrieved from a dataset at key :metamorph.ml/full-ds in the context
   * `:independent`  One-hot columns are fitted and transformed independently for train and test  data
   * `:fit` The mapping fitted in mode :fit is used in :transform, and it is assumed that all levels are present in the data during :fit
+
+  `options` can be:
+  *  `:table-args` allows to specify the precise mapping as a sequence of pairs of [val idx] or as a sorted seq of values.
+  *  `:result-datatype`  Datatype of the one-hot-mapping column
+
   "
   ([column-selector strategy]
-   (scicloj.metamorph.ml.categorical/transform-one-hot column-selector strategy))
+  (scicloj.metamorph.ml.categorical/transform-one-hot column-selector strategy))
   ([column-selector strategy options]
-   (scicloj.metamorph.ml.categorical/transform-one-hot column-selector strategy options)))
+  (scicloj.metamorph.ml.categorical/transform-one-hot column-selector strategy options)))
 
 
 (defn ungroup
@@ -2079,14 +2106,14 @@ user> (take 5 (ds/rowvecs stocks))
 
   Before joining the groups groups can be sorted by group name."
   ([]
-   (tablecloth.pipeline/ungroup))
+  (tablecloth.pipeline/ungroup ))
   ([options]
-   (tablecloth.pipeline/ungroup options)))
+  (tablecloth.pipeline/ungroup options)))
 
 
 (defn union
   ([& args]
-   (apply tablecloth.pipeline/union args)))
+  (apply tablecloth.pipeline/union args)))
 
 
 (defn unique-by
@@ -2099,11 +2126,11 @@ user> (take 5 (ds/rowvecs stocks))
     `:random` - select random row
     any function - apply function to a columns which are subject of uniqueness"
   ([]
-   (tablecloth.pipeline/unique-by))
+  (tablecloth.pipeline/unique-by ))
   ([columns-selector]
-   (tablecloth.pipeline/unique-by columns-selector))
+  (tablecloth.pipeline/unique-by columns-selector))
   ([columns-selector options]
-   (tablecloth.pipeline/unique-by columns-selector options)))
+  (tablecloth.pipeline/unique-by columns-selector options)))
 
 
 (defn unique-by-column
@@ -2112,15 +2139,15 @@ user> (take 5 (ds/rowvecs stocks))
 
   :keep-fn - Function from key, idx-seq->idx.  Defaults to #(first %2)."
   ([options colname]
-   (tech.v3.dataset.metamorph/unique-by-column options colname))
+  (tech.v3.dataset.metamorph/unique-by-column options colname))
   ([colname]
-   (tech.v3.dataset.metamorph/unique-by-column colname)))
+  (tech.v3.dataset.metamorph/unique-by-column colname)))
 
 
 (defn unmark-group
   "Remove grouping tag"
   ([]
-   (tablecloth.pipeline/unmark-group)))
+  (tablecloth.pipeline/unmark-group )))
 
 
 (defn unordered-select
@@ -2128,7 +2155,7 @@ user> (take 5 (ds/rowvecs stocks))
   *not* reorder the columns based on colname-seq.  Useful when doing selection based
   on sets or persistent hash maps."
   ([colname-seq index-seq]
-   (tech.v3.dataset.metamorph/unordered-select colname-seq index-seq)))
+  (tech.v3.dataset.metamorph/unordered-select colname-seq index-seq)))
 
 
 (defn unroll
@@ -2138,9 +2165,9 @@ user> (take 5 (ds/rowvecs stocks))
   If you want instead to split the content of the columns into a set of new _columns_, look at [[separate-column]].
   See https://scicloj.github.io/tablecloth/index.html#Unroll"
   ([columns-selector]
-   (tablecloth.pipeline/unroll columns-selector))
+  (tablecloth.pipeline/unroll columns-selector))
   ([columns-selector options]
-   (tablecloth.pipeline/unroll columns-selector options)))
+  (tablecloth.pipeline/unroll columns-selector options)))
 
 
 (defn unroll-column
@@ -2172,9 +2199,9 @@ user> (-> (ds/->dataset [{:a 1 :b [2 3]}
     the original column.  Can also be a truthy value (like a keyword) and the column
     will be named this."
   ([column-name]
-   (tech.v3.dataset.metamorph/unroll-column column-name))
+  (tech.v3.dataset.metamorph/unroll-column column-name))
   ([column-name options]
-   (tech.v3.dataset.metamorph/unroll-column column-name options)))
+  (tech.v3.dataset.metamorph/unroll-column column-name options)))
 
 
 (defn update
@@ -2200,28 +2227,28 @@ user> (-> (ds/->dataset [{:a 1 :b [2 3]}
                                  #(dtype/elemwise-cast % :float64)))
 ```"
   ([filter-fn-or-ds update-fn & args]
-   (apply tech.v3.dataset.metamorph/update filter-fn-or-ds update-fn args)))
+  (apply tech.v3.dataset.metamorph/update filter-fn-or-ds update-fn args)))
 
 
 (defn update-column
   "Update a column returning a new dataset.  update-fn is a column->column
   transformation.  Error if column does not exist."
   ([col-name update-fn]
-   (tech.v3.dataset.metamorph/update-column col-name update-fn)))
+  (tech.v3.dataset.metamorph/update-column col-name update-fn)))
 
 
 (defn update-columns
   ([columns-map]
-   (tablecloth.pipeline/update-columns columns-map))
+  (tablecloth.pipeline/update-columns columns-map))
   ([columns-selector update-functions]
-   (tablecloth.pipeline/update-columns columns-selector update-functions)))
+  (tablecloth.pipeline/update-columns columns-selector update-functions)))
 
 
 (defn update-columnwise
   "Call update-fn on each column of the dataset.  Returns the dataset.
   See arguments to update"
   ([filter-fn-or-ds cwise-update-fn & args]
-   (apply tech.v3.dataset.metamorph/update-columnwise filter-fn-or-ds cwise-update-fn args)))
+  (apply tech.v3.dataset.metamorph/update-columnwise filter-fn-or-ds cwise-update-fn args)))
 
 
 (defn update-elemwise
@@ -2231,9 +2258,9 @@ user> (-> (ds/->dataset [{:a 1 :b [2 3]}
   function must deal with type-specific missing values correctly.
   Returns new dataset"
   ([filter-fn-or-ds map-fn]
-   (tech.v3.dataset.metamorph/update-elemwise filter-fn-or-ds map-fn))
+  (tech.v3.dataset.metamorph/update-elemwise filter-fn-or-ds map-fn))
   ([map-fn]
-   (tech.v3.dataset.metamorph/update-elemwise map-fn)))
+  (tech.v3.dataset.metamorph/update-elemwise map-fn)))
 
 
 (defn value-reader
@@ -2241,9 +2268,9 @@ user> (-> (ds/->dataset [{:a 1 :b [2 3]}
   Options:
   :copying? - Default to false - When true row values are copied on read."
   ([options]
-   (tech.v3.dataset.metamorph/value-reader options))
+  (tech.v3.dataset.metamorph/value-reader options))
   ([]
-   (tech.v3.dataset.metamorph/value-reader)))
+  (tech.v3.dataset.metamorph/value-reader )))
 
 
 (defn write!
@@ -2268,13 +2295,13 @@ Options:
      pass in an output stream then you will need to specify the file type.
   * `:headers?` - if csv headers are written, defaults to true."
   ([output-path options]
-   (tablecloth.pipeline/write! output-path options))
+  (tablecloth.pipeline/write! output-path options))
   ([output-path]
-   (tablecloth.pipeline/write! output-path)))
+  (tablecloth.pipeline/write! output-path)))
 
 
 (defn write-nippy!
   ([filename]
-   (tablecloth.pipeline/write-nippy! filename)))
+  (tablecloth.pipeline/write-nippy! filename)))
 
 
