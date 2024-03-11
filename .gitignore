@@ -9,3 +9,4 @@
 /__pycache__/
 /target/
 /.nrepl-port
+deps.local.edn
