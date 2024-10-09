@@ -6,6 +6,9 @@
 # scicloj.ml
 
 A idiomatic Clojure machine learning library.
+(the usage of this `shim` is now considered deprecated. The underlying libraries should be used directly.
+[noj](https://github.com/scicloj/noj) is a new librray to combine several of these librraies, without remapping the namespaces )
+
 
 Main features:
 - Harmonized and *idiomatic* use of various classification, regression and unsupervised models 
