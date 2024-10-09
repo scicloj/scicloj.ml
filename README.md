@@ -3,12 +3,11 @@
 - latest snapshot: [![Gitpod ready-to-code latest-snapshot](https://img.shields.io/badge/Gitpod-ready--to--code-908a85?logo=gitpod)](https://gitpod.io/#https://github.com/scicloj/scicloj.ml)
 - latest snapshot: [![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/scicloj/scicloj.ml/HEAD?filepath=docs%2Fquickstart.ipynb)
 
-# scicloj.ml
+# scicloj.ml - A idiomatic Clojure machine learning library.
 
-A idiomatic Clojure machine learning library.
 (the usage of this `shim` is now considered deprecated. The underlying libraries should be used directly.
-[noj](https://github.com/scicloj/noj) is a new librray to combine several of these librraies, without remapping the namespaces )
-
+[noj](https://github.com/scicloj/noj) is a new librray to combine several of these librraies, without remapping the namespaces.
+All documenttaion stays valid when using libraries directly or via noj, except for the namespaces in use.)
 
 Main features:
 - Harmonized and *idiomatic* use of various classification, regression and unsupervised models 
