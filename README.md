@@ -1,3 +1,9 @@
+>[!NOTE]
+>***
+>The usage of this `shim` is now considered deprecated. The underlying libraries should be used directly.
+>[noj](https://github.com/scicloj/noj) is a new librray to combine several of these librraies, without remapping the namespaces.
+>It contains as well updated versions of several of the tutorials here.
+>***
 [![Clojars Project](https://img.shields.io/clojars/v/scicloj/scicloj.ml.svg)](https://clojars.org/scicloj/scicloj.ml/)[![cljdoc badge](https://cljdoc.org/badge/scicloj/scicloj.ml)](https://cljdoc.org/d/scicloj/scicloj.ml)
 - v0.3: [![Gitpod ready-to-code v0.2.2](https://img.shields.io/badge/Gitpod-ready--to--code-908a85?logo=gitpod)](https://gitpod.io/#https://github.com/scicloj/scicloj.ml/tree/v0.3)
 - latest snapshot: [![Gitpod ready-to-code latest-snapshot](https://img.shields.io/badge/Gitpod-ready--to--code-908a85?logo=gitpod)](https://gitpod.io/#https://github.com/scicloj/scicloj.ml)
@@ -5,8 +11,6 @@
 
 # scicloj.ml - A idiomatic Clojure machine learning library.
 
-(the usage of this `shim` is now considered deprecated. The underlying libraries should be used directly.
-[noj](https://github.com/scicloj/noj) is a new librray to combine several of these librraies, without remapping the namespaces.
 All documenttaion stays valid when using libraries directly or via noj, except for the namespaces in use.)
 
 Main features:
